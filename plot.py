@@ -10,7 +10,11 @@ import numpy as np
 from jittermodel.simulation import Simulation
 from autoassign import autoassign
 from time import sleep
-
+import datetime
+import cPickle as pickle
+import os
+import errno
+import glob
 
 
 class GeneratePlotData(object):
@@ -231,3 +235,44 @@ class GeneratePlotData(object):
         
         self.x = np.array(_power_spectra_x)*self.scales['f']
         self.y = np.array(_power_spectra_y)*self.scales['power spectrum']
+    
+    def pickle(self, name):
+        """Pickles the object to a file in a subdirectory pkl."""
+        today = datetime.date.today().isoformat()
+        filename = 'pkl/{today} {name}.pkl'.format(today = today, name = name)
+        make_sure_path_exists('pkl')
+        output = open(filename, 'wb')
+        pickle.dump(self, output)
+        output.close()
+
+
+def unpickle(name = None):
+    """Unpickles an object from the subdirectory pkl, with the given name, and created today."""
+    if name == None:
+        filename = get_most_recent_pkl_file('pkl')
+    else:
+        today = datetime.date.today().isoformat()
+        filename = 'pkl/{today} {name}.pkl'.format(today = today, name = name)
+    with open(filename, 'rb') as pkl_file:
+        return pickle.load(pkl_file)
+
+def get_most_recent_pkl_file(folder):
+    """Gets the most recent pickle file from the specified folder. Code from http://stackoverflow.com/questions/168409/how-do-you-get-a-directory-listing-sorted-by-creation-date-in-python."""
+    search_dir = "{cwd}/{folder}/*.pkl".format(cwd = os.getcwd(), folder = folder)
+    # remove anything from the list that is not a file (directories, symlinks)
+    # thanks to J.F. Sebastion for pointing out that the requirement was a list 
+    # of files (presumably not including directories)  
+    files = filter(os.path.isfile, glob.glob(search_dir))
+    files.sort(key=lambda x: os.path.getmtime(x))
+    return files[-1]
+
+
+def make_sure_path_exists(path):
+    """From Stackoverflow. See http://stackoverflow.com/questions/273192/create-directory-if-it-doesnt-exist-for-file-write for more information."""
+    try:
+        os.makedirs(path)
+    except OSError as exception:
+        if exception.errno != errno.EEXIST:
+            raise
+        
+    
