@@ -14,12 +14,6 @@ from nose.tools import raises, assert_raises, assert_almost_equals
 from jittermodel.base import Sample, Cantilever
 from numpy import pi
 
-
-s1 = Sample()
-print s1.rho
-print s1.V_g
-
-
 @raises(ValueError)
 def test_Cantilever_input():
     """Make sure that defining a cantilever with an incorrect geometry

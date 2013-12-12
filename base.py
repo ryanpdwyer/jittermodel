@@ -51,6 +51,10 @@ from __future__ import division
 from numpy import pi
 from autoassign import autoassign
 
+from pint import UnitRegistry
+
+u = UnitRegistry()
+
 # Universal Constants
 E_0 = 8.854e-3
 k_B = 1.38065e-2
@@ -177,6 +181,14 @@ In addition, the following quantities are defined in the class
 
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
+
+
+class UnitCantilever(Cantilever):
+    """Implement a Cantilever class with support for units."""
+    def __init__(f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000,
+                 R_tip=40*u.nm, L_tip=15*u.um, ThetaDegrees_tip=16,
+                 geometry_c='perpendicular'):
+        pass
 
 
 class Sample(Assigner):
