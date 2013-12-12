@@ -8,3 +8,4 @@ syntax: glob
 **.png
 **.jpeg
 **.jpg
+**.pkl # Ignore pickle files

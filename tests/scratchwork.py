@@ -54,22 +54,23 @@ class Axis(object):
     @autoassign
     def __init__(self, variable, range, points):
         pass
-    
+
     @property
     def min(self):
         return self.range[0]
-    
+
     @property
     def max(self):
         return self.range[1]
-    
+
     def __str__(self):
-        return "{self.variable} on the interval {self.range} {self.points} points".format(self = self)
+        return """{self.variable} on the interval \
+                  {self.range} {self.points} points""".format(self=self)
 
 h_ax = Axis('h', (10, 100), 50)
 
 """To pickle"""
-make_sure_path_exists('pkl')     
+make_sure_path_exists('pkl')
 output = open('pkl/axis.pkl', 'wb')
 pickle.dump(h_ax, output)
 output.close()
@@ -89,4 +90,3 @@ output.close()
 # dd = pickle.load(pkl_file)
 
 # print dd
-
