@@ -169,9 +169,6 @@ L_tip = {self.L_tip},\
 ThetaDegrees_tip = {self.ThetaDegrees_tip},\
 geometry_c = '{self.geometry_c}')".format(self=self)
 
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
-
 
 
 class Sample(Assigner):
@@ -345,11 +342,6 @@ class Sample(Assigner):
             E_s2 = {self.E_s2}, E_i1 = {self.E_i1},\
             E_i2 = {self.E_i2}, mobility = {self.mobility},\
             T = {self.T}, V_g = {self.V_g})""".format(self=self)
-
-    def __eq__(self, other):
-        """Defines two samples as equal if their internal
-        dictionaries are the same."""
-        return self.__dict__ == other.__dict__
 
 
 class Experiment(Assigner):

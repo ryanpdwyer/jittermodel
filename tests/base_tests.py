@@ -11,7 +11,7 @@ Look at http://stackoverflow.com/q/9613932/2823213 for expected failures.
 
 import unittest
 from nose.tools import assert_raises, assert_almost_equals
-from jittermodel.base import Sample, Cantilever
+from jittermodel.base import Sample, Cantilever, Experiment
 from numpy import pi
 
 
@@ -128,9 +128,10 @@ class TestSample(unittest.TestCase):
 
 
 def test_Experiment():
-    """Experiment currently has no tests; it is basically just
-a container at this point."""
-    pass
+    """Just checks that an experiment is properly initialized."""
+    Experiment(jitter_f_f=4)
+    Experiment(d=0.3, V_ts=10)
+    # assert_raises(ValueError, Experiment, **{'d': -1}) # Not implemented yet.
 
 
 if __name__ == '__main__':

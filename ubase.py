@@ -11,7 +11,7 @@ from jittermodel!
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-from . import u, UnitAssigner
+from jittermodel import u, UnitAssigner
 
 
 # Universal Constants

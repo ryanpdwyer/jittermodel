@@ -6,8 +6,17 @@ Ryan Dwyer
 
 """
 import pint
+import inspect
 
 u = pint.UnitRegistry()
+
+
+def get_units(func):
+    argspec = inspect.getargspec(func)
+    names = argspec.args
+    vals = argspec.defaults
+    return {name: val.units for name, val in zip(names, vals)
+            if type(val) == u.Quantity}
 
 
 class Assigner(object):
