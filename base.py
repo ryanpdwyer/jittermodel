@@ -129,8 +129,7 @@ In addition, the following quantities are defined in the class
         information."""
 
         self._check_number_inputs_positive()
-        if self.ThetaDegrees_tip >= 90:
-            raise ValueError("'ThetaDegrees_tip' must be less than 90 degrees.")
+        self._check_theta_less_than_90()
         self._check_geometry()
 
     # Define other useful cantilever properties.
@@ -165,6 +164,12 @@ In addition, the following quantities are defined in the class
             if self.lookup(attr) <= 0:
                 raise ValueError("""The attribute '{attr}'\
                                  must be positive.""".format(attr=attr))
+
+    def _check_theta_less_than_90(self):
+        """Return a ValueError if ThetaDegrees_tip >= 90,
+        since this is unphysical."""
+        if self.ThetaDegrees_tip >= 90:
+            raise ValueError("'ThetaDegrees_tip' must be less than 90 degrees.")
 
     def F_min(self, T, bandwidth=0.001):
         """Return the thermally limited minimum detectable
