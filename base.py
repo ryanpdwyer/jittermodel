@@ -1,7 +1,7 @@
 
 
 """
-capacticancev5.py
+jittermodel.base
 
 Created by Ryan Dwyer on 2013-05-18.
 
@@ -84,6 +84,13 @@ class Assigner(object):
         """Return a tuple of all the non-magic attributes of the class"""
         return tuple([attr for attr in dir(self)
                       if not attr.startswith('__')])
+
+class UnitAssigner(Assigner):
+    """An Assigner that uses units for numerical inputs.
+
+    The unit behavior is specified by a dictionary self.units containing
+    the name of the variable as the key, and default unit as the value."""
+    pass
 
 
 class Cantilever(Assigner):
