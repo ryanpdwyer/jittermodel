@@ -14,6 +14,7 @@ import unittest
 # TO DO
 # Pint Helper function!
 
+
 def test_UnitCantilever_input():
     """Make sure that defining a UnitCantilever with an incorrect geometry, or
     negative number raises a ValueError."""
@@ -27,21 +28,23 @@ def test_UnitCantilever_input():
     for kwargs in to_test:
         assert_raises(ValueError, UnitCantilever, **kwargs)
 
+
 def test_UnitCantilever_input_units():
     to_test = [{'f_c': -10 * u.s},
                {'Q': -39},
                {'f_c': 40 * u.kHz, 'R_tip': -0.023 * u.C},
                {'theta_tip': 12 * u.degK},
                {'theta_tip': 100}]
-    
+
     for kwargs in to_test:
         assert_raises(DimensionalityError, UnitCantilever, **kwargs)
 
 
 def test_UnitCantilever_init():
     """Make sure the unit cantilever initializes properly."""
-    c = UnitCantilever(f_c=50 * u.kHz, k_c=3 * u.N/u.m,
-                       Q=1000 * u.dimensionless)
+    UnitCantilever(f_c=50 * u.kHz, k_c=3 * u.N/u.m,
+                   Q=1000 * u.dimensionless)
+
 
 class TestUnitCantilever(unittest.TestCase):
 

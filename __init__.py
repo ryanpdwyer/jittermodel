@@ -9,6 +9,7 @@ import pint
 
 u = pint.UnitRegistry()
 
+
 class Assigner(object):
     """This class provides an update method, that allows Updater class
     properties to be updated using the syntax,
@@ -33,15 +34,22 @@ class Assigner(object):
         return tuple([attr for attr in dir(self)
                       if not attr.startswith('__')])
 
+    def __eq__(self, other):
+        """Define two Assigners to be equal if their internal
+        dictionaries are the same. A relatively sane check for equality."""
+        return self.__dict__ == other.__dict__
+
+
 class UnitAssigner(Assigner):
     """An Assigner that uses units for numerical inputs.
 
     The unit behavior is specified by a dictionary self.units containing
     the name of the variable as the key, and default unit as the value."""
+
     def _check_number_inputs_positive(self):
         """Return a ValueError if the number inputs are not positive."""
         greater_than_zero = self.units.viewkeys()
-        
+
         for attr in greater_than_zero:
             if self.lookup(attr).magnitude <= 0:
                 raise ValueError("""The attribute '{attr}'\

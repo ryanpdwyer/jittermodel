@@ -11,13 +11,11 @@ from jittermodel!
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-import pint
-from . import u, UnitAssigner # Get the unit registry from the module __init__.py
-
+from . import u, UnitAssigner
 
 
 # Universal Constants
-E_0 = 8.854e-12 * u.F / u.m 
+E_0 = 8.854e-12 * u.F / u.m
 k_B = 1.38065e-23 * u.J / u.K
 q = 1.602e-19 * u.C
 
@@ -28,8 +26,10 @@ class UnitCantilever(UnitAssigner):
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
                  R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
                  geometry_c='perpendicular'):
+        """Initialize the cantilever."""
         self.units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
                       'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
+
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
         self._check_theta_less_than_90()
@@ -71,9 +71,9 @@ class UnitCantilever(UnitAssigner):
 
     # Representations of the cantilever
     def __str__(self):
-        """Write out the cantilever as its
-        three most important parameters: resonance frequency,
-        spring constant, and quality factor."""
+        """Write out the cantilever as its most important parameters:
+        resonance frequency, spring constant, quality factor and
+        intrinsic friction."""
         return "f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q}\
 Gamma_i = {self.Gamma_i}".format(self=self)
 
@@ -85,7 +85,25 @@ Gamma_i = {self.Gamma_i}".format(self=self)
 R_tip = {self.R_tip}, L_tip = {self.L_tip},\
 theta_tip = {self.theta_tip},\
 geometry_c = '{self.geometry_c}')".format(self=self)
-    
-    # Operations on the cantilever
-    def __eq__(self, other):
-        return self.__dict__ == other.__dict__
+
+
+class UnitExperiment(UnitAssigner):
+    """Stores parameters set by the experimenter. Now with units!"""
+    @autoassign
+    def __init__(self, d=100 * u.nm, V_ts=5 * u.V,
+                 jitter_f_i=0.2 * u.Hz, jitter_f_f=3 * u.Hz):
+        self.units = {'d': u.nm, 'V_ts': u.V, 'jitter_f_i': u.Hz,
+                      'jitter_f_f': u.Hz}
+
+        self._check_dimensionality_units()
+        self._check_number_inputs_positive()
+        # Check for errors in the experimental parameters
+        if self.V_ts < 0:
+            raise ValueError("The voltages 'V_g' and 'V_ts' must be positive.")
+        if self.jitter_f_i > self.jitter_f_f:
+            raise ValueError("'jitter_f_i' must be less than 'jitter_f_f'.")
+
+    def __str__(self):
+        """A nice string representation of the experiment."""
+        return """Tip-sample: {self.d}, {self.V_ts}""".format(
+            self=self)

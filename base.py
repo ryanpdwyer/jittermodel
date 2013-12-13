@@ -50,8 +50,7 @@ E_0 = 8.854e-3
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-import pint
-from . import u, Assigner
+from . import Assigner
 
 # Universal Constants
 E_0 = 8.854e-3
