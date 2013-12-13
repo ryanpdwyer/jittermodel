@@ -36,6 +36,7 @@ class UnitCantilever(Assigner):
         self._check_theta_less_than_90()
         self._check_geometry()
 
+    # Properties of the cantilver
     @property
     def omega_c(self):
         """Return the angular resonance frequency of the cantilever."""
@@ -46,6 +47,16 @@ class UnitCantilever(Assigner):
         """Return the cantilever's intrinsic dissipation."""
         return (self.k_c / (self.omega_c * self.Q)).ito(u.pN * u.s / u.m)
 
+    def F_min(self, T, bandwidth=1*u.Hz):
+        """Return the thermally limited minimum detectable
+        force (pN).
+
+        The optional bandwidth parameter allows determining
+        a miniumun force over a broader or  narrower bandwidth
+        than 1 Hz."""
+        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5).ito(u.pN)
+
+    # Functions to check the inputs to the cantilever.
     def _check_geometry(self):
         """Raises an error if the geometry of the cantilever geometry_c
         is not either 'perpendicular' or 'parallel'."""
@@ -76,15 +87,7 @@ must be positive.""".format(attr=attr))
                 raise pint.DimensionalityError("No unit", unit)
             quant.to(unit)
 
-    def F_min(self, T, bandwidth=1*u.Hz):
-        """Return the thermally limited minimum detectable
-        force (pN).
-
-        The optional bandwidth parameter allows determining
-        a miniumun force over a broader or  narrower bandwidth
-        than 1 Hz."""
-        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5).ito(u.pN)
-
+    # Representations of the cantilever
     def __str__(self):
         """Write out the cantilever as its
         three most important parameters: resonance frequency,
@@ -100,6 +103,7 @@ Gamma_i = {self.Gamma_i}".format(self=self)
 R_tip = {self.R_tip}, L_tip = {self.L_tip},\
 theta_tip = {self.theta_tip},\
 geometry_c = '{self.geometry_c}')".format(self=self)
-
+    
+    # Operations on the cantilever
     def __eq__(self, other):
         return self.__dict__ == other.__dict__
