@@ -3,11 +3,16 @@ Test UnitCantilever Class
 2013-12-12
 
 Ryan Dwyer
+
 """
 
 from jittermodel.ucant import UnitCantilever, u
 from nose.tools import assert_raises, assert_almost_equals
 from pint import DimensionalityError
+import unittest
+
+# TO DO
+# Pint Helper function!
 
 def test_UnitCantilever_input():
     """Make sure that defining a UnitCantilever with an incorrect geometry, or
@@ -37,3 +42,20 @@ def test_UnitCantilever_init():
     """Make sure the unit cantilever initializes properly."""
     c = UnitCantilever(f_c=50 * u.kHz, k_c=3 * u.N/u.m,
                        Q=1000 * u.dimensionless)
+
+class TestUnitCantilever(unittest.TestCase):
+
+    def setUp(self):
+        self.c = UnitCantilever(f_c=50*u.kHz, k_c=3*u.N/u.m,
+                                Q=20000*u.dimensionless)
+
+    def test_F_min(self):
+        ex_F_min = 2.8125685411157023e-3 * u.pN
+        assert_almost_equals(ex_F_min.magnitude,
+                             self.c.F_min(300*u.K).magnitude)
+
+    def test_Gamma_i(self):
+        c = self.c
+        ex_Gamma_i = 477.46482927568604 * u.pN * u.s / u.m
+        assert_almost_equals(ex_Gamma_i.magnitude,
+                             c.Gamma_i.magnitude)

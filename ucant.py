@@ -93,7 +93,9 @@ must be positive.""".format(attr=attr))
 Gamma_i = {self.Gamma_i}".format(self=self)
 
     def __repr__(self):
-        """Return a representation of the cantilever. Cannot"""
+        """Return a representation of the cantilever. Rounds the cantilever
+        to 9 digits, so eval(repr(cantilever)) is not necessarily equal to
+        cantilever."""
         return "Cantilever(f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q},\
 R_tip = {self.R_tip}, L_tip = {self.L_tip},\
 theta_tip = {self.theta_tip},\
