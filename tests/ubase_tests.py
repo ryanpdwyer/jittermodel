@@ -6,7 +6,7 @@ Ryan Dwyer
 
 """
 
-from jittermodel.ubase import UnitCantilever, u
+from jittermodel.ubase import u, UnitCantilever, UnitExperiment
 from nose.tools import assert_raises, assert_almost_equals
 from pint import DimensionalityError
 import unittest
@@ -62,3 +62,8 @@ class TestUnitCantilever(unittest.TestCase):
         ex_Gamma_i = 477.46482927568604 * u.pN * u.s / u.m
         assert_almost_equals(ex_Gamma_i.magnitude,
                              c.Gamma_i.magnitude)
+
+
+def test_UnitExperiment():
+    UnitExperiment(jitter_f_f=4*u.Hz)
+    UnitExperiment(d=0.3 * u.um, V_ts=10 * u.V)

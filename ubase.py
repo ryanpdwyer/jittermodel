@@ -98,12 +98,11 @@ class UnitExperiment(UnitAssigner):
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
         # Check for errors in the experimental parameters
-        if self.V_ts < 0:
+        if self.V_ts < 0 * u.V:
             raise ValueError("The voltages 'V_g' and 'V_ts' must be positive.")
         if self.jitter_f_i > self.jitter_f_f:
             raise ValueError("'jitter_f_i' must be less than 'jitter_f_f'.")
 
     def __str__(self):
         """A nice string representation of the experiment."""
-        return """Tip-sample: {self.d}, {self.V_ts}""".format(
-            self=self)
+        return """Tip-sample: {self.d}, {self.V_ts}""".format(self=self)
