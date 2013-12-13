@@ -51,63 +51,12 @@ from __future__ import division
 from numpy import pi
 from autoassign import autoassign
 import pint
-from . import u
+from . import u, Assigner
 
 # Universal Constants
 E_0 = 8.854e-3
 k_B = 1.38065e-2
 q = 1.602e-1
-
-
-class Assigner(object):
-    """This class provides an update method, that allows Updater class
-    properties to be updated using the syntax,
-
-    u1 = Updater()
-    u1.assign('f_c', 50)
-    print(u1.f_c)
-    """
-
-    def assign(self, attr, val):
-        """This assign method allows an attribute 'attr' (given as a string)
-        to be assigned to the value 'val'."""
-        setattr(self, attr, val)
-
-    def lookup(self, attr):
-        """Lookup an attribute in the class with a string."""
-        return getattr(self, attr)
-
-    @property
-    def _all_attributes(self):
-        """Return a tuple of all the non-magic attributes of the class"""
-        return tuple([attr for attr in dir(self)
-                      if not attr.startswith('__')])
-
-class UnitAssigner(Assigner):
-    """An Assigner that uses units for numerical inputs.
-
-    The unit behavior is specified by a dictionary self.units containing
-    the name of the variable as the key, and default unit as the value."""
-    def _check_number_inputs_positive(self):
-        """Return a ValueError if the number inputs are not positive."""
-        greater_than_zero = self.units.viewkeys()
-        
-        for attr in greater_than_zero:
-            if self.lookup(attr).magnitude <= 0:
-                raise ValueError("""The attribute '{attr}'\
-    must be positive.""".format(attr=attr))
-
-    def _check_dimensionality_units(self):
-        """Return a DimensionalityError if unitted attributes
-        (set in self.units) have the wrong dimensionality."""
-        items = self.units.viewitems()
-        for attr, unit in items:
-            quant = self.lookup(attr)
-            if type(quant) != u.Quantity:
-                raise pint.DimensionalityError("No unit", unit)
-            quant.to(unit)
-
-
 
 
 class Cantilever(Assigner):

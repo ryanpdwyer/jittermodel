@@ -6,7 +6,7 @@ Ryan Dwyer
 
 """
 
-from jittermodel.ucant import UnitCantilever, u
+from jittermodel.ubase import UnitCantilever, u
 from nose.tools import assert_raises, assert_almost_equals
 from pint import DimensionalityError
 import unittest

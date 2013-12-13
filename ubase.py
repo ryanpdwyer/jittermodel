@@ -11,9 +11,8 @@ from jittermodel!
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-from jittermodel.base import UnitAssigner
 import pint
-from . import u  # Get the unit registry from the module __init__.py
+from . import u, UnitAssigner # Get the unit registry from the module __init__.py
 
 
 
