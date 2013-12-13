@@ -10,15 +10,23 @@ Look at http://stackoverflow.com/q/9613932/2823213 for expected failures.
 """
 
 import unittest
-from nose.tools import raises, assert_raises, assert_almost_equals
+from nose.tools import assert_raises, assert_almost_equals
 from jittermodel.base import Sample, Cantilever
 from numpy import pi
 
-@raises(ValueError)
+
 def test_Cantilever_input():
-    """Make sure that defining a cantilever with an incorrect geometry
-    raises a ValueError."""
-    Cantilever(geometry_c='not perpendicular or parallel')
+    """Make sure that defining a cantilever with an incorrect geometry, or
+    negative number raises a ValueError."""
+    to_test = [{'f_c': -10},
+               {'Q': -39},
+               {'f_c': 40, 'R_tip': -0.023},
+               {'ThetaDegrees_tip': -10},
+               {'ThetaDegrees_tip': 100},
+               {'geometry_c': 'not perpendicular or parallel'}]
+
+    for kwargs in to_test:
+        assert_raises(ValueError, Cantilever, **kwargs)
 
 
 def test_Cantilever_eq():

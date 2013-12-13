@@ -128,6 +128,9 @@ In addition, the following quantities are defined in the class
         See http://code.activestate.com/recipes/551763/ for more
         information."""
 
+        self._check_number_inputs_positive()
+        if self.ThetaDegrees_tip >= 90:
+            raise ValueError("'ThetaDegrees_tip' must be less than 90 degrees.")
         self._check_geometry()
 
     # Define other useful cantilever properties.
@@ -152,6 +155,16 @@ In addition, the following quantities are defined in the class
         if self.geometry_c is not ('perpendicular' or 'parallel'):
             raise ValueError("""geometry_c must be either 'perpendicular'\
                 or 'parallel'""")
+
+    def _check_number_inputs_positive(self):
+        """Returns a ValueError if the number inputs are not positive."""
+        greater_than_zero = ('f_c', 'k_c', 'Q',
+                             'R_tip', 'L_tip', 'ThetaDegrees_tip')
+        
+        for attr in greater_than_zero:
+            if self.lookup(attr) <= 0:
+                raise ValueError("""The attribute '{attr}'\
+                                 must be positive.""".format(attr=attr))
 
     def F_min(self, T, bandwidth=0.001):
         """Return the thermally limited minimum detectable
