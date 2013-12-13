@@ -11,7 +11,7 @@ from jittermodel!
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-from jittermodel.base import Assigner
+from jittermodel.base import UnitAssigner
 import pint
 from . import u  # Get the unit registry from the module __init__.py
 
@@ -23,7 +23,7 @@ k_B = 1.38065e-23 * u.J / u.K
 q = 1.602e-19 * u.C
 
 
-class UnitCantilever(Assigner):
+class UnitCantilever(UnitAssigner):
     """Implement a Cantilever class with support for units."""
     @autoassign
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
@@ -31,7 +31,7 @@ class UnitCantilever(Assigner):
                  geometry_c='perpendicular'):
         self.units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
                       'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
-        self._check_units()
+        self._check_dimensionality_units()
         self._check_number_inputs_positive()
         self._check_theta_less_than_90()
         self._check_geometry()
@@ -64,28 +64,11 @@ class UnitCantilever(Assigner):
             raise ValueError("""geometry_c must be either 'perpendicular'\
                 or 'parallel'""")
 
-    def _check_number_inputs_positive(self):
-        """Returns a ValueError if the number inputs are not positive."""
-        greater_than_zero = self.units.viewkeys()
-        
-        for attr in greater_than_zero:
-            if self.lookup(attr).magnitude <= 0:
-                raise ValueError("""The attribute '{attr}'\
-must be positive.""".format(attr=attr))
-
     def _check_theta_less_than_90(self):
         """Return a ValueError if theta_tip >= 90 degrees
         since this is unphysical."""
         if self.theta_tip >= 90 * u.degrees:
             raise ValueError("'theta_tip' must be less than 90 degrees.")
-
-    def _check_units(self):
-        items = self.units.viewitems()
-        for attr, unit in items:
-            quant = self.lookup(attr)
-            if type(quant) != u.Quantity:
-                raise pint.DimensionalityError("No unit", unit)
-            quant.to(unit)
 
     # Representations of the cantilever
     def __str__(self):

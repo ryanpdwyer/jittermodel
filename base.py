@@ -50,10 +50,8 @@ E_0 = 8.854e-3
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-
-from pint import UnitRegistry
-
-u = UnitRegistry()
+import pint
+from . import u
 
 # Universal Constants
 E_0 = 8.854e-3
@@ -90,7 +88,26 @@ class UnitAssigner(Assigner):
 
     The unit behavior is specified by a dictionary self.units containing
     the name of the variable as the key, and default unit as the value."""
-    pass
+    def _check_number_inputs_positive(self):
+        """Return a ValueError if the number inputs are not positive."""
+        greater_than_zero = self.units.viewkeys()
+        
+        for attr in greater_than_zero:
+            if self.lookup(attr).magnitude <= 0:
+                raise ValueError("""The attribute '{attr}'\
+    must be positive.""".format(attr=attr))
+
+    def _check_dimensionality_units(self):
+        """Return a DimensionalityError if unitted attributes
+        (set in self.units) have the wrong dimensionality."""
+        items = self.units.viewitems()
+        for attr, unit in items:
+            quant = self.lookup(attr)
+            if type(quant) != u.Quantity:
+                raise pint.DimensionalityError("No unit", unit)
+            quant.to(unit)
+
+
 
 
 class Cantilever(Assigner):
