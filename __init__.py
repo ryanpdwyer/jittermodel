@@ -3,6 +3,7 @@ jittermodel
 Ryan Dwyer
 2013-12-13
 
+TO DO: Add tests for the base classes.
 
 """
 import pint
