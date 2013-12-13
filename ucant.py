@@ -11,6 +11,7 @@ jittermodel.ucant!
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
+from jittermodel.base import Assigner
 
 from pint import UnitRegistry
 
@@ -82,8 +83,7 @@ must be positive.""".format(attr=attr))
 Gamma_i = {self.Gamma_i:!p}".format(self=self)
 
     def __repr__(self):
-        """Return a representation of the cantilever which can be used
-        to generate an equivalent copy of the cantilever."""
+        """Return a representation of the cantilever. Cannot"""
         return "Cantilever(f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q},\
 R_tip = {self.R_tip}, L_tip = {self.L_tip},\
 theta_tip = {self.theta_tip},\
