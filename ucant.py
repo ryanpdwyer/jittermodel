@@ -12,7 +12,7 @@ from __future__ import division
 from numpy import pi
 from autoassign import autoassign
 from jittermodel.base import Assigner
-
+import pint
 from pint import UnitRegistry
 
 u = UnitRegistry()
@@ -29,6 +29,9 @@ class UnitCantilever(Assigner):
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
                  R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
                  geometry_c='perpendicular'):
+        self.units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
+                      'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
+        self._check_units()
         self._check_number_inputs_positive()
         self._check_theta_less_than_90()
         self._check_geometry()
@@ -52,8 +55,7 @@ class UnitCantilever(Assigner):
 
     def _check_number_inputs_positive(self):
         """Returns a ValueError if the number inputs are not positive."""
-        greater_than_zero = ('f_c', 'k_c', 'Q',
-                             'R_tip', 'L_tip', 'theta_tip')
+        greater_than_zero = self.units.viewkeys()
         
         for attr in greater_than_zero:
             if self.lookup(attr).magnitude <= 0:
@@ -65,6 +67,14 @@ must be positive.""".format(attr=attr))
         since this is unphysical."""
         if self.theta_tip >= 90 * u.degrees:
             raise ValueError("'theta_tip' must be less than 90 degrees.")
+
+    def _check_units(self):
+        items = self.units.viewitems()
+        for attr, unit in items:
+            quant = self.lookup(attr)
+            if type(quant) != u.Quantity:
+                raise pint.DimensionalityError("No unit", unit)
+            quant.to(unit)
 
     def F_min(self, T, bandwidth=1*u.Hz):
         """Return the thermally limited minimum detectable
@@ -79,8 +89,8 @@ must be positive.""".format(attr=attr))
         """Write out the cantilever as its
         three most important parameters: resonance frequency,
         spring constant, and quality factor."""
-        return "f_c = {self.f_c:!p}, k_c = {self.k_c:!p}, Q = {self.Q:!p}\
-Gamma_i = {self.Gamma_i:!p}".format(self=self)
+        return "f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q}\
+Gamma_i = {self.Gamma_i}".format(self=self)
 
     def __repr__(self):
         """Return a representation of the cantilever. Cannot"""
