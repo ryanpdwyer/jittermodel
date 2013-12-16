@@ -22,6 +22,7 @@ q = 1.602e-19 * u.C
 
 class UnitCantilever(UnitAssigner):
     """Implement a Cantilever class with support for units."""
+
     @autoassign
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
                  R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,

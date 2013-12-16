@@ -42,8 +42,9 @@ def test_UnitCantilever_input_units():
 
 def test_UnitCantilever_init():
     """Make sure the unit cantilever initializes properly."""
-    UnitCantilever(f_c=50 * u.kHz, k_c=3 * u.N/u.m,
-                   Q=1000 * u.dimensionless)
+    c1 = UnitCantilever(f_c=50 * u.kHz, k_c=3 * u.N/u.m,
+                        Q=1000 * u.dimensionless)
+    assert c1.f_c == 50 * u.kHz
 
 
 class TestUnitCantilever(unittest.TestCase):
@@ -65,5 +66,9 @@ class TestUnitCantilever(unittest.TestCase):
 
 
 def test_UnitExperiment():
-    UnitExperiment(jitter_f_f=4*u.Hz)
-    UnitExperiment(d=0.3 * u.um, V_ts=10 * u.V)
+    e1 = UnitExperiment(jitter_f_f=4*u.Hz)
+    e2 = UnitExperiment(d=0.3 * u.um, V_ts=10 * u.V)
+    assert e1.jitter_f_f == 4*u.Hz
+    assert e2.d == 0.3 * u.um
+
+

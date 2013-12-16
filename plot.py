@@ -55,7 +55,7 @@ class GeneratePlotData(object):
             'f': 1e3
         }
 
-    def _calc_variable_array(self, x_scale = 'log', n_pts =None):
+    def _calc_variable_array(self, x_scale='log', n_pts=None):
         """Use the scale data to pick the appropriate
         spacing of the points."""
         if n_pts is None:
@@ -89,9 +89,9 @@ class GeneratePlotData(object):
     def _pick_plot_func(self, x_scale, y_scale):
         """Return the plot function with the appropriate scale on each axis."""
         _scale_tup = (x_scale, y_scale)
-        _scale_dict = {('log', 'log'): plt.loglog, 
+        _scale_dict = {('log', 'log'): plt.loglog,
                        ('linear', 'linear'): plt.plot,
-                       ('linear','log'): plt.semilogy, 
+                       ('linear', 'log'): plt.semilogy,
                        ('log', 'linear'): plt.semilogx}
         return _scale_dict[_scale_tup]
 

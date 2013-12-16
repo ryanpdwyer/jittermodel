@@ -131,7 +131,7 @@ In addition, the following quantities are defined in the class
         """Returns a ValueError if the number inputs are not positive."""
         greater_than_zero = ('f_c', 'k_c', 'Q',
                              'R_tip', 'L_tip', 'ThetaDegrees_tip')
-        
+
         for attr in greater_than_zero:
             if self.lookup(attr) <= 0:
                 raise ValueError("""The attribute '{attr}'\
@@ -141,7 +141,8 @@ In addition, the following quantities are defined in the class
         """Return a ValueError if ThetaDegrees_tip >= 90,
         since this is unphysical."""
         if self.ThetaDegrees_tip >= 90:
-            raise ValueError("'ThetaDegrees_tip' must be less than 90 degrees.")
+            raise ValueError("'ThetaDegrees_tip' must be\
+                              less than 90 degrees.")
 
     def F_min(self, T, bandwidth=0.001):
         """Return the thermally limited minimum detectable
@@ -168,7 +169,6 @@ Q = {self.Q},  R_tip = {self.R_tip},\
 L_tip = {self.L_tip},\
 ThetaDegrees_tip = {self.ThetaDegrees_tip},\
 geometry_c = '{self.geometry_c}')".format(self=self)
-
 
 
 class Sample(Assigner):
@@ -236,7 +236,7 @@ class Sample(Assigner):
 
         if rho is None:
             self.V_g = V_g
-        elif V_g == 10e3:
+        elif V_g == 10e3:  # Change this to respect the actual default value.
             self.rho = rho
         else:
             raise ValueError("""\
