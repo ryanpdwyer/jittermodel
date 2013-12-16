@@ -32,7 +32,7 @@ def get_defaults(func):
 
 def get_units(func):
     default_dict = get_defaults(func)
-    return {name: val.units for name, val in default_dict
+    return {name: val.units for name, val in default_dict.viewitems()
             if type(val) == u.Quantity}
 
 
