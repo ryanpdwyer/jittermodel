@@ -225,7 +225,7 @@ class Sample(Assigner):
                  h=70e-3, h_trans=1e-3, h_i=300e-3,
                  E_s1=3.5, E_s2=-0.0005,
                  E_i1=4.65, E_i2=0,
-                 mobility=3e-4, T=293,
+                 mobility=3e-4, T=298,
                  V_g=10e3, rho=None):
         """Initialize the sample with all of the experimentally
         relevant sample parameters.
@@ -245,6 +245,20 @@ class Sample(Assigner):
 
         if V_g <= 0:
             raise ValueError("The voltage 'V_g' must be positive.")
+
+    def check_V_g_rho_defined(self, V_g, rho):
+        """Checks to determine whether one, both, or none of V_g and rho
+        were given when the sample was initialized, and properly assigns
+        V_g and rho or throws an error as appropriate."""
+
+        if rho is None:
+            self.V_g = V_g
+        elif V_g == 10e3:  # Change this to respect the actual default value.
+            self.rho = rho
+        else:
+            raise ValueError("""\
+                The provided values of 'V_g' and 'rho'are incompatible.
+                Only specify one of 'V_g' or 'rho' when defining a Sample.""")
 
     # TODO: Add units to all of these properties!
     # All of the properties here are functions of the initial parameters.

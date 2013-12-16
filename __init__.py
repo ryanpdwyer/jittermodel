@@ -12,11 +12,27 @@ import inspect
 u = pint.UnitRegistry()
 
 
-def get_units(func):
+def get_defaults(func):
+    """Return a dictionary containing argument names and defaults.
+    Dictionary contains None if an argument has no default value."""
     argspec = inspect.getargspec(func)
     names = argspec.args
-    vals = argspec.defaults
-    return {name: val.units for name, val in zip(names, vals)
+    if argspec.defaults is not None:
+        vals = argspec.defaults
+    else:
+        vals = ()  # Empty tuple, so it has length zero.
+
+    # Handles missing default arguments by inserting None
+    n_missing_default = len(names) - len(vals)
+    vals_with_nones = [None for i in xrange(n_missing_default)]
+    vals_with_nones.extend(vals)
+
+    return dict(zip(names, vals_with_nones))
+
+
+def get_units(func):
+    default_dict = get_defaults(func)
+    return {name: val.units for name, val in default_dict
             if type(val) == u.Quantity}
 
 

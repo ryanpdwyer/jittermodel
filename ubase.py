@@ -107,3 +107,23 @@ class UnitExperiment(UnitAssigner):
     def __str__(self):
         """A nice string representation of the experiment."""
         return """Tip-sample: {self.d}, {self.V_ts}""".format(self=self)
+
+
+class UnitSample(UnitAssigner):
+    """A transistor sample, now with units."""
+    @autoassign(exclude=('V_g', 'rho'))
+    def __init__(self, semiconductor='TPD',
+                 h=70 * u.nm, h_trans=1 * u.nm, h_i=300 * u.nm,
+                 E_s1=3.5, E_s2=-0.0005,
+                 E_i1=4.65, E_i2=0,
+                 mobility=3e-6 * u.cm ** 2 / u.V / u.s, T=298 * u.K,
+                 V_g=10e3, rho=None):
+        """Initialize the sample with all of the experimentally
+        relevant sample parameters.
+
+        @autoassign automatically assigns the input quantities
+        to self. See http://code.activestate.com/recipes/551763/
+        for more information."""
+        self.units = {'h': u.nm, 'h_trans': u.nm, 'h_i': u.nm, 
+                       'mobility': u.cm ** 2 / u.V / u.s, 'T': u.K,
+                       'V_g': u.V, 'rho': u.cm ** -3}
