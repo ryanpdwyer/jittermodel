@@ -79,18 +79,6 @@ class Simulation(object):
                 return item.lookup(attr)
         return '{attr} not found'.format(attr=attr)
 
-    # def calc_rho_peak(self, d = None):
-    #     """Calculates the charge density of peak friction according
-    # to Swapna's approximate formula."""
-    #     if d == None:
-    #         d = self.Expt.d
-    #
-    #     self.rho_peak = ((4 * self.E_s1 * E_0 * k_B * self.Samp.T *
-    #                 self.Cant.omega_c / (self.diff * q ** 2) *
-    #                 sqrt( (d + self.h) / ( 4 * (d + self.h) -
-    #                 sqrt(2 * self.diff / self.Cant.omega_c)))
-    #                 ))
-
     # Capacitance Calculations  #################
     def C_sphere(self, d=None):
         """Capacitance between a sphere and a thin sample, calculated
