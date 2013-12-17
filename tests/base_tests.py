@@ -107,7 +107,12 @@ class TestSample(unittest.TestCase):
     necessary."""
     def setUp(self):
         """Set up a default sample."""
-        self.sample = Sample()
+        self.sample = Sample(semiconductor='TPD',
+                             h=70e-3, h_trans=1e-3, h_i=300e-3,
+                             E_s1=3.5, E_s2=-0.0005,
+                             E_i1=4.65, E_i2=0,
+                             mobility=3e-4, T=298,
+                             V_g=10e3, rho=None)
 
     def test_property_update(self):
         """Test that properties update appropriately

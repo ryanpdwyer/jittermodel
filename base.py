@@ -50,7 +50,7 @@ E_0 = 8.854e-3
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-from . import Assigner
+from . import Assigner, get_defaults
 
 # Universal Constants
 E_0 = 8.854e-3
@@ -220,7 +220,6 @@ class Sample(Assigner):
 
     """
     # Exclude the two variables handled as properties from the autoassign
-    @autoassign(exclude=('V_g', 'rho'))
     def __init__(self, semiconductor='TPD',
                  h=70e-3, h_trans=1e-3, h_i=300e-3,
                  E_s1=3.5, E_s2=-0.0005,
@@ -228,20 +227,19 @@ class Sample(Assigner):
                  mobility=3e-4, T=298,
                  V_g=10e3, rho=None):
         """Initialize the sample with all of the experimentally
-        relevant sample parameters.
+        relevant sample parameters."""
+        self.semiconductor = semiconductor
+        self.h = h
+        self.h_trans = h_trans
+        self.h_i = h_i
+        self.E_s1 = E_s1
+        self.E_s2 = E_s2
+        self.E_i1 = E_i1
+        self.E_i2 = E_i2
+        self.mobility = mobility
+        self.T = T
 
-        @autoassign automatically assigns the input quantities
-        to self. See http://code.activestate.com/recipes/551763/
-        for more information."""
-
-        if rho is None:
-            self.V_g = V_g
-        elif V_g == 10e3:  # Change this to respect the actual default value.
-            self.rho = rho
-        else:
-            raise ValueError("""\
-                The provided values of 'V_g' and 'rho'are incompatible.
-                Only specify one of 'V_g' or 'rho' when defining a Sample.""")
+        self.check_V_g_rho_defined(V_g, rho)
 
         if V_g <= 0:
             raise ValueError("The voltage 'V_g' must be positive.")
@@ -251,9 +249,11 @@ class Sample(Assigner):
         were given when the sample was initialized, and properly assigns
         V_g and rho or throws an error as appropriate."""
 
+        default_dict = get_defaults(self.__init__)
+
         if rho is None:
             self.V_g = V_g
-        elif V_g == 10e3:  # Change this to respect the actual default value.
+        elif V_g == default_dict['V_g']:
             self.rho = rho
         else:
             raise ValueError("""\
@@ -350,12 +350,12 @@ class Sample(Assigner):
     def __repr__(self):
         """Machine readable representation of the object,
         that can return an identical copy of the object with"""
-        return """Sample(semiconductor = '{self.semiconductor}',\
-            h = {self.h}, h_trans = {self.h_trans},
-            h_i = {self.h_i}, E_s1 = {self.E_s1},\
-            E_s2 = {self.E_s2}, E_i1 = {self.E_i1},\
-            E_i2 = {self.E_i2}, mobility = {self.mobility},\
-            T = {self.T}, V_g = {self.V_g})""".format(self=self)
+        return """Sample(semiconductor = '{self.semiconductor}', \
+h = {self.h}, h_trans = {self.h_trans}, \
+h_i = {self.h_i}, E_s1 = {self.E_s1}, \
+E_s2 = {self.E_s2}, E_i1 = {self.E_i1}, \
+E_i2 = {self.E_i2}, mobility = {self.mobility},\
+T = {self.T}, V_g = {self.V_g})""".format(self=self)
 
 
 class Experiment(Assigner):
@@ -399,7 +399,7 @@ class Experiment(Assigner):
             d_nm=self.d * 1000, V_ts_v=self.V_ts / 1e3)
 
     def __repr__(self):
-        """Machine readable representation of the object."""
-        return """Experiment(d = {self.d}, V_ts = {self.V_ts},\
-            jitter_f_i = {self.jitter_f_i},\
-            jitter_f_f = {self.jitter_f_f})""".format(self=self)
+        "Machine readable representation of the object."""
+        return "Experiment(d = {self.d}, V_ts = {self.V_ts}, \
+jitter_f_i = {self.jitter_f_i}, \
+jitter_f_f = {self.jitter_f_f})".format(self=self)
