@@ -165,7 +165,8 @@ class Simulation(object):
             E_d = samp.E_s
             h = samp.h_diel
 
-        nu = ((k ** 2 + kappa ** 2 / E_s + omega / self.Samp.diff * 1j) ** (0.5 + 0j))
+        nu = ((k ** 2 + kappa ** 2 / E_s + omega / self.Samp.diff * 1j)
+              ** (0.5 + 0j))
         llambda = (1 - E_eff / E_s) * k / nu
         thetaII = E_s / E_d * ((E_eff + (1 - llambda) * E_d * coth(k * h)) /
                               (E_eff * coth(k * h) + (1 - llambda) * E_d))
@@ -178,7 +179,8 @@ class Simulation(object):
         Lekkala et al., 2013, at the cantilever resonance frequency."""
         if omega is None:
             omega = self.Cant.omega_c
-        return ((-k) ** n * jn(0, k * abs(r1 - r2)) * exp(-1 * k * (z1 + z2)) * self._im_dielectric(k, omega))
+        return ((-k) ** n * jn(0, k * abs(r1 - r2)) *
+                exp(-1 * k * (z1 + z2)) * self._im_dielectric(k, omega))
 
     def _base_corr(self, d, omega, n_derivs):
         """This is the base function all of the other correlation
@@ -335,8 +337,8 @@ class Simulation(object):
         elif self.Cant.geometry_c == 'parallel':
             Pdf = self._power_spectrum_parallel(omega, d)
         else:
-            raise ValueError("""geometry_c must be either 'parallel'\
-                or 'perpendicular'""")
+            raise ValueError("geometry_c must be either 'parallel'\
+or 'perpendicular'")
 
         return Pdf
 

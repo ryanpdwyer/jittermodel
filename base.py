@@ -1,7 +1,6 @@
-
-
 """
-jittermodel.base
+Base classes
+=============
 
 Created by Ryan Dwyer on 2013-05-18.
 
@@ -73,13 +72,13 @@ class Cantilever(Assigner):
         The quality factor of the cantilever (1000).
 
     R_tip
-        The radius of the cantilever tip (0.04 :math:`\mu`m).
+        The radius of the cantilever tip (0.04 :math:`\\mu`m).
 
     L_tip
-        The length of the cantilever cone (15 :math:`\mu`m).
+        The length of the cantilever cone (15 :math:`\\mu`m).
 
     ThetaDegrees_tip
-        The half-angle of the cantilever tip cone (:math:`16^\circ`).
+        The half-angle of the cantilever tip cone (:math:`16^\\circ`).
 
     geometry_c
         The direction that the cantilever moves with respect to the sample.
