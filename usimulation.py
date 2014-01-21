@@ -2,9 +2,25 @@
 Unit Simulation
 ================
 
-The simulation code, now with units.
+The simulation code, but with units.
 
-Simulation code."""
+It is more difficult to add units to the simulation code than
+the simple base classes. This is because there are complicated integrals,
+derivatives, sums, and other pieces of code which are both numerically 
+sensitive and demanding of execution time. The most naive addition of 
+units to the simulation is likely to be far too slow, as well as numerically
+unstable.
+
+Therefore, the best tactic to ensure stable, fast execution of this code is
+to use some sort of input type checking in order to convert unitted quantities
+to the appropriate unitless variable.
+
+In order to do this, I should start with a dictionary containing the unitless
+version of each variable I will encounter. This dictionary should be able to 
+transform any unit into the appropriate unitless variable needed in the
+simulation. From there, I can simply use this dictionary to find the correct
+unit, and 
+"""
 
 from __future__ import division
 import numpy as np
@@ -148,8 +164,8 @@ class UnitSimulation(object):
 
     def _im_dielectric(self, k, omega=None, model=None):
         """Computes the complicated expression containing
-        :math:`\epsilon_\mathrm{rel}(\omega)` and
-        :math:`\theta(k,\omega)` in the correlation function
+        :math:`\\epsilon_\\mathrm{rel}(\\omega)` and
+        :math:`\\theta(k,\\omega)` in the correlation function
         from Lekkala et al. 2013. Currently uses model II, but
         support for model I can be easily added. See Eq. 16.
 
