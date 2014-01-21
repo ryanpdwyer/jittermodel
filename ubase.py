@@ -1,6 +1,8 @@
 """
-UnitCantilever
-Cantilever Object with units
+Unit Base
+======
+
+Base classes with units.
 2013-12-13
 Ryan Dwyer
 
@@ -23,14 +25,21 @@ q = 1.602e-19 * u.C
 class UnitCantilever(UnitAssigner):
     """Implement a Cantilever class with support for units."""
 
-    @autoassign
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
                  R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
                  geometry_c='perpendicular'):
         """Initialize the cantilever."""
-        self.units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
-                      'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
+        self.f_c = f_c
+        self.k_c = k_c
+        self.Q = Q
+        self.R_tip = R_tip
+        self.L_tip = L_tip
+        self.theta_tip = theta_tip
+        self.geometry_c = geometry_c
 
+        # self.units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
+        #               'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
+        self._get_units()
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
         self._check_theta_less_than_90()
@@ -227,8 +236,8 @@ class UnitTransistor(UnitAssigner):
         """Define the inverse Debye length screening length kappa,
         used in the Lekkala Loring theory. See Lekkala et al.,
         p4, at http://dx.doi.org/10.1063/1.4754602."""
-        return ((2 * self.rho * q ** 2 / (E_0 * k_B * self.T)) ** 0.5).ito(
-                                                                        1/u.nm)
+        return ((2 * self.rho * q ** 2 / (E_0 * k_B * self.T)) ** 0.5
+                ).ito(1/u.nm)
 
     def E_eff(self, omega):
         """Defines the effective dielectric constant,

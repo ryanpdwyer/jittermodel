@@ -21,35 +21,47 @@ chosen so that the integrals and derivatives that must be
 evaluated are of order 1.
 
 Units:
+
 frequency: kHz
+
 time: ms
+
 distance: um
+
 charge: aC
+
 mass: pg
+
 capacitance: fF
+
 capacitance / length: fF / um = 1e-9 F/m
+
 capacitance / length^2: fF / um^2 = 1e-3 F/m^2
 
 voltage: mV
 
 Friction: pg / ms = 1 pN s / m
+
 From swapna's paper, we had about 10 pN s/ m = 1e-11 N s/m = 1e-5 uN s / m
 
 mobility: um^2 / mV ms = (1e-6 m^2 / Vs)
+
 Spring constant: pg / ms^2 = 1e-9 N/m
-energy: J = Nm =
-            kg m^2 / s^2 = pg um^2 / ms^2 = -15 - 12 -(-6) = 1e-21 J = zJ?
+
+energy: J = Nm = kg m^2 / s^2 = pg um^2 / ms^2 = 1e-21 J = zJ
 
 
-Boltzmann: 1.38065e-2
+k_B = 1.38065e-2
+
 q = 1.602e-1
+
 E_0 = 8.854e-3
 """
 
 from __future__ import division
 from numpy import pi
 from autoassign import autoassign
-from . import Assigner, get_defaults
+from jittermodel import Assigner, get_defaults
 
 # Universal Constants
 E_0 = 8.854e-3
@@ -72,10 +84,10 @@ class Cantilever(Assigner):
         The quality factor of the cantilever (1000).
 
     R_tip
-        The radius of the cantilever tip (0.04 :math:`\\mu`m).
+        The radius of the cantilever tip (0.04 :math:`\\mu` m).
 
     L_tip
-        The length of the cantilever cone (15 :math:`\\mu`m).
+        The length of the cantilever cone (15 :math:`\\mu` m).
 
     ThetaDegrees_tip
         The half-angle of the cantilever tip cone (:math:`16^\\circ`).
@@ -190,7 +202,7 @@ class Sample(Assigner):
     E_s2
         The imaginary part of the dielectic constant of the semiconductor
         E_s1, adjusted for the contribution of conductivity
-        (:math:`\frac{\sigma}{\epsilon_0 D}`) (-0.0005).
+        (:math:`\\frac{\sigma}{\epsilon_0 D}` ) (-0.0005).
 
     E_i1
         The static relative dielectric constant of the insulator (3.5).
@@ -367,7 +379,7 @@ class Experiment(Assigner):
     information).
 
     d
-        Distance between the cantilever and the sample . (0.1 um = 100 nm)
+        Distance between the cantilever and the sample (0.1 um = 100 nm).
 
     V_ts
         The tip-sample voltage (5e3 mV = 5 V)
@@ -380,12 +392,14 @@ class Experiment(Assigner):
         The upper frequency endpoint used to calcualte
         jitter (3e-3 kHz = 3 Hz)
     """
-    @autoassign
     def __init__(self, d=0.1, V_ts=5e3,
                  jitter_f_i=0.2e-3, jitter_f_f=3e-3):
         """Initialize the experimental parameters, and then check for
         obvious errors, raising a ValueError."""
-
+        self.d = d
+        self.V_ts = V_ts
+        self.jitter_f_i = jitter_f_i
+        self.jitter_f_f = jitter_f_f
         # Check for errors in the experimental parameters
         if self.V_ts < 0:
             raise ValueError("The voltages 'V_g' and 'V_ts' must be positive.")

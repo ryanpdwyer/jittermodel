@@ -40,9 +40,11 @@ class Assigner(object):
     """This class provides an update method, that allows Updater class
     properties to be updated using the syntax,
 
-    u1 = Updater()
-    u1.assign('f_c', 50)
-    print(u1.f_c)
+    >>> u1 = Assigner()
+    >>> u1.assign('f_c', 50)
+    >>> print(u1.f_c)
+    50
+
     """
 
     def assign(self, attr, val):
@@ -71,6 +73,11 @@ class UnitAssigner(Assigner):
 
     The unit behavior is specified by a dictionary self.units containing
     the name of the variable as the key, and default unit as the value."""
+
+    def _get_units(self):
+        """Get the units of the arguments to initialize the object, inferring
+        them from the class's __init__ method."""
+        self.units = get_units(self.__init__)
 
     def _check_number_inputs_positive(self):
         """Return a ValueError if the number inputs are not positive."""

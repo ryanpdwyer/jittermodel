@@ -1,10 +1,10 @@
 """
-Simulation
-==========
+Unit Simulation
+================
 
-The code for the Lekkala, Loring theory to calculate sample-induced friction
-and jitter.
-"""
+The simulation code, now with units.
+
+Simulation code."""
 
 from __future__ import division
 import numpy as np
@@ -15,6 +15,7 @@ from scipy.special import jn
 from numdifftools import Derivative
 import math
 from copy import copy
+from jittermodel import u
 
 E_0 = 8.854e-3
 k_B = 1.38065e-2
@@ -51,7 +52,7 @@ def sum_sinh(alpha, eps=1e-8):
     return math.fsum(terms)
 
 
-class Simulation(object):
+class UnitSimulation(object):
 
     """This calculates experimental parameters such as capacitance
     and sample-induced friction for a given cantilever, sample,
@@ -233,7 +234,7 @@ class Simulation(object):
         This formula uses the result from taking the derivative of
         the potential autocorrelation fluctuations. This result is
         summerized below.
-        :math:`\\left.\\frac{\partial^4}{\\partial x_1^2 \\partial x_2^2}C(r_1,d,r_2,d;\\omega)\\right|_{r_1 = r_2 = 0}`
+        :math:`\\left.\\frac{\\partial^4}{\\partial x_1^2 \\partial x_2^2}C(r_1,d,r_2,d;\\omega)\\right|_{r_1 = r_2 = 0}`
 
         :math:`\\left.\\frac{\\partial^4}{\\partial x_1^2 \\partial x_2^2}J_0(k|r_1 - r_2|)|_{r_1 = r_2 = 0} = \\frac{3 k^4}{8}`
 
