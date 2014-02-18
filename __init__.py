@@ -59,8 +59,9 @@ class Assigner(object):
     @property
     def _all_attributes(self):
         """Return a tuple of all the non-magic attributes of the class"""
-        return tuple([attr for attr in dir(self)
-                      if not attr.startswith('__')])
+        all = set([attr for attr in dir(self) if not attr.startswith('__')])
+        _except = {'assign', 'lookup', '_all_attributes'}
+        return all.difference(_except)
 
     def __eq__(self, other):
         """Define two Assigners to be equal if their internal
@@ -85,8 +86,8 @@ class UnitAssigner(Assigner):
 
         for attr in greater_than_zero:
             if self.lookup(attr).magnitude <= 0:
-                raise ValueError("""The attribute '{attr}'\
-    must be positive.""".format(attr=attr))
+                raise ValueError("The attribute '{attr}'\
+must be positive.".format(attr=attr))
 
     def _check_dimensionality_units(self):
         """Return a DimensionalityError if unitted attributes
