@@ -22,7 +22,56 @@ k_B = 1.38065e-23 * u.J / u.K
 q = 1.602e-19 * u.C
 
 
-class UnitCantilever(UnitAssigner):
+class SUCantilever(UnitAssigner):
+    """Implement a simple unit cantilever, and require all inputs."""
+
+    def __init__(self, f_c, k_c, Q):
+        """Initialize the cantilever."""
+        self.f_c = f_c
+        self.k_c = k_c
+        self.Q = Q
+
+        self.units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
+                      'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
+        self._get_units()
+        self._check_dimensionality_units()
+        self._check_number_inputs_positive()
+
+    # Properties of the cantilver
+    @property
+    def omega_c(self):
+        """Return the angular resonance frequency of the cantilever."""
+        return self.f_c * 2 * pi
+
+    @property
+    def Gamma_i(self):
+        """Return the cantilever's intrinsic dissipation."""
+        return (self.k_c / (self.omega_c * self.Q)).ito(u.pN * u.s / u.m)
+
+    def F_min(self, T, bandwidth=1*u.Hz):
+        """Return the thermally limited minimum detectable
+        force (pN).
+
+        The optional bandwidth parameter allows determining
+        a miniumun force over a broader or narrower bandwidth
+        than 1 Hz."""
+        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5).ito(u.pN)
+
+    # Representations of the cantilever
+    def __str__(self):
+        """Write out the cantilever as its most important parameters:
+        resonance frequency, spring constant, quality factor and
+        intrinsic friction."""
+        return "f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q}\
+Gamma_i = {self.Gamma_i}".format(self=self)
+
+    def __repr__(self):
+        """Return a representation of the cantilever. Rounds the cantilever
+        to 9 digits, so eval(repr(cantilever)) is not necessarily equal to
+        cantilever."""
+        return "Cantilever(f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q})".format(self=self)
+
+class UnitCantilever(SUCantilever):
     """Implement a Cantilever class with support for units."""
 
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
@@ -45,26 +94,6 @@ class UnitCantilever(UnitAssigner):
         self._check_theta_less_than_90()
         self._check_geometry()
 
-    # Properties of the cantilver
-    @property
-    def omega_c(self):
-        """Return the angular resonance frequency of the cantilever."""
-        return self.f_c * 2 * pi
-
-    @property
-    def Gamma_i(self):
-        """Return the cantilever's intrinsic dissipation."""
-        return (self.k_c / (self.omega_c * self.Q)).ito(u.pN * u.s / u.m)
-
-    def F_min(self, T, bandwidth=1*u.Hz):
-        """Return the thermally limited minimum detectable
-        force (pN).
-
-        The optional bandwidth parameter allows determining
-        a miniumun force over a broader or  narrower bandwidth
-        than 1 Hz."""
-        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5).ito(u.pN)
-
     # Functions to check the inputs to the cantilever.
     def _check_geometry(self):
         """Raises an error if the geometry of the cantilever geometry_c
@@ -80,13 +109,6 @@ class UnitCantilever(UnitAssigner):
             raise ValueError("'theta_tip' must be less than 90 degrees.")
 
     # Representations of the cantilever
-    def __str__(self):
-        """Write out the cantilever as its most important parameters:
-        resonance frequency, spring constant, quality factor and
-        intrinsic friction."""
-        return "f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q}\
-Gamma_i = {self.Gamma_i}".format(self=self)
-
     def __repr__(self):
         """Return a representation of the cantilever. Rounds the cantilever
         to 9 digits, so eval(repr(cantilever)) is not necessarily equal to

@@ -6,8 +6,8 @@ The simulation code, but with units.
 
 It is more difficult to add units to the simulation code than
 the simple base classes. This is because there are complicated integrals,
-derivatives, sums, and other pieces of code which are both numerically 
-sensitive and demanding of execution time. The most naive addition of 
+derivatives, sums, and other pieces of code which are both numerically
+sensitive and demanding of execution time. The most naive addition of
 units to the simulation is likely to be far too slow, as well as numerically
 unstable.
 
@@ -16,10 +16,10 @@ to use some sort of input type checking in order to convert unitted quantities
 to the appropriate unitless variable.
 
 In order to do this, I should start with a dictionary containing the unitless
-version of each variable I will encounter. This dictionary should be able to 
+version of each variable I will encounter. This dictionary should be able to
 transform any unit into the appropriate unitless variable needed in the
 simulation. From there, I can simply use this dictionary to find the correct
-unit, and 
+unit, and keep all the math in this code unitfree.
 """
 
 from __future__ import division
