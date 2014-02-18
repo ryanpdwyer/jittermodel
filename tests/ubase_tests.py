@@ -1,5 +1,6 @@
 """
-Test UnitCantilever Class
+Test UnitBase Classes
+=========================
 2013-12-12
 
 Ryan Dwyer
@@ -12,9 +13,6 @@ from jittermodel.tests import pint_assert_almost_equal
 from nose.tools import assert_raises
 from pint import DimensionalityError
 import unittest
-
-# TO DO
-# Pint Helper function!
 
 
 # ----- SUCantilever Tests ----------------------------------------------

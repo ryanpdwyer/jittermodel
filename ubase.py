@@ -1,13 +1,13 @@
 """
 Unit Base
-======
+=========
 
 Base classes with units.
 2013-12-13
 Ryan Dwyer
 
-NOTE: To use units in your own file, import the unitregistry (u)
-from jittermodel!
+NOTE: To use units in your own file, import the
+unitregistry (:code:`u`) from jittermodel!
 """
 
 from __future__ import division
@@ -69,7 +69,9 @@ Gamma_i = {self.Gamma_i}".format(self=self)
         """Return a representation of the cantilever. Rounds the cantilever
         to 9 digits, so eval(repr(cantilever)) is not necessarily equal to
         cantilever."""
-        return "Cantilever(f_c = {self.f_c}, k_c = {self.k_c}, Q = {self.Q})".format(self=self)
+        return "Cantilever(f_c = {self.f_c}, k_c = {self.k_c}, \
+Q = {self.Q})".format(self=self)
+
 
 class UnitCantilever(SUCantilever):
     """Implement a Cantilever class with support for units."""
@@ -165,7 +167,7 @@ class UnitTransistor(UnitAssigner):
         self.mobility = mobility
         self.T = T
 
-        self.check_V_g_rho_defined(V_g, rho)
+        self._check_V_g_rho_defined(V_g, rho)
 
         self.units = {'h': u.nm, 'h_trans': u.nm, 'h_i': u.nm,
                       'mobility': u.cm ** 2 / u.V / u.s, 'T': u.K,
@@ -174,7 +176,7 @@ class UnitTransistor(UnitAssigner):
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
 
-    def check_V_g_rho_defined(self, V_g, rho):
+    def _check_V_g_rho_defined(self, V_g, rho):
         """Checks to determine whether one, both, or none of V_g and rho
         were given when the sample was initialized, and properly assigns
         V_g and rho or throws an error as appropriate."""
@@ -186,25 +188,24 @@ class UnitTransistor(UnitAssigner):
         elif V_g == default_dict['V_g']:
             self.rho = rho
         else:
-            raise ValueError("""\
-                The provided values of 'V_g' and 'rho'are incompatible.
-                Only specify one of 'V_g' or 'rho' when defining a Sample.""")
+            raise ValueError("The provided values of 'V_g' and 'rho' are \
+incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
 
     @property
     def diff(self):
         """Diffusion constant defined according to the Einstein relation."""
-        return (self.mobility * k_B * self.T / q).ito(u.nm ** 2 / u.ms)
+        return self.mobility * k_B * self.T / q
 
     @property
     def C_i(self):
         """Capacitance per unit area between the
         transistor gate and sample."""
-        return (self.E_i1 * E_0 / self.h_i).ito(u.nF / (u.cm ** 2))
+        return self.E_i1 * E_0 / self.h_i
 
     @property
     def h_diel(self):
         """Layer of the sample which is acting as a pure dielectric layer."""
-        return (self.h - self.h_trans).ito(u.nm)
+        return self.h - self.h_trans
 
     @property
     def E_s(self):
@@ -231,7 +232,7 @@ class UnitTransistor(UnitAssigner):
         carrier density hidden variable _rho to match the
         new gate voltage."""
         self._V_g = value.ito(u.V)
-        self._rho = (self.C_i * self._V_g / (self.h_trans * q)).ito(u.cm ** -3)
+        self._rho = self.C_i * self._V_g / (self.h_trans * q)
 
     @property
     def rho(self):
@@ -244,22 +245,21 @@ class UnitTransistor(UnitAssigner):
         Updates the gate voltage hidden variable _V_g to match the new
         carrier density."""
         self._rho = value.ito(u.cm ** -3)
-        self._V_g = (q * self._rho * self.h_trans / self.C_i).ito(u.V)
+        self._V_g = q * self._rho * self.h_trans / self.C_i
 
     #---------------------------------------------------------
     # Relevant properties derived from gate voltage / charge density.
     @property
     def sigma(self):
         """The conductivity sigma of the sample."""
-        return (self.mobility * self.rho * q).ito(u.S / u.m)
+        return self.mobility * self.rho * q
 
     @property
     def kappa(self):
         """Define the inverse Debye length screening length kappa,
         used in the Lekkala Loring theory. See Lekkala et al.,
         p4, at http://dx.doi.org/10.1063/1.4754602."""
-        return ((2 * self.rho * q ** 2 / (E_0 * k_B * self.T)) ** 0.5
-                ).ito(1/u.nm)
+        return (2 * self.rho * q ** 2 / (E_0 * k_B * self.T)) ** 0.5
 
     def E_eff(self, omega):
         """Defines the effective dielectric constant,
@@ -271,13 +271,13 @@ class UnitTransistor(UnitAssigner):
     def __str__(self):
         """Write out the sample, using its semiconductor material,
         height and mobility."""
-        return """{self.semiconductor:P}  {self.h_nm:P}
-                   mobility {self.mobility_cm2:P}""".format(self=self)
+        return "{self.semiconductor:P}  {self.h_nm:P}\
+mobility {self.mobility_cm2:P}".format(self=self)
 
     def __repr__(self):
-        return """Sample(semiconductor = '{self.semiconductor}', \
+        return "Sample(semiconductor = '{self.semiconductor}', \
 h = {self.h}, h_trans = {self.h_trans}, \
 h_i = {self.h_i}, E_s1 = {self.E_s1}, \
 E_s2 = {self.E_s2}, E_i1 = {self.E_i1}, \
 E_i2 = {self.E_i2}, mobility = {self.mobility},\
-T = {self.T}, V_g = {self.V_g})""".format(self=self)
+T = {self.T}, V_g = {self.V_g})".format(self=self)

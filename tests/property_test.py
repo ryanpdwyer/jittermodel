@@ -12,7 +12,7 @@ from autoassign import autoassign
 
 class PropClass(object):
     @autoassign
-    def __init__(self,x = 2,y = 4):
+    def __init__(self, x=2, y=4):
         pass
 
     @property
@@ -23,8 +23,9 @@ class PropClass(object):
     def xdy(self):
         return self.x / self.y
 
+
 def test():
-    pc = PropClass(x = 19294, y = 3945755)
+    pc = PropClass(x=19294, y=3945755)
     pc.xdy ** 10 + pc.xy ** 10
 
 
@@ -43,12 +44,12 @@ def test2():
     uc.xdy ** 10 + uc.xy ** 10
 
 
-if __name__ == '__main__':
-    from timeit import timeit
-    print(timeit("test()", setup="from __main__ import PropClass, test",
-                 number=1000000))
-    print(timeit("test2()", setup="from __main__ import UpdateClass, test2",
-                 number=1000000))
+# if __name__ == '__main__':
+#     from timeit import timeit
+#     print(timeit("test()", setup="from __main__ import PropClass, test",
+#                  number=1000000))
+#     print(timeit("test2()", setup="from __main__ import UpdateClass, test2",
+#                  number=1000000))
 
 """This shows that implementing propreties in python does not result
 in a large overhead time cost."""
