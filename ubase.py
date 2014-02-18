@@ -46,7 +46,7 @@ class SUCantilever(UnitAssigner):
     @property
     def Gamma_i(self):
         """Return the cantilever's intrinsic dissipation."""
-        return (self.k_c / (self.omega_c * self.Q)).ito(u.pN * u.s / u.m)
+        return (self.k_c / (self.omega_c * self.Q))
 
     def F_min(self, T, bandwidth=1*u.Hz):
         """Return the thermally limited minimum detectable
@@ -55,7 +55,7 @@ class SUCantilever(UnitAssigner):
         The optional bandwidth parameter allows determining
         a miniumun force over a broader or narrower bandwidth
         than 1 Hz."""
-        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5).ito(u.pN)
+        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5)
 
     # Representations of the cantilever
     def __str__(self):

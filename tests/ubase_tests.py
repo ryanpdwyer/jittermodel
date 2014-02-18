@@ -8,6 +8,7 @@ Ryan Dwyer
 
 from jittermodel.ubase import (u, SUCantilever, UnitCantilever,
                                UnitExperiment, UnitTransistor)
+from jittermodel.tests import pint_assert_almost_equal
 from nose.tools import assert_raises, assert_almost_equals
 from pint import DimensionalityError
 import unittest
@@ -71,13 +72,13 @@ class TestUnitCantilever(unittest.TestCase):
     def test_F_min(self):
         ex_F_min = 2.8125685411157023e-3 * u.pN
         assert_almost_equals(ex_F_min.magnitude,
-                             self.c.F_min(300*u.K).magnitude)
+                             self.c.F_min(300*u.K).ito(u.pN).magnitude)
 
     def test_Gamma_i(self):
         c = self.c
         ex_Gamma_i = 477.46482927568604 * u.pN * u.s / u.m
         assert_almost_equals(ex_Gamma_i.magnitude,
-                             c.Gamma_i.magnitude)
+                             c.Gamma_i.ito(u.pN * u.s / u.m).magnitude)
 
 # ---- Unit Experiment Tests --------------------------------------------
 

@@ -42,13 +42,11 @@ class simulation_tests(unittest.TestCase):
 # def test_func(func):
 #     alphas = (2 ** i for i in xrange(-12, 10))
 #     [func(alpha) for alpha in alphas]
-
-
+#
 # def test_func2(func):
 #     alphas = (2 ** i for i in xrange(-2, 3))
 #     [func(alpha) for alpha in alphas]
-
-
+#
 # if __name__ == '__main__':
 #     from timeit import timeit
 #     # print(timeit("test_func(mp_sum_sinh)",
@@ -63,7 +61,6 @@ class simulation_tests(unittest.TestCase):
 #     print(timeit("test_func2(sum_sinh)",
 #                  setup="from __main__ import test_func2, sum_sinh",
 #                  number=100))
-
 
 """This test shows that the mpmath implementation of the infinite sum is
 approximately 30 times slower over the whole range of values (see test_func)
