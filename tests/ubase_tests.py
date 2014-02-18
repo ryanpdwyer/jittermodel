@@ -27,7 +27,7 @@ def test_SUnitCantilever_bad_init():
     for kwargs in to_test:
         assert_raises(TypeError, SUCantilever, **kwargs)
 
-# ---- Unit Cantilever Tests -------------------------------------------- 
+# ---- Unit Cantilever Tests --------------------------------------------
 
 
 def test_UnitCantilever_input():
@@ -81,28 +81,30 @@ class TestUnitCantilever(unittest.TestCase):
 
 # ---- Unit Experiment Tests --------------------------------------------
 
+
 def test_UnitExperiment_init():
     e1 = UnitExperiment(jitter_f_f=4*u.Hz)
     e2 = UnitExperiment(d=0.3 * u.um, V_ts=10 * u.V)
     assert e1.jitter_f_f == 4*u.Hz
     assert e2.d == 0.3 * u.um
     assert_raises(DimensionalityError, UnitExperiment, **{'d': 4 * u.K})
-    assert_raises(ValueError, UnitExperiment, **{'d':-1*u.nm})
+    assert_raises(ValueError, UnitExperiment, **{'d': -1*u.nm})
 
 
 # ----- Unit Transistor Tests --------------------------------------------
 
-def test_UnitTransistor_init():
+def test_UnitTransistor_init_success():
     samp1 = UnitTransistor(semiconductor='TPD',
-                 h=70 * u.nm, h_trans=1 * u.nm, h_i=300 * u.nm,
-                 E_s1=3.5, E_s2=-0.0005,
-                 E_i1=4.65, E_i2=0,
-                 mobility=3e-6 * u.cm ** 2 / u.V / u.s, T=298 * u.K,
-                 V_g=10 * u.V, rho=None)
-    
+                           h=70 * u.nm, h_trans=1 * u.nm, h_i=300 * u.nm,
+                           E_s1=3.5, E_s2=-0.0005, E_i1=4.65, E_i2=0,
+                           mobility=3e-6 * u.cm ** 2 / u.V / u.s, T=298 * u.K,
+                           V_g=10 * u.V, rho=None)
+
     assert samp1.h == 70 * u.nm
     assert samp1.mobility == 3e-6 * u.cm ** 2 / u.V / u.s
-    # Try some things that shoud raise errors.
+
+
+def test_UnitTransistor_bad_init():
+    """Try some things that shoud raise errors."""
     assert_raises(ValueError, UnitTransistor, **{'T': -23 * u.K})
     assert_raises(DimensionalityError, UnitTransistor, **{'h': 70 * u.s})
-
