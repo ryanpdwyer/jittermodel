@@ -7,13 +7,11 @@ Created by Ryan Dwyer on 2013-10-11.
 Copyright (c) 2013 Cornell University. All rights reserved.
 """
 
-from autoassign import autoassign
-
 
 class PropClass(object):
-    @autoassign
     def __init__(self, x=2, y=4):
-        pass
+        self.x = x
+        self.y = y
 
     @property
     def xy(self):
@@ -30,8 +28,9 @@ def test():
 
 
 class UpdateClass(object):
-    @autoassign
     def __init__(self, x=2, y=4):
+        self.x = x
+        self.y = y
         self._update_params()
 
     def _update_params(self):
