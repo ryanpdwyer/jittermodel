@@ -6,7 +6,8 @@ Ryan Dwyer
 
 """
 
-from jittermodel.ubase import u, UnitCantilever, UnitExperiment, UnitTransistor
+from jittermodel.ubase import (u, SUCantilever, UnitCantilever,
+                               UnitExperiment, UnitTransistor)
 from nose.tools import assert_raises, assert_almost_equals
 from pint import DimensionalityError
 import unittest
@@ -14,7 +15,20 @@ import unittest
 # TO DO
 # Pint Helper function!
 
+
+# ----- SUCantilever Tests ----------------------------------------------
+
+def test_SUnitCantilever_bad_init():
+    """Test that SUnit Cantilever returns an error when
+    too few arguements are given."""
+    to_test = [{'f_c': -10 * u.Hz, 'Q': 39 * u.dimensionless},
+               {'Q': 39 * u.dimensionless, 'k_c': 1 * u.N / u.m},
+               {'f_c': 40 * u.kHz, 'k_c': 1 * u.N / u.m}]
+    for kwargs in to_test:
+        assert_raises(TypeError, SUCantilever, **kwargs)
+
 # ---- Unit Cantilever Tests -------------------------------------------- 
+
 
 def test_UnitCantilever_input():
     """Make sure that defining a UnitCantilever with an incorrect geometry, or
