@@ -58,8 +58,8 @@ class Assigner(object):
 
     @property
     def _all_attributes(self):
-        """Return a tuple of all the non-magic, non-hidden
-        attributes of the class.
+        """Return a tuple of all the non-magic, non-hidden attributes
+        of the class.
 
         See http://goo.gl/4juRRI for more information."""
         all = set([attr for attr in dir(self) if not attr.startswith('_')])
@@ -121,16 +121,19 @@ must be positive.".format(attr=attr))
     def to_unitless(self):
         """I want this to programatically generate a new, unitless,
         version of the current class. I'll need to reassign all values,
-        and also use unitless_units to convert all the numbers."""
-        current_class = self.__class__.__name__
-        to_eval = """class No{class_name}(NoUnitAssigner, {class_name}):
-    pass
-"""
-        eval(to_eval.format(class_name=current_class))
-        new_class = eval("No{class_name}()".format(class_name=current_class))
+        and also use unitless_units to convert all the numbers.
 
-        for attr, unit in self.unitless_units:
-            new_class.assign(attr, unit)
+        See http://www.webcitation.org/6NUjbigHH."""
+        class_name = self.__class__.__name__
+        new_class_name = "No"+class_name
+        unitless = type(new_class_name, (NoUnitAssigner, self.__class__), {})
+
+        for attr, unit in self._unitless_units.viewitems():
+            unitless.assign(attr, self.lookup(attr).to(unit))
+
+        unitless._units = self._unitless_units
+
+        return unitless
 
 
 class NoUnitAssigner(Assigner):

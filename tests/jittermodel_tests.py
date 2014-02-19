@@ -154,18 +154,12 @@ class TestUnitAssigner(unittest.TestCase):
                       self.ua_bad._check_dimensionality_units)
 
 
-# def test_unit_to_unitless():
-#     unit_a = TUAssigner(3*u.nm, 1*u.ms)
-#     unit_a._unitless_units = {'x': u.um, 't': u.ms}
-#     no_unit_a = unit_a.to_unitless()
-#     eq_(no_unit_a.x, 3000)
-#     eq_(no_unit_a.t, 1)
-
-
-to_eval = """class No{class_name}(NoUnitAssigner, {class_name}):
-    pass"""
-
-instantiate = "No{class_name}()"
+def test_unit_to_unitless():
+    unit_a = TUAssigner(3*u.nm, 1*u.ms)
+    unit_a._unitless_units = {'x': u.um, 't': u.ms}
+    no_unit_a = unit_a.to_unitless()
+    eq_(no_unit_a.x, 3000)
+    eq_(no_unit_a.t, 1)
 
 
 class TUAssigner2(UnitAssigner):
