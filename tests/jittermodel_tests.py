@@ -140,25 +140,43 @@ class TUAssigner(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
         self.x = x
         self.t = t
-        self.units = {'x': u.m, 't': u.s}
+        self._units = {'x': u.m, 't': u.s}
 
+
+class UAssignerNoDefault(UnitAssigner):
+    def __init__(self, x, t):
+        self.x = x
+        self.t = t
+        self._units = {'x': u.m, 't': u.s}
 
 class TestUnitAssigner(unittest.TestCase):
     def setUp(self):
         self.ua = TUAssigner(3*u.nm, 1*u.ms)
-        self.ua_bad = TUAssigner(3*u.s, 1*u.ms)
+        self.ua_bad = TUAssigner(3*u.s, 1*u.ms)  # Wrong units
+        self.und = UAssignerNoDefault(3 * u.nm, 1 * u.ms)
 
     def test_check_dimensionality_units(self):
         self.ua._check_dimensionality_units()
         assert_raises(pint.DimensionalityError,
                       self.ua_bad._check_dimensionality_units)
 
+    def test_get_units(self):
+        ua = self.ua
+        eq_(ua._units, {'x': u.m, 't': u.s})
+        ua._get_units()
+        eq_(ua._units, {'x': u.m.units, 't': u.s.units})
+
+    def test_get_units_error_no_defaults(self):
+        """Make sure _get_units raises a helpful error when called on an
+        object with no default values. Currently, no error is raised!"""
+        assert_raises(AttributeError, self.und._get_units)
+
 
 def test_unit_to_unitless():
     unit_a = TUAssigner(3*u.nm, 1*u.ms)
     unit_a._unitless_units = {'x': u.um, 't': u.ms}
     no_unit_a = unit_a.to_unitless()
-    eq_(no_unit_a.x, 3000)
+    eq_(no_unit_a.x, 0.003)
     eq_(no_unit_a.t, 1)
 
 
@@ -166,7 +184,7 @@ class TUAssigner2(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
         self.x = x
         self.t = t
-        self.units = {'x': u.m, 't': u.s}
+        self._units = {'x': u.m, 't': u.s}
 
     def speed(self):
         return self.x / self.t

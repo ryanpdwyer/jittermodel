@@ -91,17 +91,17 @@ class Assigner(object):
 class UnitAssigner(Assigner):
     """An Assigner that uses units for numerical inputs.
 
-    The unit behavior is specified by a dictionary self.units containing
+    The unit behavior is specified by a dictionary self._units containing
     the name of the variable as the key, and default unit as the value."""
 
     def _get_units(self):
         """Get the units of the arguments to initialize the object, inferring
         them from the class's __init__ method."""
-        self.units = get_units(self.__init__)
+        self._units = get_units(self.__init__)
 
     def _check_number_inputs_positive(self):
         """Return a ValueError if the number inputs are not positive."""
-        greater_than_zero = self.units.viewkeys()
+        greater_than_zero = self._units.viewkeys()
 
         for attr in greater_than_zero:
             if self.lookup(attr).magnitude <= 0:
@@ -110,8 +110,8 @@ must be positive.".format(attr=attr))
 
     def _check_dimensionality_units(self):
         """Return a DimensionalityError if unitted attributes
-        (set in self.units) have the wrong dimensionality."""
-        items = self.units.viewitems()
+        (set in self._units) have the wrong dimensionality."""
+        items = self._units.viewitems()
         for attr, unit in items:
             quant = self.lookup(attr)
             if type(quant) != u.Quantity:
@@ -126,10 +126,13 @@ must be positive.".format(attr=attr))
         See http://www.webcitation.org/6NUjbigHH."""
         class_name = self.__class__.__name__
         new_class_name = "No"+class_name
-        unitless = type(new_class_name, (NoUnitAssigner, self.__class__), {})
+        unitless_class = type(new_class_name,
+                              (NoUnitAssigner, self.__class__), {})
+
+        unitless = unitless_class()
 
         for attr, unit in self._unitless_units.viewitems():
-            unitless.assign(attr, self.lookup(attr).to(unit))
+            unitless.assign(attr, self.lookup(attr).to(unit).magnitude)
 
         unitless._units = self._unitless_units
 
