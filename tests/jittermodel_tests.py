@@ -81,15 +81,27 @@ class TestAssigner(unittest.TestCase):
 
     def test_all_attributes_with_method(self):
         class AssignerPlusMethod(Assigner):
-            @property
             def a_method(self):
                 pass
+
+            @property
+            def a_property(self):
+                pass
+
+            @property
+            def property_with_setter(self):
+                return self._property_with_setter
+
+            @property_with_setter.setter
+            def property_with_setter(self, value):
+                self._property_with_setter = value
 
         a = AssignerPlusMethod()
         a.a = 2
         a.b = 10
+        a.property_with_setter = 1200
 
-        eq_({'a', 'b'}, a._all_attributes)
+        eq_({'a', 'b', 'property_with_setter'}, a._all_attributes)
 
 
 class TestEqAssigner(unittest.TestCase):

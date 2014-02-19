@@ -66,8 +66,21 @@ class Assigner(object):
         # This prevents an infinite recursion when we run inspect.isroutine
         all.discard('_all_attributes')
 
-        return {attr for attr in all if not
-                inspect.isroutine(getattr(self, attr))}
+        filtered = {attr for attr in all if not
+                    inspect.isroutine(getattr(self, attr))}
+
+        to_discard = set()
+        for attr in filtered:
+            try:
+                value = getattr(self, attr)
+                setattr(self, attr, value)
+            except AttributeError:
+                to_discard.add(attr)
+
+        return filtered.difference(to_discard)
+
+
+        return filtered
 
     def __eq__(self, other):
         """Define two Assigners to be equal if their internal
