@@ -79,6 +79,14 @@ class TestAssigner(unittest.TestCase):
         exp_all_attributes = {'a', 'b', 'c'}
         eq_(exp_all_attributes, a._all_attributes)
 
+    def test_hidden_all_attributes(self):
+        """Hide attributes prefaced with '_', so that property getter / setters
+        can use these values without interference."""
+        a = self.a
+        a.a = "hello"
+        a._a = "I am hidden"
+        eq_({'a'}, a._all_attributes)
+
     def test_all_attributes_with_method(self):
         class AssignerPlusMethod(Assigner):
             def a_method(self):
@@ -100,7 +108,6 @@ class TestAssigner(unittest.TestCase):
         a.a = 2
         a.b = 10
         a.property_with_setter = 1200
-
         eq_({'a', 'b', 'property_with_setter'}, a._all_attributes)
 
 

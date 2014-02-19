@@ -58,10 +58,11 @@ class Assigner(object):
 
     @property
     def _all_attributes(self):
-        """Return a tuple of all the non-magic attributes of the class.
+        """Return a tuple of all the non-magic, non-hidden
+        attributes of the class.
 
         See http://goo.gl/4juRRI for more information."""
-        all = set([attr for attr in dir(self) if not attr.startswith('__')])
+        all = set([attr for attr in dir(self) if not attr.startswith('_')])
 
         # This prevents an infinite recursion when we run inspect.isroutine
         all.discard('_all_attributes')
@@ -78,7 +79,6 @@ class Assigner(object):
                 to_discard.add(attr)
 
         return filtered.difference(to_discard)
-
 
         return filtered
 
