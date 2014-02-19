@@ -81,7 +81,8 @@ class TestAssigner(unittest.TestCase):
 
     def test_all_attributes_with_method(self):
         class AssignerPlusMethod(Assigner):
-            def a_method():
+            @property
+            def a_method(self):
                 pass
 
         a = AssignerPlusMethod()

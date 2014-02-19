@@ -119,6 +119,7 @@ must be positive.".format(attr=attr))
         for attr, unit in self.unitless_units:
             new_class.assign(attr, unit)
 
+
 class NoUnitAssigner(Assigner):
     """A class with blank, dummy, _get_units and
     _check_number_inputs_positive"""
