@@ -5,10 +5,12 @@ Ryan Dwyer
 
 Test general helper functions in the package and
 """
-
-from jittermodel import (get_defaults, get_units, u, Assigner)
+from __future__ import division
+import pint
+from jittermodel import (get_defaults, get_units, u, Assigner, UnitAssigner,
+                         NoUnitAssigner)
 import unittest
-from nose.tools import eq_, assert_not_equal
+from nose.tools import eq_, assert_not_equal, assert_raises
 
 
 def test_get_defaults():
@@ -77,6 +79,17 @@ class TestAssigner(unittest.TestCase):
         exp_all_attributes = {'a', 'b', 'c'}
         eq_(exp_all_attributes, a._all_attributes)
 
+    def test_all_attributes_with_method(self):
+        class AssignerPlusMethod(Assigner):
+            def a_method():
+                pass
+
+        a = AssignerPlusMethod()
+        a.a = 2
+        a.b = 10
+
+        eq_({'a', 'b'}, a._all_attributes)
+
 
 class TestEqAssigner(unittest.TestCase):
     def setUp(self):
@@ -101,3 +114,50 @@ class TestEqAssigner(unittest.TestCase):
         self.a.d = 4
         self.b.d = 5
         assert_not_equal(self.a, self.b)
+
+
+class TUAssigner(UnitAssigner):
+    def __init__(self, x=2*u.m, t=1*u.s):
+        self.x = x
+        self.t = t
+        self.units = {'x': u.m, 't': u.s}
+
+
+class TestUnitAssigner(unittest.TestCase):
+    def setUp(self):
+        self.ua = TUAssigner(3*u.nm, 1*u.ms)
+        self.ua_bad = TUAssigner(3*u.s, 1*u.ms)
+
+    def test_check_dimensionality_units(self):
+        self.ua._check_dimensionality_units()
+        assert_raises(pint.DimensionalityError,
+                      self.ua_bad._check_dimensionality_units)
+
+
+# def test_unit_to_unitless():
+#     unit_a = TUAssigner(3*u.nm, 1*u.ms)
+#     unit_a._unitless_units = {'x': u.um, 't': u.ms}
+#     no_unit_a = unit_a.to_unitless()
+#     eq_(no_unit_a.x, 3000)
+#     eq_(no_unit_a.t, 1)
+
+
+to_eval = """class No{class_name}(NoUnitAssigner, {class_name}):
+    pass"""
+
+instantiate = "No{class_name}()"
+
+
+class TUAssigner2(UnitAssigner):
+    def __init__(self, x=2*u.m, t=1*u.s):
+        self.x = x
+        self.t = t
+        self.units = {'x': u.m, 't': u.s}
+
+    def speed(self):
+        return self.x / self.t
+
+
+# def test_mult_inherit_from_eval():
+#     eval(to_eval.format(class_name='TUAssigner2')
+#     tua2 = eval(instantiate.format(class_name='TUAssigner2'))

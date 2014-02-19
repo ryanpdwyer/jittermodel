@@ -58,10 +58,16 @@ class Assigner(object):
 
     @property
     def _all_attributes(self):
-        """Return a tuple of all the non-magic attributes of the class"""
+        """Return a tuple of all the non-magic attributes of the class.
+
+        See http://goo.gl/4juRRI for more information."""
         all = set([attr for attr in dir(self) if not attr.startswith('__')])
-        _except = {'assign', 'lookup', '_all_attributes'}
-        return all.difference(_except)
+
+        # This prevents an infinite recursion when we run inspect.isroutine
+        all.discard('_all_attributes')
+
+        return {attr for attr in all if not
+                inspect.isroutine(getattr(self, attr))}
 
     def __eq__(self, other):
         """Define two Assigners to be equal if their internal
@@ -98,3 +104,35 @@ must be positive.".format(attr=attr))
             if type(quant) != u.Quantity:
                 raise pint.DimensionalityError("No unit", unit)
             quant.to(unit)
+
+    def to_unitless(self):
+        """I want this to programatically generate a new, unitless,
+        version of the current class. I'll need to reassign all values,
+        and also use unitless_units to convert all the numbers."""
+        current_class = self.__class__.__name__
+        to_eval = """class No{class_name}(NoUnitAssigner, {class_name}):
+    pass
+"""
+        eval(to_eval.format(class_name=current_class))
+        new_class = eval("No{class_name}()".format(class_name=current_class))
+
+        for attr, unit in self.unitless_units:
+            new_class.assign(attr, unit)
+
+class NoUnitAssigner(Assigner):
+    """A class with blank, dummy, _get_units and
+    _check_number_inputs_positive"""
+    def _get_units(self):
+        pass
+
+    def _check_number_inputs_positive(self):
+        pass
+
+    def _check_dimensionality_units(self):
+        pass
+
+    def to_unitless(self):
+        pass
+
+    def __init__(self):
+        pass
