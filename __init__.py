@@ -97,7 +97,11 @@ class UnitAssigner(Assigner):
     def _get_units(self):
         """Get the units of the arguments to initialize the object, inferring
         them from the class's __init__ method."""
-        self._units = get_units(self.__init__)
+        _units = get_units(self.__init__)
+        if _units == {}:
+            raise AttributeError("No default values with units.")
+        else:
+            self._units = _units
 
     def _check_number_inputs_positive(self):
         """Return a ValueError if the number inputs are not positive."""

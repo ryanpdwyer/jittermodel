@@ -149,6 +149,7 @@ class UAssignerNoDefault(UnitAssigner):
         self.t = t
         self._units = {'x': u.m, 't': u.s}
 
+
 class TestUnitAssigner(unittest.TestCase):
     def setUp(self):
         self.ua = TUAssigner(3*u.nm, 1*u.ms)
