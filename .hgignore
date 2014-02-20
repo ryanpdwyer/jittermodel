@@ -8,7 +8,7 @@ syntax: glob
 **.png
 **.jpeg
 **.jpg
-**.pkl # Ignore pickle files
+**.pkl  # Ignore pickle files
 **.doctree
 **.pickle
 **.buildinfo
@@ -16,4 +16,5 @@ syntax: glob
 **.gif
 **.js
 **.inv
+**.swp  # Ignore swap files
 docs/_build/**
