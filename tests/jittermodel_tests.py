@@ -7,8 +7,8 @@ Test general helper functions in the package and
 """
 from __future__ import division
 import pint
-from jittermodel import (get_defaults, get_units, u, Assigner, UnitAssigner,
-                         NoUnitAssigner)
+from jittermodel import (get_defaults, get_default_units, u, Assigner,
+                         UnitAssigner, NoUnitAssigner)
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises
 
@@ -31,7 +31,7 @@ def test_get_defaults():
         eq_(get_defaults(func), exp_dict)
 
 
-def test_get_units():
+def test_get_default_units():
     def f1(x=2*u.nm):
         pass
 
@@ -46,7 +46,7 @@ def test_get_units():
                       {'x': u.m.units, 'y': u.s.units, 'z': u.K.units}]
 
     for func, exp_dict in zip(funcs, exp_unit_dicts):
-        eq_(get_units(func), exp_dict)
+        eq_(get_default_units(func), exp_dict)
 
 
 class TestAssigner(unittest.TestCase):
@@ -164,13 +164,13 @@ class TestUnitAssigner(unittest.TestCase):
     def test_get_units(self):
         ua = self.ua
         eq_(ua._units, {'x': u.m, 't': u.s})
-        ua._get_units()
+        ua._get_default_units()
         eq_(ua._units, {'x': u.m.units, 't': u.s.units})
 
-    def test_get_units_error_no_defaults(self):
-        """Make sure _get_units raises a helpful error when called on an
+    def test_get_default_units_error_no_defaults(self):
+        """Make sure _get_default_units raises a helpful error when called on an
         object with no default values. Currently, no error is raised!"""
-        assert_raises(AttributeError, self.und._get_units)
+        assert_raises(AttributeError, self.und._get_default_units)
 
 
 def test_unit_to_unitless():

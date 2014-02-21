@@ -5,6 +5,9 @@ Ryan Dwyer
 
 TO DO: Add tests for the base classes.
 
+Should _units be _default_units? I think so. That way we can transfer those
+properties between the UnitAssigner and NoUnitAssigner completely intact.
+
 """
 import pint
 import inspect
@@ -30,7 +33,7 @@ def get_defaults(func):
     return dict(zip(names, vals_with_nones))
 
 
-def get_units(func):
+def get_default_units(func):
     default_dict = get_defaults(func)
     return {name: val.units for name, val in default_dict.viewitems()
             if type(val) == u.Quantity}
@@ -94,10 +97,10 @@ class UnitAssigner(Assigner):
     The unit behavior is specified by a dictionary self._units containing
     the name of the variable as the key, and default unit as the value."""
 
-    def _get_units(self):
+    def _get_default_units(self):
         """Get the units of the arguments to initialize the object, inferring
         them from the class's __init__ method."""
-        _units = get_units(self.__init__)
+        _units = get_default_units(self.__init__)
         if _units == {}:
             raise AttributeError("No default values with units.")
         else:
@@ -144,12 +147,9 @@ must be positive.".format(attr=attr))
 
 
 class NoUnitAssigner(Assigner):
-    """A class with blank, dummy, _get_units and
+    """A class with blank, dummy, _get_default_units and
     _check_number_inputs_positive"""
-    def _get_units(self):
-        pass
-
-    def _check_number_inputs_positive(self):
+    def _get_default_units(self):
         pass
 
     def _check_dimensionality_units(self):

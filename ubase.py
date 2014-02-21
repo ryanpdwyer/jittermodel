@@ -33,7 +33,7 @@ class SUCantilever(UnitAssigner):
 
         self._units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
                       'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
-        self._get_units()
+        self._get_default_units()
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
 
@@ -90,7 +90,7 @@ class UnitCantilever(SUCantilever):
 
         # self._units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
         #               'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
-        self._get_units()
+        self._get_default_units()
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
         self._check_theta_less_than_90()
