@@ -31,9 +31,9 @@ class SUCantilever(UnitAssigner):
         self.k_c = k_c
         self.Q = Q
 
-        self._units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
-                      'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
-        self._get_default_units()
+        self._default_units = {'f_c': u.kHz, 'k_c': u.N/u.m,
+                               'Q': u.dimensionless, 'R_tip': u.nm,
+                               'L_tip': u.um, 'theta_tip': u.degrees}
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
 
@@ -88,7 +88,7 @@ class UnitCantilever(SUCantilever):
         self.theta_tip = theta_tip
         self.geometry_c = geometry_c
 
-        # self._units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
+        # self._default_units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
         #               'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
         self._get_default_units()
         self._check_dimensionality_units()
@@ -126,8 +126,8 @@ class UnitExperiment(UnitAssigner):
     @autoassign
     def __init__(self, d=100 * u.nm, V_ts=5 * u.V,
                  jitter_f_i=0.2 * u.Hz, jitter_f_f=3 * u.Hz):
-        self._units = {'d': u.nm, 'V_ts': u.V, 'jitter_f_i': u.Hz,
-                       'jitter_f_f': u.Hz}
+        self._default_units = {'d': u.nm, 'V_ts': u.V, 'jitter_f_i': u.Hz,
+                               'jitter_f_f': u.Hz}
 
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
@@ -169,7 +169,7 @@ class UnitTransistor(UnitAssigner):
 
         self._check_V_g_rho_defined(V_g, rho)
 
-        self._units = {'h': u.nm, 'h_trans': u.nm, 'h_i': u.nm,
+        self._default_units = {'h': u.nm, 'h_trans': u.nm, 'h_i': u.nm,
                       'mobility': u.cm ** 2 / u.V / u.s, 'T': u.K,
                       'V_g': u.V, 'rho': u.cm ** -3}
 

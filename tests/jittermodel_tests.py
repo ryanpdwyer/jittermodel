@@ -140,14 +140,14 @@ class TUAssigner(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
         self.x = x
         self.t = t
-        self._units = {'x': u.m, 't': u.s}
+        self._default_units = {'x': u.m, 't': u.s}
 
 
 class UAssignerNoDefault(UnitAssigner):
     def __init__(self, x, t):
         self.x = x
         self.t = t
-        self._units = {'x': u.m, 't': u.s}
+        self._default_units = {'x': u.m, 't': u.s}
 
 
 class TestUnitAssigner(unittest.TestCase):
@@ -163,13 +163,13 @@ class TestUnitAssigner(unittest.TestCase):
 
     def test_get_units(self):
         ua = self.ua
-        eq_(ua._units, {'x': u.m, 't': u.s})
+        eq_(ua._default_units, {'x': u.m, 't': u.s})
         ua._get_default_units()
-        eq_(ua._units, {'x': u.m.units, 't': u.s.units})
+        eq_(ua._default_units, {'x': u.m.units, 't': u.s.units})
 
     def test_get_default_units_error_no_defaults(self):
-        """Make sure _get_default_units raises a helpful error when called on an
-        object with no default values. Currently, no error is raised!"""
+        """Make sure _get_default_units raises a helpful error
+        when called on an object with no default values."""
         assert_raises(AttributeError, self.und._get_default_units)
 
 
@@ -185,12 +185,12 @@ class TUAssigner2(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
         self.x = x
         self.t = t
-        self._units = {'x': u.m, 't': u.s}
+        self._default_units = {'x': u.m, 't': u.s}
 
     def speed(self):
         return self.x / self.t
 
 
-# def test_mult_inherit_from_eval():
-#     eval(to_eval.format(class_name='TUAssigner2')
-#     tua2 = eval(instantiate.format(class_name='TUAssigner2'))
+# class TestNoUnitAssigner(unittest.TestCase):
+#     def setUp(self):
+

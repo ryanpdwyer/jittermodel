@@ -94,7 +94,7 @@ class Assigner(object):
 class UnitAssigner(Assigner):
     """An Assigner that uses units for numerical inputs.
 
-    The unit behavior is specified by a dictionary self._units containing
+    The unit behavior is specified by a dictionary self._default_units containing
     the name of the variable as the key, and default unit as the value."""
 
     def _get_default_units(self):
@@ -104,11 +104,11 @@ class UnitAssigner(Assigner):
         if _units == {}:
             raise AttributeError("No default values with units.")
         else:
-            self._units = _units
+            self._default_units = _units
 
     def _check_number_inputs_positive(self):
         """Return a ValueError if the number inputs are not positive."""
-        greater_than_zero = self._units.viewkeys()
+        greater_than_zero = self._default_units.viewkeys()
 
         for attr in greater_than_zero:
             if self.lookup(attr).magnitude <= 0:
@@ -117,8 +117,8 @@ must be positive.".format(attr=attr))
 
     def _check_dimensionality_units(self):
         """Return a DimensionalityError if unitted attributes
-        (set in self._units) have the wrong dimensionality."""
-        items = self._units.viewitems()
+        (set in self._default_units  have the wrong dimensionality."""
+        items = self._default_units.viewitems()
         for attr, unit in items:
             quant = self.lookup(attr)
             if type(quant) != u.Quantity:
@@ -141,7 +141,7 @@ must be positive.".format(attr=attr))
         for attr, unit in self._unitless_units.viewitems():
             unitless.assign(attr, self.lookup(attr).to(unit).magnitude)
 
-        unitless._units = self._unitless_units
+        unitless._default_units = self._unitless_units
 
         return unitless
 
