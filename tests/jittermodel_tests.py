@@ -191,6 +191,21 @@ class TUAssigner2(UnitAssigner):
         return self.x / self.t
 
 
-# class TestNoUnitAssigner(unittest.TestCase):
-#     def setUp(self):
+class TestNoUnitAssigner(unittest.TestCase):
+    def setUp(self):
+        unit_a = TUAssigner(3*u.nm, 1*u.ms)
+        unit_a.what = "Car"
+        unit_a._unitless_units = {'x': u.um, 't': u.ms}
+        self.nu = unit_a.to_unitless()
 
+    def test_verify_values_passed(self):
+        eq_(self.nu.what, "Car")
+
+    def test_get_default_units(self):
+        assert_raises(AttributeError, self.nu._get_default_units)
+
+    def test_check_dimensionality_units(self):
+        assert_raises(AttributeError, self.nu._check_dimensionality_units)
+
+    def test_to_unitless(self):
+        assert_raises(AttributeError, self.nu._check_dimensionality_units)

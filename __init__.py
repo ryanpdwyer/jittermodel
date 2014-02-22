@@ -138,10 +138,16 @@ must be positive.".format(attr=attr))
 
         unitless = unitless_class()
 
-        for attr, unit in self._unitless_units.viewitems():
-            unitless.assign(attr, self.lookup(attr).to(unit).magnitude)
+        for attr in self._all_attributes:
+            val = self.lookup(attr)
+            if attr in self._unitless_units:
+                unit = self._unitless_units[attr]
+                unitless.assign(attr, val.to(unit).magnitude)
+            else:
+                unitless.assign(attr, val)
 
-        unitless._default_units = self._unitless_units
+        unitless._default_units = self._default_units
+        unitless._unitless_units = self._unitless_units
 
         return unitless
 
@@ -150,13 +156,13 @@ class NoUnitAssigner(Assigner):
     """A class with blank, dummy, _get_default_units and
     _check_number_inputs_positive"""
     def _get_default_units(self):
-        pass
+        raise AttributeError
 
     def _check_dimensionality_units(self):
-        pass
+        raise AttributeError
 
     def to_unitless(self):
-        pass
+        raise AttributeError
 
     def __init__(self):
         pass
