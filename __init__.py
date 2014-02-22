@@ -154,7 +154,32 @@ must be positive.".format(attr=attr))
 
 class NoUnitAssigner(Assigner):
     """A class with blank, dummy, _get_default_units and
-    _check_number_inputs_positive"""
+    _check_number_inputs_positive. Meant to be used as a mix-in class."""
+    def to_unitted(self):
+        """I need to look up how to make a member of a class without calling
+        the class' __init__ method."""
+        unit_class = self.__class__.__bases__[-1]
+        init_keys = set(get_defaults(unit_class.__init__).keys())
+        init_keys.remove('self')
+
+        unit_attributes = {attr: self.lookup(attr) for attr
+                           in self._all_attributes}
+
+        for attr in self._all_attributes:
+            unit_attributes[attr] = self.lookup(attr)
+            if attr in self._unitless_units:
+                unit_attributes[attr] *= self._unitless_units[attr]
+
+        init_dict = {attr: val for attr, val in unit_attributes.viewitems()
+                     if attr in init_keys}
+
+        unitted = unit_class(**init_dict)
+
+        for attr, val in unit_attributes.viewitems():
+            unitted.assign(attr, val)
+
+        return unitted
+
     def _get_default_units(self):
         raise AttributeError
 

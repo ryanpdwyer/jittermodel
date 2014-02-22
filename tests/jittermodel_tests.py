@@ -9,9 +9,12 @@ from __future__ import division
 import pint
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
                          UnitAssigner, NoUnitAssigner)
+from jittermodel.tests import pint_assert_almost_equal
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises
 
+
+pa_eq = pint_assert_almost_equal
 
 def test_get_defaults():
     def f1(x):
@@ -193,13 +196,23 @@ class TUAssigner2(UnitAssigner):
 
 class TestNoUnitAssigner(unittest.TestCase):
     def setUp(self):
-        unit_a = TUAssigner(3*u.nm, 1*u.ms)
-        unit_a.what = "Car"
-        unit_a._unitless_units = {'x': u.um, 't': u.ms}
-        self.nu = unit_a.to_unitless()
+        self.unitted = TUAssigner2(3*u.nm, 1*u.ms)
+        self.unitted.what = "Car"
+        self.unitted._unitless_units = {'x': u.um, 't': u.ms}
+        self.nu = self.unitted.to_unitless()
 
     def test_verify_values_passed(self):
         eq_(self.nu.what, "Car")
+        eq_(self.nu.speed(), 0.003)
+
+    def test_to_unitted(self):
+        """Make sure that we can make an object with units again
+        from a NoUnit object."""
+        unitted = self.nu.to_unitted()
+        pa_eq(unitted.x, self.unitted.x)
+        pa_eq(unitted.t, self.unitted.t)
+        pa_eq(unitted.speed(), self.unitted.speed())
+        eq_(unitted.what, self.unitted.what)
 
     def test_get_default_units(self):
         assert_raises(AttributeError, self.nu._get_default_units)
