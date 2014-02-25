@@ -75,7 +75,8 @@ class UnitSimulation(object):
     and experiment.
     """
     units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
-                      "[current]": u.aC / u.ms, "[temperature]": u.K}
+             "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
+
     def __init__(self, cantilever, sample, experiment):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates

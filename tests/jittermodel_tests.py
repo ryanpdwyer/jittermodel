@@ -52,20 +52,21 @@ def test_get_default_units():
         eq_(get_default_units(func), exp_dict)
 
 
-def test_q2unitless():
-    speed = 10 * u.m / u.s
-    friction = 100 * u.pN * u.s / u.m
-    units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
-             "[current]": u.aC / u.ms, "[temperature]": u.K}
-    eq_(10000, q2unitless(speed, units))
-    assert_almost_equal(q2unitless(friction, units), 100)
+class Test_q2unitless(unittest.TestCase):
+    def setUp(self):
+        self.units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
+                      "[current]": u.aC / u.ms, "[temperature]": u.K,
+                      "[angle]": u.rad}
 
+    def test_q2unitless(self):
+        speed = 10 * u.m / u.s
+        friction = 100 * u.pN * u.s / u.m
+        eq_(10000, q2unitless(speed, self.units))
+        assert_almost_equal(q2unitless(friction, self.units), 100)
 
-def test_quant_to_base_mag_dimensionless():
-    units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
-             "[current]": u.aC / u.ms, "[temperature]": u.K}
-    Q = 1000 * u.dimensionless
-    eq_(q2unitless(Q, units), 1000)
+    def test_quant_to_base_mag_dimensionless(self):
+        Q = 1000 * u.dimensionless
+        eq_(q2unitless(Q, self.units), 1000)
 
 
 class TestAssigner(unittest.TestCase):

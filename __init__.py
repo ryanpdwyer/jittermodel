@@ -41,7 +41,7 @@ def get_default_units(func):
 
 def q2unitless(quant, base_dict):
     dims = quant.dimensionality
-    units = 1
+    units = u.dimensionless
     for dimension, power in dims.viewitems():
         units *= base_dict[dimension] ** power
     return quant.to(units).magnitude
