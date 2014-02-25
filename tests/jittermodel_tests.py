@@ -7,14 +7,15 @@ Test general helper functions in the package and
 """
 from __future__ import division
 import pint
+from numpy import pi
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
                          UnitAssigner, NoUnitAssigner, q2unitless)
 from jittermodel.tests import pint_assert_almost_equal
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
 
-
 pa_eq = pint_assert_almost_equal
+
 
 def test_get_defaults():
     def f1(x):
@@ -58,15 +59,19 @@ class Test_q2unitless(unittest.TestCase):
                       "[current]": u.aC / u.ms, "[temperature]": u.K,
                       "[angle]": u.rad}
 
-    def test_q2unitless(self):
+    def test_normal(self):
         speed = 10 * u.m / u.s
         friction = 100 * u.pN * u.s / u.m
         eq_(10000, q2unitless(speed, self.units))
         assert_almost_equal(q2unitless(friction, self.units), 100)
 
-    def test_quant_to_base_mag_dimensionless(self):
+    def test_dimensionless(self):
         Q = 1000 * u.dimensionless
         eq_(q2unitless(Q, self.units), 1000)
+
+    def test_radians(self):
+        angle = 15 * u.degrees
+        assert_almost_equal(15 * pi / 180, q2unitless(angle, self.units))
 
 
 class TestAssigner(unittest.TestCase):
