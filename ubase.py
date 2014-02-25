@@ -25,6 +25,7 @@ q = 1.602e-19 * u.C
 class SUCantilever(UnitAssigner):
     """Implement a simple unit cantilever, and require all inputs."""
 
+    k_B = k_B
     def __init__(self, f_c, k_c, Q):
         """Initialize the cantilever."""
         self.f_c = f_c
@@ -55,7 +56,7 @@ class SUCantilever(UnitAssigner):
         The optional bandwidth parameter allows determining
         a miniumun force over a broader or narrower bandwidth
         than 1 Hz."""
-        return ((4 * k_B * self.Gamma_i * T * bandwidth) ** 0.5)
+        return ((4 * self.k_B * self.Gamma_i * T * bandwidth) ** 0.5)
 
     # Representations of the cantilever
     def __str__(self):
@@ -123,9 +124,13 @@ geometry_c = '{self.geometry_c}')".format(self=self)
 
 class UnitExperiment(UnitAssigner):
     """Stores parameters set by the experimenter. Now with units!"""
-    @autoassign
     def __init__(self, d=100 * u.nm, V_ts=5 * u.V,
                  jitter_f_i=0.2 * u.Hz, jitter_f_f=3 * u.Hz):
+        self.d = d
+        self.V_ts = V_ts
+        self.jitter_f_i = jitter_f_i
+        self.jitter_f_f = jitter_f_f
+
         self._default_units = {'d': u.nm, 'V_ts': u.V, 'jitter_f_i': u.Hz,
                                'jitter_f_f': u.Hz}
 
@@ -144,7 +149,10 @@ class UnitExperiment(UnitAssigner):
 
 class UnitTransistor(UnitAssigner):
     """A transistor sample, now with units."""
-    E_0 = 8.854e-12 * u.F / u.m
+    E_0 = E_0
+    k_B = k_B
+    q = q
+
     def __init__(self, semiconductor='TPD',
                  h=70 * u.nm, h_trans=1 * u.nm, h_i=300 * u.nm,
                  E_s1=3.5, E_s2=-0.0005,
@@ -195,7 +203,7 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
     @property
     def diff(self):
         """Diffusion constant defined according to the Einstein relation."""
-        return self.mobility * k_B * self.T / q
+        return self.mobility * self.k_B * self.T / self.q
 
     @property
     def C_i(self):
@@ -233,7 +241,7 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
         carrier density hidden variable _rho to match the
         new gate voltage."""
         self._V_g = value
-        self._rho = self.C_i * self._V_g / (self.h_trans * q)
+        self._rho = self.C_i * self._V_g / (self.h_trans * self.q)
 
     @property
     def rho(self):
@@ -246,28 +254,29 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
         Updates the gate voltage hidden variable _V_g to match the new
         carrier density."""
         self._rho = value
-        self._V_g = q * self._rho * self.h_trans / self.C_i
+        self._V_g = self.q * self._rho * self.h_trans / self.C_i
 
     #---------------------------------------------------------
     # Relevant properties derived from gate voltage / charge density.
     @property
     def sigma(self):
         """The conductivity sigma of the sample."""
-        return self.mobility * self.rho * q
+        return self.mobility * self.rho * self.q
 
     @property
     def kappa(self):
         """Define the inverse Debye length screening length kappa,
         used in the Lekkala Loring theory. See Lekkala et al.,
         p4, at http://dx.doi.org/10.1063/1.4754602."""
-        return (2 * self.rho * q ** 2 / (E_0 * k_B * self.T)) ** 0.5
+        return (2 * self.rho * self.q ** 2 /
+                (self.E_0 * self.k_B * self.T)) ** 0.5
 
     def E_eff(self, omega):
         """Defines the effective dielectric constant,
         which corrects for the effect of Ohm's law (carrier drift),
         at a particular angular frequency. See Eq. 14 in
         Lekkala et al., 2013."""
-        return (self.E_s - self.sigma / (E_0 * omega) * 1j).magnitude
+        return self.E_s - self.sigma / (self.E_0 * omega) * 1j
 
     def __str__(self):
         """Write out the sample, using its semiconductor material,
