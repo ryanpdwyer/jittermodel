@@ -18,5 +18,8 @@ def test_init_UnitSimulation():
                           jitter_f_f=3 * u.Hz)
 
     sim = UnitSimulation(cant, trans, expt)
+    # Test some properties are correct
+    eq_(sim.Cant.f_c, 50)
+    eq_(sim.Expt.d, 0.1)
     # sim.calc_gamma_s()
 

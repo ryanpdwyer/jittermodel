@@ -8,6 +8,7 @@ Copyright (c) 2013 Cornell University. All rights reserved.
 """
 import numpy as np
 from jittermodel.simulation import Simulation
+from jittermodel.usimulation import UnitSimulation
 from autoassign import autoassign
 from time import sleep
 import datetime
@@ -30,8 +31,13 @@ class GeneratePlotData(object):
     s1 = Sample()
     e1 = Experiment()
     fp1 = GenerateFrictionPlot(c1,s1,e1, 'V_g', )"""
-    @autoassign
+    Simulation = Simulation
     def __init__(self, Cant, Samp, Expt, variable, variable_range):
+        self.Cant = Cant
+        self.Samp = Samp
+        self.Expt = Expt
+        self.variable = variable
+        self.variable_range = variable_range
         self.labels = {
             'rho': r'Carrier Density $\rho$ ($\mathrm{m}^{-3}$)',
             'V_g': r'Gate Voltage $V_\mathrm{g}$ (V)',
@@ -70,22 +76,6 @@ class GeneratePlotData(object):
             raise ValueError("x_scale must be either 'log' or 'linear'")
         return _r
 
-    # def _pick_y_func(self, sim, label):
-    #     """Picks the appropriate function from the class Simulation to calculate the labeled quantity. Currently, it accepts labels,
-    #     
-    #     friction
-    #         Calculate the sample-induced friction using function calc_gamma_s
-    #     
-    #     jitter
-    #         Calcualte the jitter
-    #     """
-    #     _func_dict = {'friction':sim.calc_gamma_s, 'jitter':sim.calc_jitter}
-    #     try: 
-    #         _func = _func_dict[label]
-    #     except KeyError:
-    #         raise KeyError('Please enter a correct label. The available labels are %s' % _func_dict.keys())
-    #     return _func
-
     def _pick_plot_func(self, x_scale, y_scale):
         """Return the plot function with the appropriate scale on each axis."""
         _scale_tup = (x_scale, y_scale)
@@ -95,39 +85,6 @@ class GeneratePlotData(object):
                        ('log', 'linear'): plt.semilogx}
         return _scale_dict[_scale_tup]
 
-    # def plot(self, x_var, x_scale = 'log', y_scale = 'log', n_pts = 50):
-    #     """This function plots the variable x_var, using the scales x_scale, y_scale, and using the number of points n_pts. The points at which x_var is evaluated are given by var1_range and var1, which are selected when the object is initialized."""
-    #     
-    #     """Convert the scale to a tuple, and then use a dictionary to pick the appropriate function for plotting."""
-    #     _key_tup = (x_var, n_pts)
-    #     
-    #     var_range = self._calc_variable_array(x_scale, n_pts)
-    #     
-    #     """Takes the simulation data and varies var1 (defined when the object is initialized) over the range specified."""
-    #     all_sims = []
-    #     for val in var_range:
-    #         sim = Simulation(self.Cant, self.Samp, self.Expt)
-    #         sim[self.var1] = val
-    #         # print sim
-    #         all_sims.append(sim)
-    #     
-    #     
-    #     """Saves the data to the object so that it is available for further use."""
-    #     _func = self._pick_y_func(sim)
-    #     self.plot_x[_key_tup] = _x_data = [sim[x_var] for sim in all_sims]
-    #     self.plot_y[_key_tup] = _y_data = [sim.calc_gamma_s() for sim in all_sims]
-    #     
-    #     
-    #     """Plot the results"""
-    #     # Use LaTeX to render the axes labels.
-    #     plt.rc('text', usetex=True)
-    #     plt.rc('font', family='serif')
-    #     _plot_func = self._pick_plot_func(x_scale, y_scale)
-    #     _plot_func(_x_data, _y_data, 'b-')
-    #     plt.xlabel(self.label_dict[x_var], fontsize = 8)
-    #     plt.ylabel(r'Friction $\Gamma_\mathrm{s}$ ($\mathrm{pN} \mathrm{s}/\mathrm{m}$)', fontsize = 8)
-    #     plt.savefig('fig_fric.pdf')
-
     def _make_sim_array(self):
         """Makes an array of simulations over the variable varied
         in the experiment, and also for multi_plot_var."""
@@ -136,7 +93,7 @@ class GeneratePlotData(object):
         for multi_plot_val in self.multi_plot_values:
             row = []
             for val in variable_values:
-                sim = Simulation(self.Cant, self.Samp, self.Expt)
+                sim = self.Simulation(self.Cant, self.Samp, self.Expt)
                 sim.assign(self.multi_plot_var, multi_plot_val)
                 sim.assign(self.variable, val)
                 row.append(sim)
@@ -247,7 +204,7 @@ class GeneratePlotData(object):
         self.y_var = 'power spectrum'
         all_sims = []
         for multi_plot_val in var_values:
-            sim = Simulation(self.Cant, self.Samp, self.Expt)
+            sim = self.Simulation(self.Cant, self.Samp, self.Expt)
             sim.assign(multi_plot_var, multi_plot_val)
             all_sims.append(sim)
 
@@ -269,6 +226,12 @@ class GeneratePlotData(object):
         output = open(filename, 'wb')
         pickle.dump(self, output)
         output.close()
+
+
+
+
+class UnitGeneratePlotData(GeneratePlotData):
+    Simulation = UnitSimulation
 
 
 def unpickle(name=None):

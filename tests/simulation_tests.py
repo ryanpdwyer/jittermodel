@@ -33,12 +33,6 @@ def test_sum_sinh():
         assert_almost_equals(mp_result, test_result, 7)
 
 
-class simulation_tests(unittest.TestCase):
-
-    def setUp(self):
-        pass
-
-
 # def test_func(func):
 #     alphas = (2 ** i for i in xrange(-12, 10))
 #     [func(alpha) for alpha in alphas]
