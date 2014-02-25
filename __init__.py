@@ -181,13 +181,10 @@ class NoUnitAssigner(Assigner):
         return unitted
 
     def _get_default_units(self):
-        raise AttributeError
+        pass
 
     def _check_dimensionality_units(self):
-        raise AttributeError
+        pass
 
     def to_unitless(self):
         raise AttributeError
-
-    def __init__(self):
-        pass

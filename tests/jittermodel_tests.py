@@ -214,11 +214,11 @@ class TestNoUnitAssigner(unittest.TestCase):
         pa_eq(unitted.speed(), self.unitted.speed())
         eq_(unitted.what, self.unitted.what)
 
-    def test_get_default_units(self):
-        assert_raises(AttributeError, self.nu._get_default_units)
+    # def test_get_default_units(self):
+    #     assert_raises(AttributeError, self.nu._get_default_units)
 
-    def test_check_dimensionality_units(self):
-        assert_raises(AttributeError, self.nu._check_dimensionality_units)
+    # def test_check_dimensionality_units(self):
+    #     assert_raises(AttributeError, self.nu._check_dimensionality_units)
 
     def test_to_unitless(self):
-        assert_raises(AttributeError, self.nu._check_dimensionality_units)
+        assert_raises(AttributeError, self.nu.to_unitless)

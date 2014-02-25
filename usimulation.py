@@ -79,9 +79,22 @@ class UnitSimulation(object):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates
         parameters used in the simulation"""
-        self.Cant = copy(cantilever)
-        self.Samp = copy(sample)
-        self.Expt = copy(experiment)
+        self.UCant = copy(cantilever)
+        self.UCant._unitless_units = {'f_c': u.kHz, 'k_c': u.nN / u.m,
+                                      'Q': u.dimensionless, 'R_tip': u.um,
+                                      'L_tip': u.um, 'theta_tip': u.radians}
+
+        self.USamp = copy(sample)
+        self.USamp._unitless_units = {'h': u.um, 'h_trans': u.um, 'h_i': u.um,
+                                      'mobility': u.um**2/u.mV/u.ms, 'T': u.K,
+                                      'V_g': u.mV, 'rho': u.um ** -3}
+        self.UExpt = copy(experiment)
+        self.UExpt._unitless_units = {'d': u.um, 'V_ts': u.mV,
+                                      'jitter_f_i': u.kHz, 'jitter_f_f': u.kHz}
+
+        self.Cant = self.UCant.to_unitless()
+        self.Samp = self.USamp.to_unitless()
+        self.Expt = self.UExpt.to_unitless()
 
         self.func_dict = {'friction': self.calc_gamma_s,
                           'jitter': self.calc_jitter}
@@ -319,9 +332,8 @@ class UnitSimulation(object):
         if d is None:
             d = self.Expt.d
 
-        _prefactor = - \
-            self.C_sphere(d) ** 2 * self.Expt.V_ts ** 2 / \
-            (8 * pi * E_0 * self.Cant.omega_c)
+        _prefactor = (- self.C_sphere(d) ** 2 * self.Expt.V_ts ** 2 /
+                      (8 * pi * E_0 * self.Cant.omega_c))
         _integrand = lambda k: (
             k ** 2 * exp(-2 * k * d) * self._im_dielectric(k))
         _integral, _error = quad(_integrand, 0, inf)

@@ -88,9 +88,9 @@ class UnitCantilever(SUCantilever):
         self.theta_tip = theta_tip
         self.geometry_c = geometry_c
 
-        # self._default_units = {'f_c': u.kHz, 'k_c': u.N/u.m, 'Q': u.dimensionless,
-        #               'R_tip': u.nm, 'L_tip': u.um, 'theta_tip': u.degrees}
-        self._get_default_units()
+        self._default_units = {'f_c': u.kHz, 'k_c': u.N/u.m,
+                               'Q': u.dimensionless, 'R_tip': u.nm,
+                               'L_tip': u.um, 'theta_tip': u.degrees}
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
         self._check_theta_less_than_90()
@@ -231,7 +231,7 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
         """Set the gate voltage. Updates the semiconductor
         carrier density hidden variable _rho to match the
         new gate voltage."""
-        self._V_g = value.ito(u.V)
+        self._V_g = value
         self._rho = self.C_i * self._V_g / (self.h_trans * q)
 
     @property
@@ -244,7 +244,7 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
         """Set the semiconductory carrier density rho.
         Updates the gate voltage hidden variable _V_g to match the new
         carrier density."""
-        self._rho = value.ito(u.cm ** -3)
+        self._rho = value
         self._V_g = q * self._rho * self.h_trans / self.C_i
 
     #---------------------------------------------------------
