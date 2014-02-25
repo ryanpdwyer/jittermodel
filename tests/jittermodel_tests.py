@@ -70,8 +70,20 @@ class Test_q2unitless(unittest.TestCase):
         eq_(q2unitless(Q, self.units), 1000)
 
     def test_radians(self):
+        """If this does not work, change your unit definition file to
+        to include
+
+        radian = [angle] = rad
+
+        so that angles put something in the unitcontainer."""
         angle = 15 * u.degrees
         assert_almost_equal(15 * pi / 180, q2unitless(angle, self.units))
+
+    def test_bits(self):
+        """This asserts that calculations using bits fail (in an expected way).
+        """
+        bits = 4 * u.bit
+        assert_raises(pint.DimensionalityError, q2unitless, bits, self.units)
 
 
 class TestAssigner(unittest.TestCase):
