@@ -74,23 +74,18 @@ class UnitSimulation(object):
     and sample-induced friction for a given cantilever, sample,
     and experiment.
     """
-
+    units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
+                      "[current]": u.aC / u.ms, "[temperature]": u.K}
     def __init__(self, cantilever, sample, experiment):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates
         parameters used in the simulation"""
         self.UCant = copy(cantilever)
-        self.UCant._unitless_units = {'f_c': u.kHz, 'k_c': u.nN / u.m,
-                                      'Q': u.dimensionless, 'R_tip': u.um,
-                                      'L_tip': u.um, 'theta_tip': u.radians}
-
         self.USamp = copy(sample)
-        self.USamp._unitless_units = {'h': u.um, 'h_trans': u.um, 'h_i': u.um,
-                                      'mobility': u.um**2/u.mV/u.ms, 'T': u.K,
-                                      'V_g': u.mV, 'rho': u.um ** -3}
         self.UExpt = copy(experiment)
-        self.UExpt._unitless_units = {'d': u.um, 'V_ts': u.mV,
-                                      'jitter_f_i': u.kHz, 'jitter_f_f': u.kHz}
+        self.UCant._unitless_units = self.units
+        self.USamp._unitless_units = self.units
+        self.UExpt._unitless_units = self.units
 
         self.Cant = self.UCant.to_unitless()
         self.Samp = self.USamp.to_unitless()
@@ -103,7 +98,7 @@ class UnitSimulation(object):
         """Assign the attribute 'attr' to value 'val'. Behind the
         scenes, this function finds which property came from which
         class, and then does the appropriate assignment."""
-        for item in (self.Cant, self.Samp, self.Expt):
+        for item in (self.UCant, self.USamp, self.UExpt):
             if attr in item._all_attributes:
                 item.assign(attr, val)
 

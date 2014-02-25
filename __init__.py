@@ -39,12 +39,13 @@ def get_default_units(func):
             if type(val) == u.Quantity}
 
 
-def quant_to_base_mag(quant, base_dict):
+def q2unitless(quant, base_dict):
     dims = quant.dimensionality
     units = 1
     for dimension, power in dims.viewitems():
         units *= base_dict[dimension] ** power
     return quant.to(units).magnitude
+
 
 class Assigner(object):
     """This class provides an update method, that allows Updater class
@@ -147,9 +148,9 @@ must be positive.".format(attr=attr))
 
         for attr in self._all_attributes:
             val = self.lookup(attr)
-            if attr in self._unitless_units:
-                unit = self._unitless_units[attr]
-                unitless.assign(attr, val.to(unit).magnitude)
+            if isinstance(val, u.Quantity):
+                unitless_val = q2unitless(val, self._unitless_units)
+                unitless.assign(attr, unitless_val)
             else:
                 unitless.assign(attr, val)
 
@@ -162,30 +163,30 @@ must be positive.".format(attr=attr))
 class NoUnitAssigner(Assigner):
     """A class with blank, dummy, _get_default_units and
     _check_number_inputs_positive. Meant to be used as a mix-in class."""
-    def to_unitted(self):
-        """I need to look up how to make a member of a class without calling
-        the class' __init__ method."""
-        unit_class = self.__class__.__bases__[-1]
-        init_keys = set(get_defaults(unit_class.__init__).keys())
-        init_keys.remove('self')
+    # def to_unitted(self):
+    #     """I need to look up how to make a member of a class without calling
+    #     the class' __init__ method."""
+    #     unit_class = self.__class__.__bases__[-1]
+    #     init_keys = set(get_defaults(unit_class.__init__).keys())
+    #     init_keys.remove('self')
 
-        unit_attributes = {attr: self.lookup(attr) for attr
-                           in self._all_attributes}
+    #     unit_attributes = {attr: self.lookup(attr) for attr
+    #                        in self._all_attributes}
 
-        for attr in self._all_attributes:
-            unit_attributes[attr] = self.lookup(attr)
-            if attr in self._unitless_units:
-                unit_attributes[attr] *= self._unitless_units[attr]
+    #     for attr in self._all_attributes:
+    #         unit_attributes[attr] = self.lookup(attr)
+    #         if attr in self._unitless_units:
+    #             unit_attributes[attr] *= self._unitless_units[attr]
 
-        init_dict = {attr: val for attr, val in unit_attributes.viewitems()
-                     if attr in init_keys}
+    #     init_dict = {attr: val for attr, val in unit_attributes.viewitems()
+    #                  if attr in init_keys}
 
-        unitted = unit_class(**init_dict)
+    #     unitted = unit_class(**init_dict)
 
-        for attr, val in unit_attributes.viewitems():
-            unitted.assign(attr, val)
+    #     for attr, val in unit_attributes.viewitems():
+    #         unitted.assign(attr, val)
 
-        return unitted
+    #     return unitted
 
     def _get_default_units(self):
         pass
