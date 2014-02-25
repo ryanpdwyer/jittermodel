@@ -16,5 +16,6 @@ syntax: glob
 **.gif
 **.js
 **.inv
+**.orig
 **.swp  # Ignore swap files
 docs/_build/**
