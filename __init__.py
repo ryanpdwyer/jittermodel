@@ -12,7 +12,7 @@ properties between the UnitAssigner and NoUnitAssigner completely intact.
 import pint
 import inspect
 
-u = pint.UnitRegistry()
+u = pint.UnitRegistry('units.txt')
 
 
 def get_defaults(func):
