@@ -228,8 +228,6 @@ class GeneratePlotData(object):
         output.close()
 
 
-
-
 class UnitGeneratePlotData(GeneratePlotData):
     Simulation = UnitSimulation
 

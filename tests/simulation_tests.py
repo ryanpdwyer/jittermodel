@@ -7,7 +7,6 @@ Created by Ryan Dwyer on 2013-10-11.
 Copyright (c) 2013 Cornell University. All rights reserved.
 """
 
-import unittest
 from nose.tools import assert_almost_equals
 from jittermodel.simulation import sum_sinh
 import mpmath as mp

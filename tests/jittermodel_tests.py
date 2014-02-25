@@ -81,9 +81,11 @@ class Test_q2unitless(unittest.TestCase):
 
     def test_bits(self):
         """This asserts that calculations using bits fail (in an expected way).
+        Note: Bits / bytes now works correctly in pint 0.5dev, so the test has
+        been updated accordingly.
         """
-        bits = 4 * u.bit
-        assert_raises(pint.DimensionalityError, q2unitless, bits, self.units)
+        bytes = 4 * u.bytes
+        eq_(q2unitless(bytes, self.units), 32)
 
 
 class TestAssigner(unittest.TestCase):
