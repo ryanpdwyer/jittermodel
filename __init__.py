@@ -139,25 +139,28 @@ must be positive.".format(attr=attr))
         and also use unitless_units to convert all the numbers.
 
         See http://www.webcitation.org/6NUjbigHH."""
-        class_name = self.__class__.__name__
-        new_class_name = "No"+class_name
-        unitless_class = type(new_class_name,
-                              (NoUnitAssigner, self.__class__), {})
+        try:
+            self._unitless
+        except AttributeError:
+            class_name = self.__class__.__name__
+            new_class_name = "No"+class_name
+            unitless_class = type(new_class_name,
+                                  (NoUnitAssigner, self.__class__), {})
 
-        unitless = unitless_class()
+            self._unitless = unitless_class()
 
         for attr in self._all_attributes:
             val = self.lookup(attr)
             if isinstance(val, u.Quantity):
                 unitless_val = q2unitless(val, self._unitless_units)
-                unitless.assign(attr, unitless_val)
+                self._unitless.assign(attr, unitless_val)
             else:
-                unitless.assign(attr, val)
+                self._unitless.assign(attr, val)
 
-        unitless._default_units = self._default_units
-        unitless._unitless_units = self._unitless_units
+        self._unitless._default_units = self._default_units
+        self._unitless._unitless_units = self._unitless_units
 
-        return unitless
+        return self._unitless
 
 
 class NoUnitAssigner(Assigner):

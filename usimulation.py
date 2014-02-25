@@ -80,7 +80,8 @@ class UnitSimulation(object):
     def __init__(self, cantilever, sample, experiment):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates
-        parameters used in the simulation"""
+        parameters used in the simula
+        tion"""
         self.UCant = copy(cantilever)
         self.USamp = copy(sample)
         self.UExpt = copy(experiment)
@@ -102,6 +103,7 @@ class UnitSimulation(object):
         for item in (self.UCant, self.USamp, self.UExpt):
             if attr in item._all_attributes:
                 item.assign(attr, val)
+                item.to_unitless()
 
     def lookup(self, attr):
         """Looks for an attribute in the cantilever, sample, or
