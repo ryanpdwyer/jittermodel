@@ -39,6 +39,13 @@ def get_default_units(func):
             if type(val) == u.Quantity}
 
 
+def quant_to_base_mag(quant, base_dict):
+    dims = quant.dimensionality
+    units = 1
+    for dimension, power in dims.viewitems():
+        units *= base_dict[dimension] ** power
+    return quant.to(units).magnitude
+
 class Assigner(object):
     """This class provides an update method, that allows Updater class
     properties to be updated using the syntax,

@@ -144,6 +144,7 @@ class UnitExperiment(UnitAssigner):
 
 class UnitTransistor(UnitAssigner):
     """A transistor sample, now with units."""
+    E_0 = 8.854e-12 * u.F / u.m
     def __init__(self, semiconductor='TPD',
                  h=70 * u.nm, h_trans=1 * u.nm, h_i=300 * u.nm,
                  E_s1=3.5, E_s2=-0.0005,
@@ -200,7 +201,7 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
     def C_i(self):
         """Capacitance per unit area between the
         transistor gate and sample."""
-        return self.E_i1 * E_0 / self.h_i
+        return self.E_i1 * self.E_0 / self.h_i
 
     @property
     def h_diel(self):

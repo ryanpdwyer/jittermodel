@@ -17,4 +17,6 @@ def test_init_UnitSimulation():
     expt = UnitExperiment(d=100 * u.nm, V_ts=5 * u.V, jitter_f_i=0.2 * u.Hz,
                           jitter_f_f=3 * u.Hz)
 
-    UnitSimulation(cant, trans, expt)
+    sim = UnitSimulation(cant, trans, expt)
+    # sim.calc_gamma_s()
+

@@ -8,10 +8,10 @@ Test general helper functions in the package and
 from __future__ import division
 import pint
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
-                         UnitAssigner, NoUnitAssigner)
+                         UnitAssigner, NoUnitAssigner, quant_to_base_mag)
 from jittermodel.tests import pint_assert_almost_equal
 import unittest
-from nose.tools import eq_, assert_not_equal, assert_raises
+from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
 
 
 pa_eq = pint_assert_almost_equal
@@ -50,6 +50,15 @@ def test_get_default_units():
 
     for func, exp_dict in zip(funcs, exp_unit_dicts):
         eq_(get_default_units(func), exp_dict)
+
+
+def test_quant_to_base_mag():
+    speed = 10 * u.m / u.s
+    friction = 100 * u.pN * u.s / u.m
+    base_dict = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
+                 "[current]": u.aC / u.ms, "[temperature]": u.K}
+    eq_(10000, quant_to_base_mag(speed, base_dict))
+    assert_almost_equal(quant_to_base_mag(friction, base_dict), 100)
 
 
 class TestAssigner(unittest.TestCase):
