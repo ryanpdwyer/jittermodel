@@ -39,11 +39,27 @@ def get_default_units(func):
             if type(val) == u.Quantity}
 
 
-def q2unitless(quant, base_dict):
-    dims = quant.dimensionality
+def make_units(dim_dict, base_dict):
+    """Takes a dimension dictionary in the form returned by the pint
+    method `dimensionality`, along with a set of base_units, and creates
+    appropriate unit."""
     units = u.dimensionless
-    for dimension, power in dims.viewitems():
+    for dimension, power in dim_dict.viewitems():
         units *= base_dict[dimension] ** power
+    return units
+
+
+def q2unitless(quant, base_dict):
+    """Convert a pint quanitity to the unitless variables implied by
+    base_dict. Usage:
+
+    >>> speed = 10 * u.m/u.s
+    >>> units = {'[length]': u.mm, '[time]': u.us}
+    >>> q2unitless(speed, units)
+    0.01
+
+    """
+    units = make_units(quant.dimensionality, base_dict)
     return quant.to(units).magnitude
 
 

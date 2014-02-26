@@ -9,8 +9,8 @@ from __future__ import division
 import pint
 from numpy import pi
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
-                         UnitAssigner, NoUnitAssigner, q2unitless)
-from jittermodel.tests import pint_assert_almost_equal, expected_failure
+                         UnitAssigner, q2unitless, make_units)
+from jittermodel.tests import pint_assert_almost_equal
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
 
@@ -58,6 +58,11 @@ class Test_q2unitless(unittest.TestCase):
         self.units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
                       "[current]": u.aC / u.ms, "[temperature]": u.K,
                       "[angle]": u.rad}
+
+    def test_make_units(self):
+        dim_dict = {'[length]': 1, '[time]': 1, '[temperature]': -1}
+        unit = u.um * u.ms / u.K
+        pa_eq(unit, make_units(dim_dict, self.units))
 
     def test_normal(self):
         speed = 10 * u.m / u.s
