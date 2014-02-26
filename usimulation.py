@@ -31,11 +31,12 @@ from scipy.special import jn
 from numdifftools import Derivative
 import math
 from copy import copy
-from jittermodel import u
+from jittermodel import u, q2unitless
 
-E_0 = 8.854e-3
-k_B = 1.38065e-2
-q = 1.602e-1
+# Universal Constants
+E_0 = 8.854e-12 * u.F / u.m
+k_B = 1.38065e-23 * u.J / u.K
+q = 1.602e-19 * u.C
 
 inf = float('+infinity')
 
@@ -68,6 +69,21 @@ def sum_sinh(alpha, eps=1e-8):
     return math.fsum(terms)
 
 
+# def C_sphere(d, R_tip, h, E_s1):
+#     units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
+#              "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
+
+#     E_0 = q2unitless(u.epsilon_0, units)
+
+#     if d < 0:
+#         # Prevent numerical derivatives from giving an error.
+#         d = 0
+
+#     alpha = arccosh(1 + d / R_tip + h / (E_s1 * R_tip))
+
+#     return (4 * pi * E_0 * R_tip * sum_sinh(alpha))
+
+
 class UnitSimulation(object):
 
     """This calculates experimental parameters such as capacitance
@@ -76,6 +92,10 @@ class UnitSimulation(object):
     """
     units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
              "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
+
+    E_0 = q2unitless(E_0, units)
+    q = q2unitless(q, units)
+    k_B = q2unitless(k_B, units)
 
     def __init__(self, cantilever, sample, experiment):
         """Initialize the simulation with the values from the given
@@ -132,7 +152,7 @@ class UnitSimulation(object):
         alpha = arccosh(1 + d / cant.R_tip + samp.h /
                         (samp.E_s1 * cant.R_tip))
 
-        return (4 * pi * E_0 * cant.R_tip * sum_sinh(alpha))
+        return (4 * pi * self.E_0 * cant.R_tip * sum_sinh(alpha))
 
     def Cd_sphere(self, d=None):
         """Returns the numerical derivative of the sphere capacitance
@@ -171,7 +191,7 @@ class UnitSimulation(object):
     def _prefactor(self, omega):
         """This is the prefactor for correlation function integrals.
         See Eq. 16 in Lekkala et al. 2013."""
-        return (-k_B * self.Samp.T / (4 * pi * E_0 * omega))
+        return (-self.k_B * self.Samp.T / (4 * pi * self.E_0 * omega))
 
     def _im_dielectric(self, k, omega=None, model=None):
         """Computes the complicated expression containing
@@ -311,7 +331,7 @@ class UnitSimulation(object):
             d = self.Expt.d
         omega_c = self.Cant.omega_c
 
-        gamma_prefactor = self.Expt.V_ts ** 2 / (k_B * self.Samp.T)
+        gamma_prefactor = self.Expt.V_ts ** 2 / (self.k_B * self.Samp.T)
 
         c = self.C_sphere(d)
         cd = self.Cd_sphere(d)
@@ -330,8 +350,8 @@ class UnitSimulation(object):
         if d is None:
             d = self.Expt.d
 
-        _prefactor = (- self.C_sphere(d) ** 2 * self.Expt.V_ts ** 2 /
-                      (8 * pi * E_0 * self.Cant.omega_c))
+        _prefactor = (-self.C_sphere(d) ** 2 * self.Expt.V_ts ** 2 /
+                      (8 * pi * self.E_0 * self.Cant.omega_c))
         _integrand = lambda k: (
             k ** 2 * exp(-2 * k * d) * self._im_dielectric(k))
         _integral, _error = quad(_integrand, 0, inf)

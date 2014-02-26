@@ -25,21 +25,20 @@ def make_sure_path_exists(path):
             raise
 
 
-c1 = Cantilever()
-s1 = Sample()
-e1 = Experiment()
-sim1 = Simulation(c1,s1,e1)
-gpd1 = GeneratePlotData(c1, s1, e1, 'd', (40e-3,500e-3))
-v_g_vals = (1e3, 20e3, 40e3)
-gpd1.calc_plot_data('jitter', 'd', 'V_g', v_g_vals, n_pts = 5)
-gpd1.make_plot('new_jitter_h_70.pdf', xlim = (40, 500), ylim = (1e-10, 1e-3))
+# c1 = Cantilever()
+# s1 = Sample()
+# e1 = Experiment()
+# sim1 = Simulation(c1,s1,e1)
+# gpd1 = GeneratePlotData(c1, s1, e1, 'd', (40e-3,500e-3))
+# v_g_vals = (1e3, 20e3, 40e3)
+# gpd1.calc_plot_data('jitter', 'd', 'V_g', v_g_vals, n_pts = 5)
+# gpd1.make_plot('new_jitter_h_70.pdf', xlim = (40, 500), ylim = (1e-10, 1e-3))
 
-cu1 = UnitCantilever()
-tu1 = UnitTransistor()
-eu1 = UnitExperiment()
+# cu1 = UnitCantilever()
+# tu1 = UnitTransistor()
+# eu1 = UnitExperiment()
 
 
-# 
 # 
 # s2 = Sample(h = 25e-3)
 # gpd2 = GeneratePlotData(c1, s2, e1, 'd', (40e-3,500e-3))
