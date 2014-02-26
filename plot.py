@@ -32,6 +32,7 @@ class GeneratePlotData(object):
     e1 = Experiment()
     fp1 = GenerateFrictionPlot(c1,s1,e1, 'V_g', )"""
     Simulation = Simulation
+
     def __init__(self, Cant, Samp, Expt, variable, variable_range):
         self.Cant = Cant
         self.Samp = Samp
@@ -145,19 +146,6 @@ class GeneratePlotData(object):
         if ylim is not None:
             plt.ylim(ylim)
 
-        def reformat_properties(properties):
-            """Reformats properties, given in the form,
-
-            {'color':('b', 'g'), 'ls':('-','--')},
-
-            into a format which can be looped over to apply
-            them to individual lines."""
-            reformatted_properties = [{} for i in properties.values()[0]]
-            for key, tup in properties.items():
-                for d, val in zip(reformatted_properties, tup):
-                    d[key] = val
-            return reformatted_properties
-
         if properties is not None:
             reformatted_properties = reformat_properties(properties)
             for d, line in zip(reformatted_properties, lines):
@@ -171,6 +159,20 @@ class GeneratePlotData(object):
         else:
             plt.savefig(figname)
             plt.close()
+
+
+def reformat_properties(properties):
+    """Reformats properties, given in the form,
+
+    {'color':('b', 'g'), 'ls':('-','--')},
+
+    into a format which can be looped over to apply
+    them to individual lines."""
+    reformatted_properties = [{} for i in properties.values()[0]]
+    for key, tup in properties.items():
+        for d, val in zip(reformatted_properties, tup):
+            d[key] = val
+    return reformatted_properties
 
     # def multi_plot_jitter(self, x_var, multi_plot_var, multi_plot_var, figname, x_scale = 'log', y_scale = 'log', n_pts = 50):
     #     """This calculates the jitter, integrated from f_i to f_f, and then"""
@@ -208,15 +210,15 @@ class GeneratePlotData(object):
             sim.assign(multi_plot_var, multi_plot_val)
             all_sims.append(sim)
 
-        _power_spectra_x = []
-        _power_spectra_y = []
+        power_spectra_x = []
+        power_spectra_y = []
         for sim in all_sims:
-            _x, _y = sim.calc_power_spectrum(f_i=f_i, f_f=f_f)
-            _power_spectra_x.append(_x)
-            _power_spectra_y.append(_y)
+            x, y = sim.calc_power_spectrum(f_i=f_i, f_f=f_f)
+            power_spectra_x.append(x)
+            power_spectra_y.append(y)
 
-        self.x = np.array(_power_spectra_x)*self.scales['f']
-        self.y = np.array(_power_spectra_y)*self.scales['power spectrum']
+        self.x = np.array(power_spectra_x)*self.scales['f']
+        self.y = np.array(power_spectra_y)*self.scales['power spectrum']
 
     def pickle(self, name):
         """Pickles the object to a file in a subdirectory pkl."""

@@ -28,6 +28,7 @@ from numpy import (pi, sinh, tanh, arccosh,
                    exp, log10, arctanh)
 from scipy.integrate import quad
 from scipy.special import jn
+from scipy.misc import derivative
 from numdifftools import Derivative
 import math
 from copy import copy
@@ -222,8 +223,8 @@ class UnitSimulation(object):
         nu = ((k ** 2 + kappa ** 2 / E_s + omega / self.Samp.diff * 1j)
               ** (0.5 + 0j))
         llambda = (1 - E_eff / E_s) * k / nu
-        thetaII = E_s / E_d * ((E_eff + (1 - llambda) * E_d * coth(k * h)) /
-                              (E_eff * coth(k * h) + (1 - llambda) * E_d))
+        thetaII = E_s / E_d * ((E_eff + (1 - llambda) * E_d * coth(k*h)) /
+                              (E_eff * coth(k*h) + (1 - llambda) * E_d))
 
         result = (E_s - thetaII) / (E_s + thetaII)
         return result.imag

@@ -15,6 +15,7 @@ from scipy.special import jn
 from numdifftools import Derivative
 import math
 from copy import copy
+from jittermodel.base import Cantilever, Experiment, Sample
 
 E_0 = 8.854e-3
 k_B = 1.38065e-2
@@ -418,9 +419,9 @@ This matches what Nik and Swapna reported in their paper
 """Test Case - Im Dielectric """
 # et2 = Experiment(V_ts = 3e3, d = 300e-3)
 # ct2 = Cantilever(f_c = 65, Q = 2500, k_c = 3.5e9,
-                   # geometry_c = 'perpendicular')
+#                    geometry_c = 'perpendicular')
 # st2 = Sample(h = 72e-3, V_g = 40e3, E_s1 = 3.4, mobility = 2.7e-4,
-    # E_s2 = -0.05, E_i1 = 4.65)
+#     E_s2 = -0.05, E_i1 = 4.65)
 # simt2 = Simulation(ct2, st2, et2)
 # print simt2._im_dielectric(1)
 # print simt2.corr_PP(0.1)

@@ -10,7 +10,7 @@ import pint
 from numpy import pi
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
                          UnitAssigner, NoUnitAssigner, q2unitless)
-from jittermodel.tests import pint_assert_almost_equal
+from jittermodel.tests import pint_assert_almost_equal, expected_failure
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
 
