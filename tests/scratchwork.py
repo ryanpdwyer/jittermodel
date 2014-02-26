@@ -41,8 +41,8 @@ t1 = UnitTransistor(h=70*u.nm)
 e1 = UnitExperiment()
 gpd = UnitGeneratePlotData(c1, t1, e1, 'd', (40*u.nm, 500*u.nm))
 V_g_vals = (1*u.V, 20*u.V, 40*u.V)
-gpd.calc_plot_data('jitter', 'd', 'V_g', V_g_vals, n_pts = 5)
-gpd.make_plot('unit_jitter_h_70.pdf', xlim = (40, 500), ylim = (1e-10, 1e-3))
+gpd.calc_plot_data('jitter', 'd', 'V_g', V_g_vals, x_scale='linear', n_pts=5)
+gpd.make_plot('unit_jitter_h_70.pdf')
 
 
 # 

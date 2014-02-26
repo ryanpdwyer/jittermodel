@@ -68,14 +68,14 @@ class GeneratePlotData(object):
         if n_pts is None:
             n_pts = self.n_pts
         if x_scale == 'log':
-            _r = np.logspace(np.log10(self.variable_range[0]),
-                             np.log10(self.variable_range[1]), n_pts)
+            r = np.logspace(np.log10(self.variable_range[0]),
+                            np.log10(self.variable_range[1]), n_pts)
         elif x_scale == 'linear':
-            _r = np.linspace(self.variable_range[0],
-                             self.variable_range[1], n_pts)
+            r = np.linspace(self.variable_range[0],
+                            self.variable_range[1], n_pts)
         else:
             raise ValueError("x_scale must be either 'log' or 'linear'")
-        return _r
+        return r
 
     def _pick_plot_func(self, x_scale, y_scale):
         """Return the plot function with the appropriate scale on each axis."""
@@ -104,7 +104,7 @@ class GeneratePlotData(object):
         x = []
         y = []
         for sim_row in self.all_sims:
-            x_row = [sim.lookup(self.x_var) for sim in sim_row]
+            x_row = [sim.lookup(self.x_var) for sim in sim_row]  # Unitless
             y_row = [sim.func_dict[self.y_var]() for sim in sim_row]
             x.append(x_row)
             y.append(y_row)
@@ -230,6 +230,7 @@ def reformat_properties(properties):
             d[key] = val
     return reformatted_properties
 
+
 class UnitGeneratePlotData(GeneratePlotData):
     """An object that will generate plots of friction varying
     some variable var1 over the range var1_range.
@@ -243,7 +244,7 @@ class UnitGeneratePlotData(GeneratePlotData):
     e1 = Experiment()
     fp1 = GenerateFrictionPlot(c1,s1,e1, 'V_g', )"""
     Simulation = UnitSimulation
-
+    units = UnitSimulation.units
     def __init__(self, Cant, Samp, Expt, variable, variable_range):
         self.Cant = Cant
         self.Samp = Samp
@@ -322,7 +323,6 @@ class UnitGeneratePlotData(GeneratePlotData):
         self.x = np.array(x) * self.scales[self.x_var]
         self.y = np.array(y) * self.scales[self.y_var]
 
-    @autoassign
     def calc_plot_data(self, y_var, x_var,
                        multi_plot_var, multi_plot_values,
                        x_scale='log', n_pts=50):
@@ -335,6 +335,13 @@ class UnitGeneratePlotData(GeneratePlotData):
         gpd = GeneratePlotData(c1,s1,e1, 'V_g', (1e3, 50e3))
         gpd.calc_plot_data('friction', 'V_g', 'mobility', [1e-4, 1, 1e4])
         """
+        self.y_var = y_var
+        self.x_var = x_var
+        self.multi_plot_var = multi_plot_var
+        self.multi_plot_values = multi_plot_values
+        self.x_scale = x_scale
+        self.n_pts = n_pts
+
         self._make_sim_array()
         self._calculate_plot_points()
 
