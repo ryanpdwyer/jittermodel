@@ -29,7 +29,6 @@ from numpy import (pi, sinh, tanh, arccosh,
 from scipy.integrate import quad
 from scipy.special import jn
 from scipy.misc import derivative
-from numdifftools import Derivative
 import math
 from copy import copy
 from jittermodel import u, q2unitless
@@ -70,19 +69,54 @@ def sum_sinh(alpha, eps=1e-8):
     return math.fsum(terms)
 
 
-# def C_sphere(d, R_tip, h, E_s1):
-#     units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
-#              "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
+def alpha_(d, R_tip, h, E_s1):
+    return arccosh(1 + d / R_tip + h / (E_s1 * R_tip))
 
-#     E_0 = q2unitless(u.epsilon_0, units)
 
-#     if d < 0:
-#         # Prevent numerical derivatives from giving an error.
-#         d = 0
+class SphereCapacitance(object):
+    def __init__(self, simulation):
+        """Initialize with an owner class containing the other methods
+        and data used by the capacitance model.
 
-#     alpha = arccosh(1 + d / R_tip + h / (E_s1 * R_tip))
+        See http://stackoverflow.com/q/6556744/2823213"""
+        self.sim = simulation
 
-#     return (4 * pi * E_0 * R_tip * sum_sinh(alpha))
+    def C(self, d=None):
+        """Capacitance between a sphere and a thin sample, calculated
+        according to a modified version of the equation from Brus et al.,
+        http://dx.doi.org/10.1021/jp0265438. The capacitance is
+        approximated by truncating the exact infinite sum."""
+        sim = self.sim
+        if d is None:
+            d = sim.Expt.d
+        if d < 0:
+            # Prevent numerical derivatives from giving an error.
+            d = 0
+
+        cant = sim.Cant
+        samp = sim.Samp
+
+        alpha = alpha_(d, cant.R_tip, samp.h, samp.E_s1)
+
+        return (4 * pi * sim.E_0 * cant.R_tip * sum_sinh(alpha))
+
+    def Cd(self, d=None):
+        """Returns the numerical derivative of the sphere capacitance
+        C at a distance d. Uses numdifftools
+        (https://code.google.com/p/numdifftools/) to calculate the
+        derivative to high precision automatically."""
+        if d is None:
+            d = self.sim.Expt.d
+        return derivative(self.C, d, dx=1e-5, n=1)
+
+    def Cd2(self, d=None):
+        """Returns the second derivative of the sphere capacitance
+        C at a distance d. Uses numdifftools
+        (https://code.google.com/p/numdifftools/) to calculate the
+        derivative to high precision automatically."""
+        if d is None:
+            d = self.sim.Expt.d
+        return derivative(self.C, d, dx=1e-5, n=2)
 
 
 class UnitSimulation(object):
@@ -94,9 +128,9 @@ class UnitSimulation(object):
     units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
              "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
 
-    E_0 = q2unitless(E_0, units)
-    q = q2unitless(q, units)
-    k_B = q2unitless(k_B, units)
+    E_0 = q2unitless(u.epsilon_0, units)
+    q = q2unitless(u.elementary_charge, units)
+    k_B = q2unitless(u.boltzmann_constant, units)
 
     def __init__(self, cantilever, sample, experiment):
         """Initialize the simulation with the values from the given
@@ -162,8 +196,8 @@ class UnitSimulation(object):
         derivative to high precision automatically."""
         if d is None:
             d = self.Expt.d
-        Cd = Derivative(self.C_sphere)
-        return float(Cd(d))
+        Cd2 = Derivative(self.C_sphere, n=1)
+        return float(Cd2(d))
 
     def Cd2_sphere(self, d=None):
         """Returns the second derivative of the sphere capacitance
@@ -174,18 +208,6 @@ class UnitSimulation(object):
             d = self.Expt.d
         Cd2 = Derivative(self.C_sphere, n=2)
         return float(Cd2(d))
-
-    #
-
-    # def calc_rho(self, V_g = None):
-        # """Calculates the charge density rho when a given gate voltage
-        # is placed on the sample. This function may be obsolete with the
-        # newly refactored code."""
-    #     if V_g is None:
-    #         V_g = self.Expt.V_g
-    #
-    #     rho = 1 * self.Samp.C_i * V_g / ( self.Samp.h_trans * q)
-    #     return rho
 
     # Correlation Function related functions. #####
 
@@ -248,6 +270,8 @@ class UnitSimulation(object):
 
         return self._prefactor(omega) * integral
 
+    # Correlation functions defined in terms of the function _base_corr
+
     def corr_PP(self, d, omega=None):
         """Autocorrelation function of potential fluctuations,
         defined according to Lekkala et al., 2013. See _base_corr for
@@ -274,25 +298,7 @@ class UnitSimulation(object):
         """"""
         return self._base_corr(d, omega, 4)
 
-    # Calculates the one corr_ExxExx related function we need.
-    def corr_ExxExx(self, d, omega=None):
-        """Calculate the autocorrelation function of x-direction
-        electric field gradient fluctuations.
-
-        This formula uses the result from taking the derivative of
-        the potential autocorrelation fluctuations. This result is
-        summerized below.
-        :math:`\\left.\\frac{\\partial^4}{\\partial x_1^2 \\partial x_2^2}C(r_1,d,r_2,d;\\omega)\\right|_{r_1 = r_2 = 0}`
-
-        :math:`\\left.\\frac{\\partial^4}{\\partial x_1^2 \\partial x_2^2}J_0(k|r_1 - r_2|)|_{r_1 = r_2 = 0} = \\frac{3 k^4}{8}`
-
-        In short, we get a factor of 3k^4/8 from this derivative.
-        """
-
-        _integrand = lambda k: (3 * k ** 4 / 8 * exp(-2 * k * d) *
-                                self._im_dielectric(k, omega))
-        return (self.prefactor(omega) * quad(_integrand, 0, inf))
-
+    # Power Spectrum calculations
     def _power_spectrum_parallel(self, omega, d=None):
         """Calculates the power spectrum of frequency fluctuations
         at the angular frequency omega for a parallel geometry

@@ -1,11 +1,44 @@
-from jittermodel import u
-from jittermodel.usimulation import UnitSimulation
+from jittermodel import u, q2unitless
+from jittermodel.usimulation import (UnitSimulation, SphereCapacitance, alpha_, 
+                                     sum_sinh)
 from jittermodel.ubase import UnitCantilever, UnitExperiment, UnitTransistor
 from nose.tools import eq_, assert_almost_equal, assert_raises
+from bunch import Bunch
 from jittermodel.tests import expected_failure
 import unittest
 
 u.d = u.dimensionless  # For brevity
+
+
+class MockSimulationCapacitance(object):
+    """A mock simulation object only containing the parameters necessary to
+    test SphereCapacitance"""
+    units =  {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
+             "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
+    E_0 = q2unitless(u.epsilon_0, units)
+    q = q2unitless(u.elementary_charge, units)
+    k_B = q2unitless(u.boltzmann_constant, units)
+
+    Samp = Bunch(h=0.1, E_s1=3)
+    Cant = Bunch(R_tip=0.05)
+    Expt = Bunch(d=0.15)
+
+    def __init__(self):
+        self.sphere = SphereCapacitance(self)
+
+
+class TestSphereCapacitance(unittest.TestCase):
+    def setUp(self):
+        self.sim = MockSimulationCapacitance()
+
+    def test_C(self):
+        assert_almost_equal(0.00623177, self.sim.sphere.C())
+
+    def test_Cd(self):
+        assert_almost_equal(-0.00322151, self.sim.sphere.Cd())
+
+    def test_Cd2(self):
+        assert_almost_equal(0.0311542, self.sim.sphere.Cd2())
 
 
 def test_init_UnitSimulation():
