@@ -98,11 +98,10 @@ class TestCapacitanceCalculations(unittest.TestCase):
         self.sim = UnitSimulation(cant, trans, expt)
 
     def test_capacitance(self):
-        assert_almost_equal(self.sim.C_sphere(), 5.1e-3, places=1)
+        assert_almost_equal(self.sim.Sphere.C(), 5.1e-3, places=1)
 
-    @expected_failure
     def test_capacitance_2nd_derivative(self):
-        assert_almost_equal(self.sim.Cd2_sphere(), 6.9e-2, places=1)
+        assert_almost_equal(self.sim.Sphere.Cd2(), 6.9e-2, places=1)
 
 
 class TestImDielectric(unittest.TestCase):

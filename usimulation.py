@@ -148,6 +148,8 @@ class UnitSimulation(object):
         self.Samp = self.USamp.to_unitless()
         self.Expt = self.UExpt.to_unitless()
 
+        self.Sphere = SphereCapacitance(self)
+
         self.func_dict = {'friction': self.calc_gamma_s,
                           'jitter': self.calc_jitter}
 
@@ -167,47 +169,6 @@ class UnitSimulation(object):
             if attr in item._all_attributes:
                 return item.lookup(attr)
         return '{attr} not found'.format(attr=attr)
-
-    # Capacitance Calculations  #################
-    def C_sphere(self, d=None):
-        """Capacitance between a sphere and a thin sample, calculated
-        according to a modified version of the equation from Brus et al.,
-        http://dx.doi.org/10.1021/jp0265438. The capacitance is
-        approximated by truncating the exact infinite sum.
-        """
-        if d is None:
-            d = self.Expt.d
-        if d < 0:
-            # Prevent numerical derivatives from giving an error.
-            d = 0
-
-        cant = self.Cant
-        samp = self.Samp
-
-        alpha = arccosh(1 + d / cant.R_tip + samp.h /
-                        (samp.E_s1 * cant.R_tip))
-
-        return (4 * pi * self.E_0 * cant.R_tip * sum_sinh(alpha))
-
-    def Cd_sphere(self, d=None):
-        """Returns the numerical derivative of the sphere capacitance
-        C_sphere at a distance d. Uses numdifftools
-        (https://code.google.com/p/numdifftools/) to calculate the
-        derivative to high precision automatically."""
-        if d is None:
-            d = self.Expt.d
-        Cd2 = Derivative(self.C_sphere, n=1)
-        return float(Cd2(d))
-
-    def Cd2_sphere(self, d=None):
-        """Returns the second derivative of the sphere capacitance
-        C_sphere at a distance d. Uses numdifftools
-        (https://code.google.com/p/numdifftools/) to calculate the
-        derivative to high precision automatically."""
-        if d is None:
-            d = self.Expt.d
-        Cd2 = Derivative(self.C_sphere, n=2)
-        return float(Cd2(d))
 
     # Correlation Function related functions. #####
 
@@ -305,7 +266,7 @@ class UnitSimulation(object):
         cantilever. See Eq. 6, Lekkala 2013."""
         if d is None:
             d = self.Expt.d
-        _prefactor = (self.V_ts * self.C_sphere(d) / self.k_c) ** 2
+        _prefactor = (self.V_ts * self.Sphere.C(d) / self.k_c) ** 2
 
         return (_prefactor * self.corr_ExxExx(d, omega))
 
@@ -317,9 +278,9 @@ class UnitSimulation(object):
             d = self.Expt.d
         power_spectrum_prefactor = (
             self.Cant.f_c * self.Expt.V_ts / self.Cant.k_c) ** 2
-        c = self.C_sphere(d)
-        cd = self.Cd_sphere(d)
-        cdd = self.Cd2_sphere(d)
+        c = self.Sphere.C(d)
+        cd = self.Sphere.Cd(d)
+        cdd = self.Sphere.Cd2(d)
 
         terms = [
             c ** 2 * self.corr_EzzEzz(d, omega),
@@ -340,8 +301,8 @@ class UnitSimulation(object):
 
         gamma_prefactor = self.Expt.V_ts ** 2 / (self.k_B * self.Samp.T)
 
-        c = self.C_sphere(d)
-        cd = self.Cd_sphere(d)
+        c = self.Sphere.C(d)
+        cd = self.Sphere.Cd(d)
 
         terms = [
             c ** 2 * self.corr_EzEz(d, omega_c),
@@ -357,7 +318,7 @@ class UnitSimulation(object):
         if d is None:
             d = self.Expt.d
 
-        _prefactor = (-self.C_sphere(d) ** 2 * self.Expt.V_ts ** 2 /
+        _prefactor = (-self.Sphere.C(d) ** 2 * self.Expt.V_ts ** 2 /
                       (8 * pi * self.E_0 * self.Cant.omega_c))
         _integrand = lambda k: (
             k ** 2 * exp(-2 * k * d) * self._im_dielectric(k))
@@ -462,8 +423,8 @@ or 'perpendicular'")
 # st1 = Sample(h = 63e-3) # Here too
 # et1 = Experiment() # Here three!
 # simt1 = Simulation(ct1, st1, et1)
-# print simt1.Cd2_sphere(100e-3)
-# print simt1.C_sphere(100e-3)
+# print simt1.Sphere.Cd2(100e-3)
+# print simt1.Sphere.C(100e-3)
 """Should give 6.9e-2, 5.1e-3 for the two capacitance derivatives.
 This matches what Nik and Swapna reported in their paper
 (Hoepker2011oct, Fig. 4)."""
