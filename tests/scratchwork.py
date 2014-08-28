@@ -16,7 +16,8 @@ from autoassign import autoassign
 import pickle
 import os
 import errno
-
+import cProfile
+import pstats
 
 def make_sure_path_exists(path):
     """From Stackoverflow. See http://stackoverflow.com/questions/273192/create-directory-if-it-doesnt-exist-for-file-write for more information."""
@@ -36,14 +37,19 @@ def make_sure_path_exists(path):
 # gpd1.calc_plot_data('jitter', 'd', 'V_g', v_g_vals, n_pts = 5)
 # gpd1.make_plot('new_jitter_h_70.pdf', xlim = (40, 500), ylim = (1e-10, 1e-3))
 
-c1 = UnitCantilever()
-t1 = UnitTransistor(h=70*u.nm)
-e1 = UnitExperiment()
-gpd = UnitGeneratePlotData(c1, t1, e1, 'd', (40*u.nm, 500*u.nm))
-V_g_vals = (1*u.V, 20*u.V, 40*u.V)
-gpd.calc_plot_data('jitter', 'd', 'V_g', V_g_vals, x_scale='linear', n_pts=5)
-gpd.make_plot('unit_jitter_h_70.pdf')
+def make_unit_plot():
+    c1 = UnitCantilever()
+    t1 = UnitTransistor(h=70*u.nm)
+    e1 = UnitExperiment()
+    gpd = UnitGeneratePlotData(c1, t1, e1, 'd', (40*u.nm, 500*u.nm))
+    V_g_vals = (1*u.V, 20*u.V, 40*u.V)
+    gpd.calc_plot_data('jitter', 'd', 'V_g', V_g_vals,
+                       x_scale='linear', n_pts=5)
 
+cProfile.run('make_unit_plot()', 'unit_stats')
+p = pstats.Stats('unit_stats')
+
+p
 
 # 
 # s2 = Sample(h = 25e-3)

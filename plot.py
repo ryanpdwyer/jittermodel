@@ -17,6 +17,7 @@ import os
 import errno
 import glob
 import matplotlib.pyplot as plt
+from jittermodel import u
 
 
 class GeneratePlotData(object):
@@ -273,6 +274,15 @@ class UnitGeneratePlotData(GeneratePlotData):
             'power spectrum': 1e3,
             'f': 1e3
         }
+        self.output_units = {
+            'rho': u.cm**-3,
+            'V_g': u.V,
+            'd': u.nm,
+            'jitter': u.Hz**2,
+            'h': u.nm,
+            'friction': u.pN*u.s/u.m,
+            'power spectrum': u.Hz,
+            'f': u.Hz}
 
     def _calc_variable_array(self, x_scale='log', n_pts=None):
         """Use the scale data to pick the appropriate
@@ -280,8 +290,10 @@ class UnitGeneratePlotData(GeneratePlotData):
         if n_pts is None:
             n_pts = self.n_pts
         if x_scale == 'log':
-            _r = np.logspace(np.log10(self.variable_range[0]),
-                             np.log10(self.variable_range[1]), n_pts)
+            x_unit = self.output_units[self.x_var]
+            x_min = np.log10(self.variable_range[0].to(x_unit).magnitude)
+            x_max = np.log10(self.variable_range[1].to(x_unit).magnitude)
+            _r = np.logspace(x_min, x_max, n_pts) * x_unit
         elif x_scale == 'linear':
             _r = np.linspace(self.variable_range[0],
                              self.variable_range[1], n_pts)
@@ -426,7 +438,9 @@ class UnitGeneratePlotData(GeneratePlotData):
         self.y = np.array(power_spectra_y)*self.scales['power spectrum']
 
     def pickle(self, name):
-        """Pickles the object to a file in a subdirectory pkl."""
+        """Pickles the object to a file in a subdirectory pkl. Currently
+        not working."""
+        self.Cant = self.Expt = self.Samp = self.Simulation = None
         today = datetime.date.today().isoformat()
         filename = 'pkl/{today} {name}.pkl'.format(today=today, name=name)
         make_sure_path_exists('pkl')
