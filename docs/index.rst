@@ -9,9 +9,7 @@ Welcome to Jitter Model's documentation!
 Contents:
 
 .. toctree::
-   :glob:
-   
-   **
+    ubase
 
 
 Indices and tables

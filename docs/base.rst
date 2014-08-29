@@ -1,2 +1,0 @@
-.. automodule:: jittermodel.base
-   :members:
