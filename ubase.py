@@ -12,7 +12,6 @@ unitregistry (:code:`u`) from jittermodel!
 
 from __future__ import division
 from numpy import pi
-from autoassign import autoassign
 from jittermodel import u, UnitAssigner, get_defaults
 
 
@@ -160,11 +159,7 @@ class UnitTransistor(UnitAssigner):
                  mobility=3e-6 * u.cm ** 2 / u.V / u.s, T=298 * u.K,
                  V_g=10 * u.V, rho=None):
         """Initialize the sample with all of the experimentally
-        relevant sample parameters.
-
-        @autoassign automatically assigns the input quantities
-        to self. See http://code.activestate.com/recipes/551763/
-        for more information."""
+        relevant sample parameters."""
         self.semiconductor = semiconductor
         self.h = h
         self.h_trans = h_trans
