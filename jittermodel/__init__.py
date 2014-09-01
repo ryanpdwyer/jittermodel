@@ -9,6 +9,7 @@ Should _units be _default_units? I think so. That way we can transfer those
 properties between the UnitAssigner and NoUnitAssigner completely intact.
 
 """
+
 import pint
 import inspect
 
@@ -16,7 +17,7 @@ u = pint.UnitRegistry()
 
 
 def get_defaults(func):
-    """Return a dictionary containing argument names and defaults.
+    """Return a dictionary containing argument names and defaults for a function.
     Dictionary contains None if an argument has no default value."""
     argspec = inspect.getargspec(func)
     names = argspec.args
@@ -34,6 +35,7 @@ def get_defaults(func):
 
 
 def get_default_units(func):
+    """Return a dictionary of the  units of a function from the default values"""
     default_dict = get_defaults(func)
     return {name: val.units for name, val in default_dict.viewitems()
             if type(val) == u.Quantity}
@@ -89,12 +91,12 @@ class Assigner(object):
         of the class.
 
         See http://goo.gl/4juRRI for more information."""
-        all = set([attr for attr in dir(self) if not attr.startswith('_')])
+        all_attrs = set([attr for attr in dir(self) if not attr.startswith('_')])
 
         # This prevents an infinite recursion when we run inspect.isroutine
-        all.discard('_all_attributes')
+        all_attrs.discard('_all_attributes')
 
-        filtered = {attr for attr in all if not
+        filtered = {attr for attr in all_attrs if not
                     inspect.isroutine(getattr(self, attr))}
 
         to_discard = set()
@@ -106,8 +108,6 @@ class Assigner(object):
                 to_discard.add(attr)
 
         return filtered.difference(to_discard)
-
-        return filtered
 
     def __eq__(self, other):
         """Define two Assigners to be equal if their internal
@@ -160,28 +160,38 @@ must be positive.".format(attr=attr))
         except AttributeError:
             class_name = self.__class__.__name__
             new_class_name = "No"+class_name
-            unitless_class = type(new_class_name,
-                                  (NoUnitAssigner, self.__class__), {})
+            NoUnitClass = type(new_class_name,
+                               (NoUnitAssigner, self.__class__), {})
 
-            self._unitless = unitless_class()
+            self._unitless = NoUnitClass()
 
+        # Take all unitted quanities, and make them unitless before reassigning
+        # them.
         for attr in self._all_attributes:
             val = self.lookup(attr)
             if isinstance(val, u.Quantity):
                 unitless_val = q2unitless(val, self._unitless_units)
                 self._unitless.assign(attr, unitless_val)
             else:
+                # No units. Just assign the attr to its value with no changes.
                 self._unitless.assign(attr, val)
 
+
+        # We want the unitless version of the object to retain the default unit,
+        # unitless unit variables.
         self._unitless._default_units = self._default_units
         self._unitless._unitless_units = self._unitless_units
 
         return self._unitless
 
 
+
+# Not sure if it is a good idea to have this assign from Assigner, seeing as
+# only purpose is to override the three functions listed below.
 class NoUnitAssigner(Assigner):
     """A class with blank, dummy, _get_default_units and
-    _check_number_inputs_positive. Meant to be used as a mix-in class."""
+    _check_number_inputs_positive. Meant to be used as a mix-in class, with some
+    descendent of UnitAssigner."""
     # def to_unitted(self):
     #     """I need to look up how to make a member of a class without calling
     #     the class' __init__ method."""

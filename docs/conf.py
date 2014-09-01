@@ -25,9 +25,24 @@ import jittermodel
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 
+def skip(app, what, name, obj, skip, options):
+    if name in ["__repr__", "__init__"]:
+        return False
+    return skip
+
+
+def setup(app):
+    app.connect("autodoc-skip-member", skip)
+
+# Copied from jam99@cornell.edu:
+# http://sphinx-doc.org/ext/autodoc.html#confval-autodoc_member_order
+
+autodoc_member_order = 'bysource'
+
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.coverage', 'sphinx.ext.mathjax', 'sphinx.ext.viewcode']
+extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.coverage',
+              'sphinx.ext.mathjax', 'sphinx.ext.viewcode']
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -93,7 +108,6 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'default'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
@@ -123,6 +137,24 @@ html_theme = 'default'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+# The theme to use for HTML and HTML Help pages.  See the documentation for
+# a list of builtin themes.
+
+# From readthedocs.org help files:
+# http://read-the-docs.readthedocs.org/en/latest/theme.html#how-do-i-use-this-locally-and-on-read-the-docs # noqa
+
+# on_rtd is whether we are on readthedocs.org
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
+
+if not on_rtd:  # only import and set the theme if we're building docs locally
+    import sphinx_rtd_theme
+    html_theme = 'sphinx_rtd_theme'
+    html_theme_path = [sphinx_rtd_theme.get_html_theme_path()]
+
+# otherwise, readthedocs.org uses their theme by default,
+# so no need to specify it
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
@@ -210,6 +242,7 @@ latex_documents = [
 #latex_domain_indices = True
 
 
+
 # -- Options for manual page output --------------------------------------------
 
 # One entry per manual page. List of tuples
@@ -236,6 +269,8 @@ texinfo_documents = [
 
 # Documents to append as an appendix to all manuals.
 #texinfo_appendices = []
+
+
 
 # If false, no module index is generated.
 #texinfo_domain_indices = True

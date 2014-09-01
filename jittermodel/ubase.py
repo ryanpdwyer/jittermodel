@@ -32,8 +32,7 @@ class SUCantilever(UnitAssigner):
         self.Q = Q
 
         self._default_units = {'f_c': u.kHz, 'k_c': u.N/u.m,
-                               'Q': u.dimensionless, 'R_tip': u.nm,
-                               'L_tip': u.um, 'theta_tip': u.degrees}
+                               'Q': u.dimensionless}
         self._check_dimensionality_units()
         self._check_number_inputs_positive()
 
