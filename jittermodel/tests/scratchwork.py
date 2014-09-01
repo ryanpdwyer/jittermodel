@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # encoding: utf-8
 """
 scratchwork.py
@@ -9,7 +8,6 @@ Copyright (c) 2013 Cornell University. All rights reserved.
 
 from jittermodel import u
 from jittermodel.base import Cantilever, Sample, Experiment
-from jittermodel.ubase import UnitCantilever, UnitTransistor, UnitExperiment
 from jittermodel.simulation import Simulation
 from jittermodel.plot import GeneratePlotData, UnitGeneratePlotData
 from autoassign import autoassign

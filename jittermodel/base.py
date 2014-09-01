@@ -21,7 +21,7 @@ k_B = 1.38065e-23 * u.J / u.K
 q = 1.602e-19 * u.C
 
 
-class SUCantilever(UnitAssigner):
+class SimpleCantilever(UnitAssigner):
     """Implement a simple unit cantilever, and require all inputs."""
 
     k_B = k_B
@@ -72,7 +72,7 @@ Gamma_i = {self.Gamma_i}".format(self=self)
 Q = {self.Q})".format(self=self)
 
 
-class UnitCantilever(SUCantilever):
+class Cantilever(SimpleCantilever):
     """Implement a Cantilever class with support for units."""
 
     def __init__(self, f_c=50*u.kHz, k_c=3*u.N/u.m, Q=1000*u.dimensionless,
@@ -120,7 +120,7 @@ theta_tip = {self.theta_tip},\
 geometry_c = '{self.geometry_c}')".format(self=self)
 
 
-class UnitExperiment(UnitAssigner):
+class Experiment(UnitAssigner):
     """Stores parameters set by the experimenter. Now with units!"""
     def __init__(self, d=100 * u.nm, V_ts=5 * u.V,
                  jitter_f_i=0.2 * u.Hz, jitter_f_f=3 * u.Hz):
@@ -145,7 +145,7 @@ class UnitExperiment(UnitAssigner):
         return """Tip-sample: {self.d}, {self.V_ts}""".format(self=self)
 
 
-class UnitTransistor(UnitAssigner):
+class Transistor(UnitAssigner):
     """A transistor sample, now with units."""
     E_0 = E_0
     k_B = k_B

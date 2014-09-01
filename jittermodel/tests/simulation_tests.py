@@ -1,7 +1,8 @@
+# encoding: utf-8
 from jittermodel import u, q2unitless
-from jittermodel.usimulation import (UnitSimulation, SphereCapacitance, alpha_, 
+from jittermodel.simulation import (Simulation, SphereCapacitance, alpha_, 
                                      sum_sinh)
-from jittermodel.ubase import UnitCantilever, UnitExperiment, UnitTransistor
+from jittermodel.base import Cantilever, Experiment, Transistor
 from nose.tools import eq_, assert_almost_equal, assert_raises
 from bunch import Bunch
 from jittermodel.tests import expected_failure
@@ -90,18 +91,18 @@ class TestSphereCapacitance(unittest.TestCase):
         assert_almost_equal(0.0311542, self.sim.sphere.Cd2())
 
 
-def test_init_UnitSimulation():
-    cant = UnitCantilever(f_c=50*u.kHz, k_c=3.5*u.N/u.m, Q=20000*u.d,
+def test_init_Simulation():
+    cant = Cantilever(f_c=50*u.kHz, k_c=3.5*u.N/u.m, Q=20000*u.d,
                           R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
                           geometry_c='perpendicular')
-    trans = UnitTransistor(semiconductor='TPD', h=70 * u.nm, h_trans=1 * u.nm,
+    trans = Transistor(semiconductor='TPD', h=70 * u.nm, h_trans=1 * u.nm,
                            h_i=300 * u.nm, E_s1=3.5, E_s2=-0.0005, E_i1=4.65,
                            E_i2=0, mobility=3e-6 * u.cm ** 2 / u.V / u.s,
                            T=298 * u.K, V_g=10 * u.V, rho=None)
-    expt = UnitExperiment(d=100 * u.nm, V_ts=5 * u.V, jitter_f_i=0.2 * u.Hz,
+    expt = Experiment(d=100 * u.nm, V_ts=5 * u.V, jitter_f_i=0.2 * u.Hz,
                           jitter_f_f=3 * u.Hz)
 
-    sim = UnitSimulation(cant, trans, expt)
+    sim = Simulation(cant, trans, expt)
     # Test some properties are correct
     eq_(sim.Cant.f_c, 50)
     eq_(sim.Expt.d, 0.1)
@@ -109,21 +110,21 @@ def test_init_UnitSimulation():
     assert_almost_equal(sim.Samp.diff, 0.00770475093633)
 
 
-class TestUnitSimulation(unittest.TestCase):
+class TestSimulation(unittest.TestCase):
     def setUp(self):
-        self.cant = UnitCantilever(
+        self.cant = Cantilever(
             f_c=50*u.kHz, k_c=3.5*u.N/u.m, Q=20000*u.d,
             R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
             geometry_c='perpendicular')
-        self.trans = UnitTransistor(
+        self.trans = Transistor(
             semiconductor='TPD', h=70 * u.nm, h_trans=1 * u.nm, h_i=300 * u.nm,
             E_s1=3.5, E_s2=-0.0005, E_i1=4.65, E_i2=0,
             mobility=3e-6*u.cm**2/u.V/u.s, T=298 * u.K, V_g=10 * u.V, rho=None)
-        self.expt = UnitExperiment(
+        self.expt = Experiment(
             d=100 * u.nm, V_ts=5 * u.V, jitter_f_i=0.2 * u.Hz,
             jitter_f_f=3 * u.Hz)
 
-        self.sim = UnitSimulation(self.cant, self.trans, self.expt)
+        self.sim = Simulation(self.cant, self.trans, self.expt)
 
     def test_check_assignment(self):
         eq_(self.sim.Cant.f_c, 50)
@@ -133,18 +134,18 @@ class TestUnitSimulation(unittest.TestCase):
 
 class TestCapacitanceCalculations(unittest.TestCase):
     def setUp(self):
-        cant = UnitCantilever(
+        cant = Cantilever(
             f_c=46*u.kHz, Q=2500*u.dimensionless, k_c=0.85*u.N/u.m,
             R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
             geometry_c='perpendicular')
-        trans = UnitTransistor(
+        trans = Transistor(
             semiconductor='TPD', h=63*u.nm, h_trans=1*u.nm, h_i=300*u.nm,
             E_s1=3.5, E_s2=-0.0005, E_i1=4.65, E_i2=0,
             mobility=3e-6*u.cm**2/u.V/u.s, T=298*u.K, V_g=10*u.V, rho=None)
-        expt = UnitExperiment(
+        expt = Experiment(
             d=100*u.nm, V_ts=5*u.V, jitter_f_i=0.2*u.Hz, jitter_f_f=3*u.Hz)
 
-        self.sim = UnitSimulation(cant, trans, expt)
+        self.sim = Simulation(cant, trans, expt)
 
     def test_capacitance(self):
         assert_almost_equal(self.sim.Sphere.C(), 5.1e-3, places=1)
@@ -155,15 +156,15 @@ class TestCapacitanceCalculations(unittest.TestCase):
 
 class TestImDielectric(unittest.TestCase):
     def setUp(self):
-        exp = UnitExperiment(V_ts=3*u.V, d=300*u.nm)
-        cant = UnitCantilever(
+        exp = Experiment(V_ts=3*u.V, d=300*u.nm)
+        cant = Cantilever(
             f_c=65*u.kHz, Q=2500*u.dimensionless, k_c=3.5*u.N/u.m,
             R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
             geometry_c='perpendicular')
-        trans = UnitTransistor(
+        trans = Transistor(
             h=72*u.nm, V_g=40*u.V, E_s1=3.4, mobility=2.7e-6*u.cm**2/u.V/u.s,
             E_s2=-0.05, E_i1=4.65)
-        self.sim = UnitSimulation(cant, trans, exp)
+        self.sim = Simulation(cant, trans, exp)
 
     @expected_failure
     def test_im_dielectric(self):

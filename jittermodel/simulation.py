@@ -1,6 +1,6 @@
 """
-Unit Simulation
-================
+Simulation
+===========
 
 The simulation code, but with units.
 
@@ -119,7 +119,7 @@ class SphereCapacitance(object):
         return derivative(self.C, d, dx=1e-5, n=2)
 
 
-class UnitSimulation(object):
+class Simulation(object):
 
     """This calculates experimental parameters such as capacitance
     and sample-induced friction for a given cantilever, sample,
@@ -393,32 +393,7 @@ or 'perpendicular'")
         integral, error = quad(calc_Pdf, f_i, f_f)
         return integral
 
-# def sum_csch(alpha):
-# """This calculates the infinite sum, csch(alpha * n), for n = 1 to
-# infinity. Testing the speed of this code, it is 1000 times slower
-# than the equivalent version implemented using numpy functions."""
-#     Nmax = int( np.max([4, np.ceil(20 / alpha)+1]) )
-#     f = lambda n: sinh(alpha) / sinh(alpha * n)
-#     terms = [f(n) for n in xrange(1,Nmax)]
-#     return fsum(terms)
 
-# def sum_csch(alpha, eps = 1e-8):
-#     """This calculates the infinite sum, sinh(alpha) / sinh(alpha * n), for n = 1 to infinity."""
-#     N_max_min = 1 + int(np.ceil(2 / alpha * arctanh( exp(-eps * alpha / sinh(alpha)) ) ))
-#     N_max = np.max([5, N_max_min])
-#     f = lambda n: sinh(alpha) / sinh(alpha * n)
-#     terms = f(np.arange(1,N_max))
-#     return np.sum(terms)
-
-# def to_time(f):
-#     return [f(alpha) for alpha in np.logspace(-4,1,6)]
-
-
-# if __name__ == '__main__':
-#     from timeit import timeit
-# print(timeit("to_time(sum_csch)", setup="from __main__ import to_time, sum_csch", number = 1000))
-#     print(timeit("to_time(sum_csch2)", setup="from __main__ import to_time, sum_csch2", number = 10000))
-# from jittermodel.base import Cantilever, Sample, Experiment
 """Test Case - Tip Sample Capacitance"""
 # ct1 = Cantilever(f_c = 46, Q = 2500, k_c = 8.5e9) # Should specify every parameter.
 # st1 = Sample(h = 63e-3) # Here too

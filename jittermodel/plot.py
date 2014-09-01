@@ -7,7 +7,7 @@ Created by Ryan Dwyer on 2013-10-15.
 Copyright (c) 2013 Cornell University. All rights reserved.
 """
 import numpy as np
-from jittermodel.usimulation import UnitSimulation
+from jittermodel.simulation import Simulation
 from time import sleep
 import datetime
 import cPickle as pickle
@@ -32,7 +32,7 @@ def reformat_properties(properties):
     return reformatted_properties
 
 
-class UnitGeneratePlotData(object):
+class GeneratePlotData(object):
     """An object that will generate plots of friction varying
     some variable var1 over the range var1_range.
 
@@ -44,8 +44,8 @@ class UnitGeneratePlotData(object):
     s1 = Sample()
     e1 = Experiment()
     fp1 = GenerateFrictionPlot(c1,s1,e1, 'V_g', )"""
-    Simulation = UnitSimulation
-    units = UnitSimulation.units
+    Simulation = Simulation
+    units = Simulation.units
     def __init__(self, Cant, Samp, Expt, variable, variable_range):
         self.Cant = Cant
         self.Samp = Samp

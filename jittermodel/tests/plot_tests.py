@@ -1,4 +1,5 @@
-from jittermodel.plot import UnitGeneratePlotData, reformat_properties
+# encoding: utf-8
+from jittermodel.plot import reformat_properties
 from nose.tools import eq_
 
 

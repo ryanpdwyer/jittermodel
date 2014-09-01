@@ -17,8 +17,8 @@ u = pint.UnitRegistry()
 
 
 def get_defaults(func):
-    """Return a dictionary containing argument names and defaults for a function.
-    Dictionary contains None if an argument has no default value."""
+    """Return a dictionary containing argument names and defaults for a
+    function. Dictionary contains None if an argument has no default value."""
     argspec = inspect.getargspec(func)
     names = argspec.args
     if argspec.defaults is not None:
@@ -35,7 +35,8 @@ def get_defaults(func):
 
 
 def get_default_units(func):
-    """Return a dictionary of the  units of a function from the default values"""
+    """Return a dictionary of the units of a function
+    from the default values."""
     default_dict = get_defaults(func)
     return {name: val.units for name, val in default_dict.viewitems()
             if type(val) == u.Quantity}
