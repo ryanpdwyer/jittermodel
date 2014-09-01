@@ -19,15 +19,6 @@ import errno
 import cProfile
 import pstats
 
-def make_sure_path_exists(path):
-    """From Stackoverflow. See http://stackoverflow.com/questions/273192/create-directory-if-it-doesnt-exist-for-file-write for more information."""
-    try:
-        os.makedirs(path)
-    except OSError as exception:
-        if exception.errno != errno.EEXIST:
-            raise
-
-
 # c1 = Cantilever()
 # s1 = Sample()
 # e1 = Experiment()
@@ -48,8 +39,6 @@ def make_unit_plot():
 
 cProfile.run('make_unit_plot()', 'unit_stats')
 p = pstats.Stats('unit_stats')
-
-p
 
 # 
 # s2 = Sample(h = 25e-3)
@@ -86,25 +75,3 @@ class Axis(object):
                   {self.range} {self.points} points""".format(self=self)
 
 h_ax = Axis('h', (10, 100), 50)
-
-"""To pickle"""
-make_sure_path_exists('pkl')
-output = open('pkl/axis.pkl', 'wb')
-pickle.dump(h_ax, output)
-output.close()
-
-# """To open pickled file"""
-# pkl_file = open('pkl/axis.pkl', 'rb')
-# h_ax_pkl = pickle.load(pkl_file)
-# pkl_file.close()
-# print h_ax_pkl
-
-# d = {'a':1, 'b':2}
-# output = open('data.pkl', 'wb')
-# pickle.dump(d, output)
-# output.close()
-
-# pkl_file = open('data.pkl', 'rb')
-# dd = pickle.load(pkl_file)
-
-# print dd
