@@ -10,7 +10,7 @@ import numpy as np
 from jittermodel.simulation import Simulation
 from time import sleep
 import datetime
-import cPickle as pickle
+import dill as pickle
 import os
 import errno
 import glob
@@ -225,7 +225,7 @@ class GeneratePlotData(object):
         not working."""
         self.Cant = self.Expt = self.Samp = self.Simulation = None
         today = datetime.date.today().isoformat()
-        filename = 'pkl/{today} {name}.pkl'.format(today=today, name=name)
+        filename = 'pkl/{today}-{name}.pkl'.format(today=today, name=name)
         make_sure_path_exists('pkl')
         output = open(filename, 'wb')
         pickle.dump(self, output)
@@ -239,7 +239,7 @@ def unpickle(name=None):
         filename = get_most_recent_pkl_file('pkl')
     else:
         today = datetime.date.today().isoformat()
-        filename = 'pkl/{today} {name}.pkl'.format(today=today, name=name)
+        filename = 'pkl/{today}-{name}.pkl'.format(today=today, name=name)
     with open(filename, 'rb') as pkl_file:
         return pickle.load(pkl_file)
 

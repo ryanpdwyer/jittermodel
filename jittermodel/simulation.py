@@ -151,17 +151,29 @@ class Simulation(object):
         self.Sphere = SphereCapacitance(self)
 
         self.func_dict = {'friction': self.calc_gamma_s,
-                          'jitter': self.calc_jitter}
+                          'jitter': self.calc_jitter,
+                          'power spectrum': self.calc_Pdf}
 
     def assign(self, attr, val):
         """Assign the attribute 'attr' to value 'val'. Behind the
         scenes, this function finds which property came from which
         class, and then does the appropriate assignment."""
-        for item in (self.UCant, self.USamp, self.UExpt):
-            if attr in item._all_attributes:
-                item.assign(attr, val)
-                # Reinitialize the unitless version of the item
-                item.to_unitless()
+        if attr == 'omega':
+            # Unlike other attributes, omega is owned by the simulation.
+            self.omega = val.to(u.Hz).magnitude
+        else:
+            found = False
+            for item in (self.UCant, self.USamp, self.UExpt):
+                if attr in item._all_attributes:
+                    found = True
+                    item.assign(attr, val)
+                    # Reinitialize the unitless version of the item
+                    item.to_unitless()
+
+            if not found:
+                raise AttributeError(
+                    "The attribute {0} was not found.".format(attr))
+
 
     def lookup(self, attr):
         """Looks for an attribute in the cantilever, sample, or
@@ -346,13 +358,15 @@ class Simulation(object):
         self.Gamma_s = Gamma_s
         return Gamma_s
 
-    def calc_Pdf(self, omega, d=None):
+    def calc_Pdf(self, omega=None, d=None):
         """Calculates the frequency power spectrum according
         to the appropriate equation, depending on whether the
         cantilever moves in the perpendicular or parallel geometry.
         Uses Lekkala 2013, et al., Eq. 6 and 10."""
         if d is None:
             d = self.Expt.d
+        if omega is None:
+            omega = self.omega
 
         if self.Cant.geometry_c == 'perpendicular':
             Pdf = self._power_spectrum_perpendicular(omega, d)
