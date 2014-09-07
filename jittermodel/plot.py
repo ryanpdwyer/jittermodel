@@ -158,7 +158,7 @@ class GeneratePlotData(object):
         self._calculate_plot_points()
 
     def make_plot(self, figname=None, figsize=(3, 3), fontsize=10,
-                  linewidth=2, xlim=None, ylim=None, properties=None):
+                  linewidth=2, xlim=None, ylim=None, properties=None, transparent=False):
         import matplotlib as mpl
         mpl.rcParams.update({
             'figure.figsize': figsize,
@@ -187,7 +187,7 @@ class GeneratePlotData(object):
             sleep(20)
             plt.close()
         else:
-            plt.savefig(figname)
+            plt.savefig(figname, transparent=transparent)
             plt.close()
 
     def multi_power_spectrum(self, multi_plot_var, var_values,
