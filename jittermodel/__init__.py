@@ -15,6 +15,10 @@ import inspect
 
 u = pint.UnitRegistry()
 
+# Universal Constants
+E_0 = u.epsilon_0
+k_B = u.boltzmann_constant
+q = u.elementary_charge
 
 def get_defaults(func):
     """Return a dictionary containing argument names and defaults for a

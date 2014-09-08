@@ -12,13 +12,7 @@ unitregistry (:code:`u`) from jittermodel!
 
 from __future__ import division
 from numpy import pi
-from jittermodel import u, UnitAssigner, get_defaults
-
-
-# Universal Constants
-E_0 = 8.854e-12 * u.F / u.m
-k_B = 1.38065e-23 * u.J / u.K
-q = 1.602e-19 * u.C
+from jittermodel import (u, UnitAssigner, get_defaults, E_0, k_B, q)
 
 
 class SimpleCantilever(UnitAssigner):

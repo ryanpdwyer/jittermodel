@@ -31,12 +31,8 @@ from scipy.special import jn
 from scipy.misc import derivative
 import math
 from copy import copy
-from jittermodel import u, q2unitless
+from jittermodel import (u, E_0, k_B, q, q2unitless)
 
-# Universal Constants
-E_0 = 8.854e-12 * u.F / u.m
-k_B = 1.38065e-23 * u.J / u.K
-q = 1.602e-19 * u.C
 
 inf = float('+infinity')
 

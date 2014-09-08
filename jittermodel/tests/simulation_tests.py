@@ -107,7 +107,7 @@ def test_init_Simulation():
     eq_(sim.Cant.f_c, 50)
     eq_(sim.Expt.d, 0.1)
     eq_(sim.Samp.h_i, 0.3)
-    assert_almost_equal(sim.Samp.diff, 0.00770475093633)
+    assert_almost_equal(sim.Samp.diff, 0.0077038955272097955)
 
 
 class TestSimulation(unittest.TestCase):
