@@ -10,7 +10,7 @@ import numpy as np
 from jittermodel.simulation import Simulation
 from time import sleep
 import datetime
-import dill as pickle
+import cPickle as pickle
 import os
 import errno
 import glob
