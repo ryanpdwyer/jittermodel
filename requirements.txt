@@ -1,0 +1,8 @@
+numpy
+scipy
+matplotlib
+pint
+mpmath
+nose
+bunch
+mock
