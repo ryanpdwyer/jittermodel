@@ -7,19 +7,31 @@ python:
 # Anaconda information comes from https://gist.github.com/dan-blanchard/7045057
 # Setup anaconda
 before_install:
-  - wget http://repo.continuum.io/miniconda/Miniconda-latest-Linux-x86_64.sh -O miniconda.sh
-  - chmod +x miniconda.sh
-  - ./miniconda.sh -b
-  - export PATH=/home/travis/miniconda/bin:$PATH
-  - conda update --yes conda
-  # The next couple lines fix a crash with multiprocessing on Travis and are not specific to using Miniconda
-  - sudo rm -rf /dev/shm
-  - sudo ln -s /run/shm /dev/shm
-
+  - sudo apt-get update
+  # You may want to periodically update this, although the conda update
+  # conda line below will keep everything up-to-date.  We do this
+  # conditionally because it saves us some downloading if the version is
+  # the same.
+  - if [[ "$TRAVIS_PYTHON_VERSION" == "2.7" ]]; then
+      wget http://repo.continuum.io/miniconda/Miniconda-3.4.2-Linux-x86_64.sh -O miniconda.sh;
+    else
+      wget http://repo.continuum.io/miniconda/Miniconda3-3.4.2-Linux-x86_64.sh -O miniconda.sh;
+    fi
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  # Useful for debugging any issues with conda
+  - conda info -a
 # Install packages
 install:
-  - conda install --yes python=$TRAVIS_PYTHON_VERSION atlas numpy scipy matplotlib nose dateutil
-  - pip install -r requirements.txt
+  - conda create -q -n test-environment python=$TRAVIS_PYTHON_VERSION
+  - conda install -n test-environment pip
+  - conda install -n test-environment atlas numpy scipy matplotlib nose
+  - source activate test-environment
+  - pip install pint mpmath bunch mock 
+  - python setup.py install
  
 # Run test
 script:
