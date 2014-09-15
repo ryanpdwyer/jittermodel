@@ -76,7 +76,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Jitter Model'
-copyright = u'2013, Ryan Dwyer'
+copyright = u'2014, Ryan Dwyer'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
