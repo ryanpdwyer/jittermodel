@@ -9,7 +9,7 @@ except ImportError:
 
 from distutils.core import setup
 
-requirements = ['numpy', 'scipy', 'matplotlib']
+requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
 
 test_requirements = ['mpmath', 'bunch', 'nose']
 

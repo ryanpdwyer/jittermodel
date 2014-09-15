@@ -2,3 +2,4 @@ mpmath
 nose
 bunch
 mock
+pint
