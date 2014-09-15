@@ -12,6 +12,23 @@
 # serve to show the default.
 
 import sys, os
+from mock import MagicMock
+
+class Mock(MagicMock):
+    @classmethod
+    def __getattr__(cls, name):
+            return Mock()
+
+MOCK_MODULES = [
+    'matplotlib',
+    'matplotlib.pypplot',
+    'numpy',
+    'scipy',
+    'scipy.integrate',
+    'scipy.misc',
+    'scipy.special']
+
+sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 import jittermodel
 
@@ -20,11 +37,11 @@ import jittermodel
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #sys.path.insert(0, os.path.abspath('.'))
 
-# -- General configuration -----------------------------------------------------
+# -- General configuration ----------------------------------------------------
+
 
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
-
 def skip(app, what, name, obj, skip, options):
     if name in ["__repr__", "__init__"]:
         return False
@@ -39,8 +56,9 @@ def setup(app):
 
 autodoc_member_order = 'bysource'
 
-# Add any Sphinx extension module names here, as strings. They can be extensions
-# coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
+# Add any Sphinx extension module names here, as strings.
+# They can be extensions coming with Sphinx (named 'sphinx.ext.*')
+# or your custom ones.
 extensions = ['sphinx.ext.autodoc', 'sphinx.ext.todo', 'sphinx.ext.coverage',
               'sphinx.ext.mathjax', 'sphinx.ext.viewcode']
 
@@ -104,7 +122,7 @@ pygments_style = 'sphinx'
 #modindex_common_prefix = []
 
 
-# -- Options for HTML output ---------------------------------------------------
+# -- Options for HTML output --------------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
@@ -201,7 +219,7 @@ if not on_rtd:  # only import and set the theme if we're building docs locally
 htmlhelp_basename = 'JitterModeldoc'
 
 
-# -- Options for LaTeX output --------------------------------------------------
+# -- Options for LaTeX output -------------------------------------------------
 
 latex_elements = {
 # The paper size ('letterpaper' or 'a4paper').
@@ -216,10 +234,7 @@ latex_elements = {
 
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
-latex_documents = [
-  ('index', 'JitterModel.tex', u'Jitter Model Documentation',
-   u'Ryan Dwyer', 'manual'),
-]
+latex_documents = []
 
 # The name of an image file (relative to this directory) to place at the top of
 # the title page.

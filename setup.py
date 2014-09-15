@@ -11,7 +11,7 @@ from distutils.core import setup
 
 requirements = ['numpy', 'scipy', 'matplotlib']
 
-test_requirements = ['mpmath', 'bunch', 'nosetests']
+test_requirements = ['mpmath', 'bunch', 'nose']
 
 setup(name='jittermodel',
       version='0.1',
