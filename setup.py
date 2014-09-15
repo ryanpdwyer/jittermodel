@@ -9,10 +9,17 @@ except ImportError:
 
 from distutils.core import setup
 
+requirements = ['numpy', 'scipy', 'matplotlib']
+
+test_requirements = ['mpmath', 'bunch', 'nosetests']
+
 setup(name='jittermodel',
       version='0.1',
       description='',
       author='Ryan Dwyer',
       author_email='ryanpdwyer@gmail.com',
-      packages=['jittermodel']
+      packages=['jittermodel'],
+      zip_safe=False,
+      install_requires=requirements,
+      tests_require=test_requirements
       )

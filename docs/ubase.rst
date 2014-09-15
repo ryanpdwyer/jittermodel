@@ -1,2 +1,0 @@
-.. automodule:: jittermodel.ubase
-   :members:
