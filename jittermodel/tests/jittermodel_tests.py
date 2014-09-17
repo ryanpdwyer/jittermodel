@@ -9,7 +9,7 @@ from __future__ import division
 import pint
 from numpy import pi
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
-                         UnitAssigner, q2unitless, make_units)
+                         UnitAssigner, NoUnitAssigner, q2unitless, make_units)
 from jittermodel.tests import pint_assert_almost_equal
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
@@ -18,16 +18,16 @@ pa_eq = pint_assert_almost_equal
 
 
 def test_get_defaults():
-    def f1(x):
+    def no_defaults(x):
         pass
 
-    def f2(x=3, y=5):
+    def both_defaults(x=3, y=5):
         pass
 
-    def f3(x, y='adfe'):
+    def no_default_then_default(x, y='adfe'):
         pass
 
-    funcs = [f1, f2, f3]
+    funcs = [no_defaults, both_defaults, no_default_then_default]
     exp_default_dicts = [{'x': None}, {'x': 3, 'y': 5},
                          {'x': None, 'y': 'adfe'}]
 
@@ -182,9 +182,13 @@ class TestEqAssigner(unittest.TestCase):
 
 class TUAssigner(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
+        self.UnitlessClass = UnitlessTUAssigner
         self.x = x
         self.t = t
         self._default_units = {'x': u.m, 't': u.s}
+
+class UnitlessTUAssigner(NoUnitAssigner, TUAssigner):
+    pass
 
 
 class UAssignerNoDefault(UnitAssigner):
@@ -227,6 +231,8 @@ def test_unit_to_unitless():
 
 class TUAssigner2(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
+        self.UnitlessClass = UnitlessTUAssigner2
+
         self.x = x
         self.t = t
         self._default_units = {'x': u.m, 't': u.s}
@@ -234,6 +240,8 @@ class TUAssigner2(UnitAssigner):
     def speed(self):
         return self.x / self.t
 
+class UnitlessTUAssigner2(NoUnitAssigner, TUAssigner2):
+    pass
 
 class TestNoUnitAssigner(unittest.TestCase):
     def setUp(self):
@@ -246,20 +254,3 @@ class TestNoUnitAssigner(unittest.TestCase):
         eq_(self.nu.what, "Car")
         eq_(self.nu.speed(), 0.003)
 
-    # def test_to_unitted(self):
-    #     """Make sure that we can make an object with units again
-    #     from a NoUnit object."""
-    #     unitted = self.nu.to_unitted()
-    #     pa_eq(unitted.x, self.unitted.x)
-    #     pa_eq(unitted.t, self.unitted.t)
-    #     pa_eq(unitted.speed(), self.unitted.speed())
-    #     eq_(unitted.what, self.unitted.what)
-
-    # def test_get_default_units(self):
-    #     assert_raises(AttributeError, self.nu._get_default_units)
-
-    # def test_check_dimensionality_units(self):
-    #     assert_raises(AttributeError, self.nu._check_dimensionality_units)
-
-    def test_to_unitless(self):
-        assert_raises(AttributeError, self.nu.to_unitless)

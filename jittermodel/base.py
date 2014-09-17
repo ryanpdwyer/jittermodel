@@ -1,18 +1,17 @@
 """
-Unit Base
-=========
+Base
+====
 
-Base classes with units.
-2013-12-13
-Ryan Dwyer
+This file defines the individual classes used to build a simulation, including
+a ``Cantilever``, ``Transistor`` and ``Experiment``
 
 NOTE: To use units in your own file, import the
-unitregistry (:code:`u`) from jittermodel!
+unitregistry (``u``) from ``jittermodel``!
 """
 
 from __future__ import division
 from numpy import pi
-from jittermodel import (u, UnitAssigner, get_defaults, E_0, k_B, q)
+from jittermodel import (u, UnitAssigner, NoUnitAssigner, get_defaults, E_0, k_B, q)
 
 
 class SimpleCantilever(UnitAssigner):
@@ -73,6 +72,8 @@ class Cantilever(SimpleCantilever):
                  R_tip=40*u.nm, L_tip=15*u.um, theta_tip=16*u.degrees,
                  geometry_c='perpendicular'):
         """Initialize the cantilever."""
+        self.UnitlessClass = UnitlessCantilever
+
         self.f_c = f_c
         self.k_c = k_c
         self.Q = Q
@@ -114,10 +115,16 @@ theta_tip = {self.theta_tip},\
 geometry_c = '{self.geometry_c}')".format(self=self)
 
 
+class UnitlessCantilever(NoUnitAssigner, Cantilever):
+    pass
+
 class Experiment(UnitAssigner):
     """Stores parameters set by the experimenter. Now with units!"""
+
     def __init__(self, d=100 * u.nm, V_ts=5 * u.V,
                  jitter_f_i=0.2 * u.Hz, jitter_f_f=3 * u.Hz):
+        self.UnitlessClass = UnitlessExperiment
+
         self.d = d
         self.V_ts = V_ts
         self.jitter_f_i = jitter_f_i
@@ -139,6 +146,10 @@ class Experiment(UnitAssigner):
         return """Tip-sample: {self.d}, {self.V_ts}""".format(self=self)
 
 
+class UnitlessExperiment(NoUnitAssigner, Experiment):
+    pass
+
+
 class Transistor(UnitAssigner):
     """A transistor sample, now with units."""
     E_0 = E_0
@@ -153,6 +164,8 @@ class Transistor(UnitAssigner):
                  V_g=10 * u.V, rho=None):
         """Initialize the sample with all of the experimentally
         relevant sample parameters."""
+        self.UnitlessClass = UnitlessTransistor
+
         self.semiconductor = semiconductor
         self.h = h
         self.h_trans = h_trans
@@ -279,3 +292,7 @@ h_i = {self.h_i}, E_s1 = {self.E_s1}, \
 E_s2 = {self.E_s2}, E_i1 = {self.E_i1}, \
 E_i2 = {self.E_i2}, mobility = {self.mobility},\
 T = {self.T}, V_g = {self.V_g})".format(self=self)
+
+
+class UnitlessTransistor(NoUnitAssigner, Transistor):
+    pass

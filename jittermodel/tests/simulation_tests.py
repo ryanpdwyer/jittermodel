@@ -131,7 +131,7 @@ class TestSimulation(unittest.TestCase):
         self.sim.assign('f_c', 75 * u.kHz)
         eq_(self.sim.Cant.f_c, 75)
 
-
+# TODO: Where does this calculation come from?
 class TestCapacitanceCalculations(unittest.TestCase):
     def setUp(self):
         cant = Cantilever(
