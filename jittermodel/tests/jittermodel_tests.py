@@ -9,10 +9,13 @@ from __future__ import division
 import pint
 from numpy import pi
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
-                         UnitAssigner, NoUnitAssigner, q2unitless, make_units)
+                         UnitAssigner, NoUnitAssigner, q2unitless, make_units,
+                         silentremove)
 from jittermodel.tests import pint_assert_almost_equal
 import unittest
 from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
+import cPickle as pickle
+
 
 pa_eq = pint_assert_almost_equal
 
@@ -221,13 +224,29 @@ class TestUnitAssigner(unittest.TestCase):
         assert_raises(AttributeError, self.und._get_default_units)
 
 
-def test_unit_to_unitless():
-    unit_a = TUAssigner(3*u.nm, 1*u.ms)
-    unit_a._unitless_units = {'[length]': u.um, '[time]': u.ms}
-    no_unit_a = unit_a.to_unitless()
-    eq_(no_unit_a.x, 0.003)
-    eq_(no_unit_a.t, 1)
+class TestUnit_to_unitless():
+    filename = 'test-pickle-unitless-Assigner.pkl'
 
+    def setUp(self):
+        self.unit_a = TUAssigner(3*u.nm, 1*u.ms)
+        self.unit_a._unitless_units = {'[length]': u.um, '[time]': u.ms}
+        self.no_unit_a = self.unit_a.to_unitless()
+
+    def tearDown(self):
+        silentremove(self.filename)
+
+    def test_unit_to_unitless_magnitude_correct(self):
+        eq_(self.no_unit_a.x, 0.003)
+        eq_(self.no_unit_a.t, 1)
+
+    def test_pickle(self):
+        with open(self.filename, 'w') as f:
+            pickle.dump(self.no_unit_a, f)
+
+        with open(self.filename, 'r') as f:
+            no_unit_unpickled = pickle.load(f)
+
+        eq_(self.no_unit_a.x, no_unit_unpickled.x)
 
 class TUAssigner2(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
@@ -240,8 +259,10 @@ class TUAssigner2(UnitAssigner):
     def speed(self):
         return self.x / self.t
 
+
 class UnitlessTUAssigner2(NoUnitAssigner, TUAssigner2):
     pass
+
 
 class TestNoUnitAssigner(unittest.TestCase):
     def setUp(self):
@@ -254,3 +275,16 @@ class TestNoUnitAssigner(unittest.TestCase):
         eq_(self.nu.what, "Car")
         eq_(self.nu.speed(), 0.003)
 
+
+def test_pickle_Assigner():
+    filename = 'test-pickle-Assigner.pkl'
+    a = Assigner()
+    a.b = 2
+    with open(filename, 'w') as f:
+        pickle.dump(a, f)
+
+    with open(filename, 'r') as f:
+        b = pickle.load(f)
+
+    eq_(a.b, b.b)
+    silentremove(filename)

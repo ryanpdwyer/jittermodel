@@ -158,7 +158,8 @@ class GeneratePlotData(object):
         self._calculate_plot_points()
 
     def make_plot(self, figname=None, figsize=(3, 3), fontsize=10,
-                  linewidth=2, xlim=None, ylim=None, properties=None, transparent=False):
+                  linewidth=2, xlim=None, ylim=None, properties=None,
+                  transparent=False):
         import matplotlib as mpl
         mpl.rcParams.update({
             'figure.figsize': figsize,
@@ -221,8 +222,7 @@ class GeneratePlotData(object):
         self.y = np.array(power_spectra_y)*self.scales['power spectrum']
 
     def pickle(self, name):
-        """Pickles the object to a file in a subdirectory pkl. Currently
-        not working."""
+        """Pickles the object to a file in a subdirectory pkl."""
         self.Cant = self.Expt = self.Samp = self.Simulation = None
         today = datetime.date.today().isoformat()
         filename = 'pkl/{today}-{name}.pkl'.format(today=today, name=name)

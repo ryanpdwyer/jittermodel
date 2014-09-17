@@ -12,6 +12,8 @@ properties between the UnitAssigner and NoUnitAssigner completely intact.
 
 import pint
 import inspect
+import os
+import errno
 
 u = pint.UnitRegistry()
 
@@ -186,10 +188,7 @@ must be positive.".format(attr=attr))
         return self._unitless
 
 
-
-# Not sure if it is a good idea to have this assign from Assigner, seeing as
-# only purpose is to override the three functions listed below.
-class NoUnitAssigner(Assigner):
+class NoUnitAssigner(object):
     """A class with blank, dummy, _get_default_units and
     _check_number_inputs_positive. Meant to be used as a mix-in class, with
     some descendent of UnitAssigner."""
@@ -202,3 +201,13 @@ class NoUnitAssigner(Assigner):
 
     def to_unitless(self):
         raise AttributeError
+
+
+def silentremove(filename):
+    """If a file exists, delete it. Otherwise, return nothing.
+       See http://stackoverflow.com/q/10840533/2823213"""
+    try:
+        os.remove(filename)
+    except OSError as e:  # this would be "except OSError, e:" before Python 2.6
+        if e.errno != errno.ENOENT:  # errno.ENOENT = no such file or directory
+            raise  # re-raise exception if a different error occured

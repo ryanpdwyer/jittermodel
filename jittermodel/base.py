@@ -11,7 +11,8 @@ unitregistry (``u``) from ``jittermodel``!
 
 from __future__ import division
 from numpy import pi
-from jittermodel import (u, UnitAssigner, NoUnitAssigner, get_defaults, E_0, k_B, q)
+from jittermodel import (u, UnitAssigner, NoUnitAssigner,
+                         get_defaults, E_0, k_B, q)
 
 
 class SimpleCantilever(UnitAssigner):
