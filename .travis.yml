@@ -30,7 +30,6 @@ install:
   - conda install -n test-environment pip
   - conda install -n test-environment atlas numpy scipy matplotlib nose
   - source activate test-environment
-  - python -c "import matplotlib; matplotlib.test()"
   - pip install pint mpmath bunch mock
   - python setup.py install
  

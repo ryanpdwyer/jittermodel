@@ -1,8 +1,11 @@
 # encoding: utf-8
+import numpy as np
+import matplotlib
+# Force matplotlib to not use any Xwindows backend.
+# See http://stackoverflow.com/a/3054314
+matplotlib.use('Agg')
 
 from nose.tools import eq_
-
-import numpy as np
 
 from jittermodel import u, silentremove
 from jittermodel.base import Cantilever, Transistor, Experiment
