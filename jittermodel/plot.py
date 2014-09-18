@@ -166,7 +166,6 @@ class GeneratePlotData(object):
         import matplotlib as mpl
         mpl.rcParams.update({
             'figure.figsize': figsize,
-            'text.usetex': True,
             'font.family': 'serif',
             'font.serif': 'Times',
             'font.size': fontsize})
