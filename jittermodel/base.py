@@ -287,11 +287,11 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
 mobility {self.mobility_cm2:P}".format(self=self)
 
     def __repr__(self):
-        return "Sample(semiconductor = '{self.semiconductor}', \
+        return "Transistor(semiconductor = '{self.semiconductor}', \
 h = {self.h}, h_trans = {self.h_trans}, \
 h_i = {self.h_i}, E_s1 = {self.E_s1}, \
 E_s2 = {self.E_s2}, E_i1 = {self.E_i1}, \
-E_i2 = {self.E_i2}, mobility = {self.mobility},\
+E_i2 = {self.E_i2}, mobility = {self.mobility}, \
 T = {self.T}, V_g = {self.V_g})".format(self=self)
 
 

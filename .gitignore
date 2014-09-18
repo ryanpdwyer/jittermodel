@@ -3,4 +3,5 @@
 docs/_build/
 .tox/
 .coverage
+**.ipynb_checkpoints/
 

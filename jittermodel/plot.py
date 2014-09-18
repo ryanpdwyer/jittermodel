@@ -87,40 +87,43 @@ class GeneratePlotData(object):
     def _calc_variable_array(self, x_scale='log', n_pts=None):
         """Use the scale data to pick the appropriate
         spacing of the points."""
+        x_unit = self.output_units[self.x_var]
+        x_min = self.variable_range[0].to(x_unit).magnitude
+        x_max = self.variable_range[1].to(x_unit).magnitude
+
         if n_pts is None:
             n_pts = self.n_pts
         if x_scale == 'log':
             x_unit = self.output_units[self.x_var]
-            x_min = np.log10(self.variable_range[0].to(x_unit).magnitude)
-            x_max = np.log10(self.variable_range[1].to(x_unit).magnitude)
-            _r = np.logspace(x_min, x_max, n_pts) * x_unit
+            x_min_log = np.log10(x_min)
+            x_max_log = np.log10(x_max)
+            x = np.logspace(x_min_log, x_max_log, n_pts) * x_unit
         elif x_scale == 'linear':
-            _r = np.linspace(self.variable_range[0],
-                             self.variable_range[1], n_pts)
+            x = np.linspace(x_min, x_max, n_pts)
         else:
             raise ValueError("x_scale must be either 'log' or 'linear'")
-        return _r
+        return x
 
     def _pick_plot_func(self, x_scale, y_scale):
         """Return the plot function with the appropriate scale on each axis."""
-        _scale_tup = (x_scale, y_scale)
-        _scale_dict = {('log', 'log'): plt.loglog,
+        scales_tuple = (x_scale, y_scale)
+        scales_plotting_function_dict = {('log', 'log'): plt.loglog,
                        ('linear', 'linear'): plt.plot,
                        ('linear', 'log'): plt.semilogy,
                        ('log', 'linear'): plt.semilogx}
-        return _scale_dict[_scale_tup]
+        return scales_plotting_function_dict[scales_tuple]
 
     def _make_sim_array(self):
         """Makes an array of simulations over the variable varied
         in the experiment, and also for multi_plot_var."""
-        variable_values = self._calc_variable_array(self.x_scale)
+        x_array = self._calc_variable_array(self.x_scale)
         self.all_sims = []
         for multi_plot_val in self.multi_plot_values:
             row = []
-            for val in variable_values:
+            for x in x_array:
                 sim = self.Simulation(self.Cant, self.Samp, self.Expt)
                 sim.assign(self.multi_plot_var, multi_plot_val)
-                sim.assign(self.variable, val)
+                sim.assign(self.variable, x)
                 row.append(sim)
             self.all_sims.append(row)
 
@@ -159,7 +162,7 @@ class GeneratePlotData(object):
 
     def make_plot(self, figname=None, figsize=(3, 3), fontsize=10,
                   linewidth=2, xlim=None, ylim=None, properties=None,
-                  transparent=False):
+                  tight_layout=True, transparent=False):
         import matplotlib as mpl
         mpl.rcParams.update({
             'figure.figsize': figsize,
@@ -168,7 +171,8 @@ class GeneratePlotData(object):
             'font.serif': 'Times',
             'font.size': fontsize})
         import matplotlib.pyplot as plt
-        lines = plt.loglog(self.x.T, self.y.T, linewidth=linewidth)
+        plot = self._pick_plot_func(self.x_scale, 'log') 
+        lines = plot(self.x.T, self.y.T, linewidth=linewidth)
         plt.xlabel(self.labels[self.x_var])
         plt.ylabel(self.labels[self.y_var])
 
@@ -182,7 +186,9 @@ class GeneratePlotData(object):
             for d, line in zip(reformatted_properties, lines):
                 plt.setp(line, **d)
 
-        plt.tight_layout()
+        if tight_layout:
+            plt.tight_layout()
+
         if figname is None:
             plt.show()
             sleep(20)

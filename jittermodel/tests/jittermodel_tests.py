@@ -3,7 +3,8 @@ __init__ tests
 2013-12-16
 Ryan Dwyer
 
-Test general helper functions in the package and
+Test general helper functions in the package and the base classes used to
+derive specific classes we implement our simulation with.
 """
 from __future__ import division
 import pint
@@ -11,9 +12,10 @@ from numpy import pi
 from jittermodel import (get_defaults, get_default_units, u, Assigner,
                          UnitAssigner, NoUnitAssigner, q2unitless, make_units,
                          silentremove)
-from jittermodel.tests import pint_assert_almost_equal
+from jittermodel.tests import pint_assert_almost_equal, expected_failure
 import unittest
-from nose.tools import eq_, assert_not_equal, assert_raises, assert_almost_equal
+from nose.tools import (eq_, assert_not_equal,
+                        assert_raises, assert_almost_equal)
 import cPickle as pickle
 
 
@@ -190,6 +192,7 @@ class TUAssigner(UnitAssigner):
         self.t = t
         self._default_units = {'x': u.m, 't': u.s}
 
+
 class UnitlessTUAssigner(NoUnitAssigner, TUAssigner):
     pass
 
@@ -247,6 +250,7 @@ class TestUnit_to_unitless():
             no_unit_unpickled = pickle.load(f)
 
         eq_(self.no_unit_a.x, no_unit_unpickled.x)
+
 
 class TUAssigner2(UnitAssigner):
     def __init__(self, x=2*u.m, t=1*u.s):
