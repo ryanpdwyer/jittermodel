@@ -1,6 +1,6 @@
 # encoding: utf-8
 from jittermodel import u, q2unitless
-from jittermodel.simulation import (Simulation, SphereCapacitance, alpha_, 
+from jittermodel.simulation import (Simulation, SphereCapacitance, _alpha, 
                                      sum_sinh)
 from jittermodel.base import Cantilever, Experiment, Transistor
 from nose.tools import eq_, assert_almost_equal, assert_raises

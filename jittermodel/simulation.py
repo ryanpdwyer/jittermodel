@@ -65,11 +65,14 @@ def sum_sinh(alpha, eps=1e-8):
     return math.fsum(terms)
 
 
-def alpha_(d, R_tip, h, E_s1):
+def _alpha(d, R_tip, h, E_s1):
     return arccosh(1 + d / R_tip + h / (E_s1 * R_tip))
 
 
 class SphereCapacitance(object):
+    """Implement a simple model of AFM cantilever-sample capacitance
+    contributed by a spherical tip."""
+
     def __init__(self, simulation):
         """Initialize with an owner class containing the other methods
         and data used by the capacitance model.
@@ -92,24 +95,20 @@ class SphereCapacitance(object):
         cant = sim.Cant
         samp = sim.Samp
 
-        alpha = alpha_(d, cant.R_tip, samp.h, samp.E_s1)
+        alpha = _alpha(d, cant.R_tip, samp.h, samp.E_s1)
 
         return (4 * pi * sim.E_0 * cant.R_tip * sum_sinh(alpha))
 
     def Cd(self, d=None):
         """Returns the numerical derivative of the sphere capacitance
-        C at a distance d. Uses numdifftools
-        (https://code.google.com/p/numdifftools/) to calculate the
-        derivative to high precision automatically."""
+        C at a distance d. Uses scipy to calculate the derivative."""
         if d is None:
             d = self.sim.Expt.d
         return derivative(self.C, d, dx=1e-5, n=1)
 
     def Cd2(self, d=None):
         """Returns the second derivative of the sphere capacitance
-        C at a distance d. Uses numdifftools
-        (https://code.google.com/p/numdifftools/) to calculate the
-        derivative to high precision automatically."""
+        C at a distance d. Uses scipy to calculate the derivative."""
         if d is None:
             d = self.sim.Expt.d
         return derivative(self.C, d, dx=1e-5, n=2)
@@ -160,16 +159,19 @@ class Simulation(object):
         else:
             found = False
             for item in (self.UCant, self.USamp, self.UExpt):
+                # TODO: searching in a hidden, private attribute is bad form;
+                # This could be nicely implemented with __contains__, which
+                # would make this check look far saner.
                 if attr in item._all_attributes:
                     found = True
                     item.assign(attr, val)
                     # Reinitialize the unitless version of the item
                     item.to_unitless()
+                    break
 
             if not found:
                 raise AttributeError(
                     "The attribute {0} was not found.".format(attr))
-
 
     def lookup(self, attr):
         """Looks for an attribute in the cantilever, sample, or
