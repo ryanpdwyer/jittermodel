@@ -162,15 +162,23 @@ class GeneratePlotData(object):
 
     def make_plot(self, figname=None, figsize=(3, 3), fontsize=10,
                   linewidth=2, xlim=None, ylim=None, properties=None,
-                  tight_layout=True, transparent=False):
+                  tight_layout=True, transparent=False, usetex=False):
         import matplotlib as mpl
-        mpl.rcParams.update({
-            'figure.figsize': figsize,
-            'font.family': 'serif',
-            'font.serif': 'Times',
-            'font.size': fontsize})
+
+        if usetex:
+            mpl.rcParams.update({
+                                'figure.figsize': figsize,
+                                'text.usetex': True,
+                                'font.family': 'serif',
+                                'font.serif': 'Times',
+                                'font.size': fontsize})
+        else:
+            mpl.rcParams.update({
+                                'figure.figsize': figsize,
+                                'font.size': fontsize})
+
         import matplotlib.pyplot as plt
-        plot = self._pick_plot_func(self.x_scale, 'log') 
+        plot = self._pick_plot_func(self.x_scale, 'log')
         lines = plot(self.x.T, self.y.T, linewidth=linewidth)
         plt.xlabel(self.labels[self.x_var])
         plt.ylabel(self.labels[self.y_var])
