@@ -99,7 +99,7 @@ class GeneratePlotData(object):
             x_max_log = np.log10(x_max)
             x = np.logspace(x_min_log, x_max_log, n_pts) * x_unit
         elif x_scale == 'linear':
-            x = np.linspace(x_min, x_max, n_pts)
+            x = np.linspace(x_min, x_max, n_pts) * x_unit
         else:
             raise ValueError("x_scale must be either 'log' or 'linear'")
         return x
