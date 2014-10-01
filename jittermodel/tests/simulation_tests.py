@@ -26,7 +26,7 @@ def test_sum_sinh():
     The mpmath module is used to verify that the sum meets error
     specifications.
     """
-    alphas = [2 ** i for i in xrange(-12, 10)]
+    alphas = [2 ** i for i in xrange(-12, 7)]
     results = [sum_sinh(alpha) for alpha in alphas]
     mp_results = [mp_sum_sinh(alpha) for alpha in alphas]
     for mp_result, test_result in zip(mp_results, results):

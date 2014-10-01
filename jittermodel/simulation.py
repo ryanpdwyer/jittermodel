@@ -58,11 +58,16 @@ def sum_sinh(alpha, eps=1e-8):
 
     We manually require at least 4 terms so that the derivative is
     numerically stable. We use math.fsum to give a numerically stable sum."""
-    summand = lambda n: sinh(alpha) / sinh(alpha * n)
+    # For alpha greater than 37, the sum is 1 to within double precision,
+    # so short-circuit the calculation to avoid overflow errors.
+    if alpha > 37:
+        return 1
+    else:
+        summand = lambda n: sinh(alpha) / sinh(alpha * n)
 
-    N_max = max(4, int_sum_sinh(alpha, eps))
-    terms = summand(np.arange(1, N_max + 1))
-    return math.fsum(terms)
+        N_max = max(4, int_sum_sinh(alpha, eps))
+        terms = summand(np.arange(1, N_max + 1))
+        return math.fsum(terms)
 
 
 def _alpha(d, R_tip, h, E_s1):
