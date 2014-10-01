@@ -215,6 +215,12 @@ class TestUnitAssigner(unittest.TestCase):
         assert_raises(pint.DimensionalityError,
                       self.ua_bad._check_dimensionality_units)
 
+    def test_dot_assign_wrong_units_does_nothing(self):
+        self.ua.x = 5 * u.s
+
+    def test_assign_wrong_units_raises_error(self):
+        assert_raises(pint.DimensionalityError, self.ua.assign, 'x', 5*u.s)
+
     def test_get_units(self):
         ua = self.ua
         eq_(ua._default_units, {'x': u.m, 't': u.s})

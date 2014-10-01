@@ -129,6 +129,10 @@ class UnitAssigner(Assigner):
     The unit behavior is specified by a dictionary self._default_units containing
     the name of the variable as the key, and default unit as the value."""
 
+    def assign(self, attr, val):
+        setattr(self, attr, val)
+        self._check_dimensionality_units()
+
     def _get_default_units(self):
         """Get the units of the arguments to initialize the object, inferring
         them from the class's __init__ method."""
