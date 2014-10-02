@@ -1,3 +1,5 @@
 - [ ] Remove functions from `__init__.py`, put them in a separate, hidden utility file (`_util.py`)
 - [ ] Add imports of simulation, base, plot, etc to `__init__.py`
-- [ ] 
+- [ ] Implement model II, plus nice unittests for it.
+- [ ] Is there any use case for all of the `=None` defaults in calculation code? It seems better to just force the caller to actually specify a value, since the capacitance, etc, are low-level routines.
+- [ ] Start adding tests for the various simulation objects, so that I can implement the other model.
