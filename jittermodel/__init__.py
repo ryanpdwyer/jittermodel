@@ -126,8 +126,9 @@ class Assigner(object):
 class UnitAssigner(Assigner):
     """An Assigner that uses units for numerical inputs.
 
-    The unit behavior is specified by a dictionary self._default_units containing
-    the name of the variable as the key, and default unit as the value."""
+    The unit behavior is specified by a dictionary self._default_units
+    containing the name of the variable as the key,
+    and default unit as the value."""
 
     def assign(self, attr, val):
         setattr(self, attr, val)

@@ -19,6 +19,7 @@ class SimpleCantilever(UnitAssigner):
     """Implement a simple unit cantilever, and require all inputs."""
 
     k_B = k_B
+
     def __init__(self, f_c, k_c, Q):
         """Initialize the cantilever."""
         self.f_c = f_c
