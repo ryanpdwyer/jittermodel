@@ -46,14 +46,16 @@ class GeneratePlotData(object):
     fp1 = GenerateFrictionPlot(c1,s1,e1, 'V_g', )"""
     Simulation = Simulation
     units = Simulation.units
+
     def __init__(self, Cant, Samp, Expt, variable, variable_range):
         self.Cant = Cant
         self.Samp = Samp
         self.Expt = Expt
         self.variable = variable
         self.variable_range = variable_range
+
         self.labels = {
-            'rho': r'Carrier Density $\rho$ ($\mathrm{m}^{-3}$)',
+            'rho': r'Carrier Density $\rho$ ($\mathrm{cm}^{-3}$)',
             'V_g': r'Gate Voltage $V_\mathrm{g}$ (V)',
             'd': r'Tip-Sample Distance $d$ (nm)',
             'friction': (r'Friction $\Gamma_\mathrm{s}$ ' +
@@ -64,8 +66,10 @@ class GeneratePlotData(object):
                                r'($\mathrm{Hz}^2 / \mathrm{Hz}$)'),
             'f': r'$f$ (Hz)'
         }
+        # Shouldn't scales be inferred from self.units, self.output units?
+        # After looking at it, yes it should.
         self.scales = {
-            'rho': 1e18,
+            'rho': 1e12,
             'V_g': 1e-3,
             'd': 1e3,
             'jitter': 1e6,
@@ -74,6 +78,7 @@ class GeneratePlotData(object):
             'power spectrum': 1e3,
             'f': 1e3
         }
+
         self.output_units = {
             'rho': u.cm**-3,
             'V_g': u.V,

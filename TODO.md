@@ -1,0 +1,3 @@
+- [ ] Remove functions from `__init__.py`, put them in a separate, hidden utility file (`_util.py`)
+- [ ] Add imports of simulation, base, plot, etc to `__init__.py`
+- [ ] 
