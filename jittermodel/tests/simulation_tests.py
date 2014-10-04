@@ -1,8 +1,12 @@
 # encoding: utf-8
+from __future__ import division, print_function
+import numpy as np
+
 from jittermodel import u, q2unitless
 from jittermodel.simulation import (Simulation, SphereCapacitance, _alpha, 
-                                     sum_sinh)
+                                     sum_sinh, _eta, _lambda)
 from jittermodel.base import Cantilever, Experiment, Transistor
+from numpy.testing import assert_allclose
 from nose.tools import eq_, assert_almost_equal, assert_raises
 from bunch import Bunch
 from jittermodel.tests import expected_failure
@@ -110,6 +114,44 @@ def test_init_Simulation():
     assert_almost_equal(sim.Samp.diff, 0.0077038955272097955)
 
 
+def test__eta():
+    k = np.array([1, 10, 100, 1000, 10000, 100000])
+    kappa = 3500
+    E_s = 3 - 0.001j
+    D = 0.005
+    omega = 300
+    # Expected values were calculated using sympy, to 15 digits of precision.
+    expected_eta = np.array([2020.78311260126 + 15.182507854811j,
+                             2020.80760652432 + 15.182323829782j,
+                             2023.25550170076 + 15.163955048756j,
+                             2254.66583909462 + 13.607584302718j,
+                             10202.1243828582 + 3.007271263178j,
+                             100020.414581093 + 0.30674293451j])
+    eta = _eta(k, kappa, E_s, D, omega)
+    assert_allclose(eta, expected_eta)
+
+
+def test__lambda():
+    k = np.array([1, 10, 100, 1000, 10000, 100000])
+    eta = np.array([2020.78311260126 + 15.182507854811j,
+                    2020.80760652432 + 15.182323829782j,
+                    2023.25550170076 + 15.163955048756j,
+                    2254.66583909462 + 13.607584302718j,
+                    10202.1243828582 + 3.007271263178j,
+                    100020.414581093 + 0.30674293451j])
+
+    E_eff = 3 - 100j
+    E_s = 3 - 0.001j
+    expected_lambda = np.array([0.0001184255261724 + 0.0164941987549306j,
+                                0.00118421087011718 + 0.164939988752172j,
+                                0.0117978533636026 + 1.64740475175451j,
+                                0.0842948437214929 + 14.7834985873234j,
+                               -0.00125999301746353 + 32.672603689536j,
+                               -0.0110065260871034 + 33.3261929274151j])
+    Lambda = _lambda(k, eta, E_eff, E_s)
+    assert_allclose(Lambda, expected_lambda)
+
+
 class TestSimulation(unittest.TestCase):
     def setUp(self):
         self.cant = Cantilever(
@@ -148,10 +190,10 @@ class TestCapacitanceCalculations(unittest.TestCase):
         self.sim = Simulation(cant, trans, expt)
 
     def test_capacitance(self):
-        assert_almost_equal(self.sim.Sphere.C(), 5.1e-3, places=1)
+        assert_almost_equal(self.sim.Sphere.C(), 5.1e-3, places=2)
 
     def test_capacitance_2nd_derivative(self):
-        assert_almost_equal(self.sim.Sphere.Cd2(), 6.9e-2, places=1)
+        assert_almost_equal(self.sim.Sphere.Cd2(), 6.9e-2, places=2)
 
 
 class TestImDielectric(unittest.TestCase):

@@ -24,14 +24,14 @@ unit, and keep all the math in this code unitfree.
 
 from __future__ import division
 import numpy as np
-from numpy import (pi, sinh, tanh, arccosh,
+from numpy import (pi, sinh, cosh, tanh, arccosh,
                    exp, log10, arctanh)
 from scipy.integrate import quad
 from scipy.special import jn
 from scipy.misc import derivative
 import math
 from copy import copy
-from jittermodel import (u, E_0, k_B, q, q2unitless)
+from jittermodel import u, q2unitless
 
 
 inf = float('+infinity')
@@ -72,6 +72,18 @@ def sum_sinh(alpha, eps=1e-8):
 
 def _alpha(d, R_tip, h, E_s1):
     return arccosh(1 + d / R_tip + h / (E_s1 * R_tip))
+
+
+def _thetaI_big_term(k, h_s, alpha, Lambda, eta):
+    """Large term in brackets at the bottom of page 17 of
+    Lekkala, 2013, *et al.*."""
+    sk = sinh(k * h_s)
+    sn = sinh(eta * h_s)
+    ck = cosh(k * h_s)
+    cn = cosh(k * eta)
+    return (-Lambda * coth(eta*h_s) +
+            (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /
+            (ck * sn + alpha*sk*sn - Lambda*sk*cn))
 
 
 class SphereCapacitance(object):
@@ -119,6 +131,15 @@ class SphereCapacitance(object):
         return derivative(self.C, d, dx=1e-5, n=2)
 
 
+def _eta(k, kappa, E_s, D, omega):
+    return np.sqrt(k**2 + kappa**2 / E_s + omega/D*1j)
+
+def _lambda(k, eta, E_eff, E_s):
+    """Helper function for calculating the correlation integrand.
+    See Lekkala, et al., 2013, Eq. 19"""
+    return k/eta*(1 - E_eff/E_s)
+
+
 class Simulation(object):
 
     """This calculates experimental parameters such as capacitance
@@ -128,6 +149,7 @@ class Simulation(object):
     units = {"[mass]": u.pg, "[length]": u.um, "[time]": u.ms,
              "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
 
+    # Store fundamental constants in the units defined above.
     E_0 = q2unitless(u.epsilon_0, units)
     q = q2unitless(u.elementary_charge, units)
     k_B = q2unitless(u.boltzmann_constant, units)
@@ -186,14 +208,14 @@ class Simulation(object):
                 return item.lookup(attr)
         return '{attr} not found'.format(attr=attr)
 
-    # Correlation Function related functions. #####
+    # Correlation Function related functions. #
 
     def _prefactor(self, omega):
         """This is the prefactor for correlation function integrals.
         See Eq. 16 in Lekkala et al. 2013."""
         return (-self.k_B * self.Samp.T / (4 * pi * self.E_0 * omega))
 
-    def _im_dielectric(self, k, omega=None, model=None):
+    def _im_dielectric(self, k, omega, model='II'):
         """Computes the complicated expression containing
         :math:`\\epsilon_\\mathrm{rel}(\\omega)` and
         :math:`\\theta(k,\\omega)` in the correlation function
@@ -202,30 +224,36 @@ class Simulation(object):
 
         TODO: Add unittest, even with just hard-coded comparisons
         to Mathematica."""
-        if omega is None:
-            omega = self.Cant.omega_c
-        if model is None:
-            model = 'II'
-        elif model == 'I':
-            raise NotImplementedError('This model has not beed coded yet.')
-        else:
+
+        if model not in ('I', 'II'):
             raise ValueError("Model must be either 'I' or 'II'.")
 
         samp = self.Samp
+        kappa = samp.kappa
+
+        if model == 'I':
+            E_s = samp.E_s
+            E_eff = samp.E_eff(omega)
+            E_d = samp.E_i
+            h = samp.h_diel + samp.h_trans
         if model == 'II':
-            kappa = samp.kappa
             E_s = samp.E_s
             E_eff = samp.E_eff(omega)
             E_d = samp.E_s
             h = samp.h_diel
 
+        alpha = E_eff / E_d
         nu = ((k ** 2 + kappa ** 2 / E_s + omega / self.Samp.diff * 1j)
               ** (0.5 + 0j))
-        llambda = (1 - E_eff / E_s) * k / nu
-        thetaII = E_s / E_d * ((E_eff + (1 - llambda) * E_d / tanh(k*h)) /
-                              (E_eff / tanh(k*h) + (1 - llambda) * E_d))
+        Lambda = (1 - E_eff / E_s) * k / nu
 
-        result = (E_s - thetaII) / (E_s + thetaII)
+        if model == 'I':
+            theta = E_s / E_eff * _thetaI_big_term(k, h, alpha, Lambda, nu)
+        elif model == 'II':
+            theta = E_s / E_d * ((E_eff + (1 - Lambda) * E_d / tanh(k*h)) /
+                                 (E_eff / tanh(k*h) + (1 - Lambda) * E_d))
+
+        result = (E_s - theta) / (E_s + theta)
         return result.imag
 
     def _corr_integrand(self, r1, r2, z1, z2, k, omega=None, n=0):

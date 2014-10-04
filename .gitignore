@@ -4,4 +4,5 @@ docs/_build/
 .tox/
 .coverage
 **.ipynb_checkpoints/
+jittermodel/tests/test_validation/.ipynb_checkpoints/
 
