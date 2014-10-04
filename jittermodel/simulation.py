@@ -30,6 +30,7 @@ from scipy.integrate import quad
 from scipy.special import jn
 from scipy.misc import derivative
 import math
+import cmath
 from copy import copy
 from jittermodel import u, q2unitless
 
@@ -72,18 +73,6 @@ def sum_sinh(alpha, eps=1e-8):
 
 def _alpha(d, R_tip, h, E_s1):
     return arccosh(1 + d / R_tip + h / (E_s1 * R_tip))
-
-
-def _thetaI_big_term(k, h_s, alpha, Lambda, eta):
-    """Large term in brackets at the bottom of page 17 of
-    Lekkala, 2013, *et al.*."""
-    sk = sinh(k * h_s)
-    sn = sinh(eta * h_s)
-    ck = cosh(k * h_s)
-    cn = cosh(k * eta)
-    return (-Lambda * coth(eta*h_s) +
-            (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /
-            (ck * sn + alpha*sk*sn - Lambda*sk*cn))
 
 
 class SphereCapacitance(object):
@@ -134,14 +123,31 @@ class SphereCapacitance(object):
 def _eta(k, kappa, E_s, D, omega):
     return np.sqrt(k**2 + kappa**2 / E_s + omega/D*1j)
 
+
 def _lambda(k, eta, E_eff, E_s):
     """Helper function for calculating the correlation integrand.
     See Lekkala, et al., 2013, Eq. 19"""
     return k/eta*(1 - E_eff/E_s)
 
 
-class Simulation(object):
+def _thetaI(k, h_s, alpha, Lambda, eta, E_s, E_eff):
+    """Large term in brackets at the bottom of page 17 of
+    Lekkala, 2013, *et al.*."""
+    sk = sinh(k * h_s)
+    sn = sinh(eta * h_s)
+    ck = cosh(k * h_s)
+    cn = cosh(k * eta)
+    return (E_s / E_eff * (-Lambda/ tanh(eta*h_s) +
+            (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /
+            (ck * sn + alpha*sk*sn - Lambda*sk*cn)))
 
+
+def _thetaII(k, h, E_s, E_d, E_eff, Lambda):
+    return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / tanh(k*h)) /
+                         (E_eff / tanh(k*h) + (1 - Lambda) * E_d)))
+
+
+class Simulation(object):
     """This calculates experimental parameters such as capacitance
     and sample-induced friction for a given cantilever, sample,
     and experiment.
@@ -154,7 +160,7 @@ class Simulation(object):
     q = q2unitless(u.elementary_charge, units)
     k_B = q2unitless(u.boltzmann_constant, units)
 
-    def __init__(self, cantilever, sample, experiment):
+    def __init__(self, cantilever, sample, experiment, model="II"):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates
         parameters used in the simula
@@ -169,6 +175,8 @@ class Simulation(object):
         self.Cant = self.UCant.to_unitless()
         self.Samp = self.USamp.to_unitless()
         self.Expt = self.UExpt.to_unitless()
+
+        self.model = model
 
         self.Sphere = SphereCapacitance(self)
 
@@ -215,7 +223,7 @@ class Simulation(object):
         See Eq. 16 in Lekkala et al. 2013."""
         return (-self.k_B * self.Samp.T / (4 * pi * self.E_0 * omega))
 
-    def _im_dielectric(self, k, omega, model='II'):
+    def _im_dielectric(self, k, omega):
         """Computes the complicated expression containing
         :math:`\\epsilon_\\mathrm{rel}(\\omega)` and
         :math:`\\theta(k,\\omega)` in the correlation function
@@ -225,33 +233,33 @@ class Simulation(object):
         TODO: Add unittest, even with just hard-coded comparisons
         to Mathematica."""
 
-        if model not in ('I', 'II'):
+        if self.model not in ('I', 'II'):
             raise ValueError("Model must be either 'I' or 'II'.")
 
         samp = self.Samp
         kappa = samp.kappa
+        diff = samp.diff
 
-        if model == 'I':
+        if self.model == 'I':
             E_s = samp.E_s
             E_eff = samp.E_eff(omega)
             E_d = samp.E_i
             h = samp.h_diel + samp.h_trans
-        if model == 'II':
+            alpha = E_eff / E_d
+
+        if self.model == 'II':
             E_s = samp.E_s
             E_eff = samp.E_eff(omega)
             E_d = samp.E_s
             h = samp.h_diel
 
-        alpha = E_eff / E_d
-        nu = ((k ** 2 + kappa ** 2 / E_s + omega / self.Samp.diff * 1j)
-              ** (0.5 + 0j))
-        Lambda = (1 - E_eff / E_s) * k / nu
+        eta = _eta(k, kappa, E_s, diff, omega)
+        Lambda = _lambda(k, eta, E_eff, E_s)
 
-        if model == 'I':
-            theta = E_s / E_eff * _thetaI_big_term(k, h, alpha, Lambda, nu)
-        elif model == 'II':
-            theta = E_s / E_d * ((E_eff + (1 - Lambda) * E_d / tanh(k*h)) /
-                                 (E_eff / tanh(k*h) + (1 - Lambda) * E_d))
+        if self.model == 'I':
+            theta = _thetaI(k, h, alpha, Lambda, eta, E_s, E_eff)
+        elif self.model == 'II':
+            theta = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
 
         result = (E_s - theta) / (E_s + theta)
         return result.imag
