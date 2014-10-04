@@ -163,8 +163,7 @@ class Simulation(object):
     def __init__(self, cantilever, sample, experiment, model="II"):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates
-        parameters used in the simula
-        tion"""
+        parameters used in the simulation"""
         self.UCant = copy(cantilever)
         self.USamp = copy(sample)
         self.UExpt = copy(experiment)
