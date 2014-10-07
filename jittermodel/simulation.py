@@ -30,7 +30,6 @@ from scipy.integrate import quad
 from scipy.special import jn
 from scipy.misc import derivative
 import math
-import cmath
 from copy import copy
 from jittermodel import u, q2unitless
 
@@ -189,7 +188,9 @@ class Simulation(object):
         class, and then does the appropriate assignment."""
         if attr == 'omega':
             # Unlike other attributes, omega is owned by the simulation.
-            self.omega = val.to(u.Hz).magnitude
+            self.omega = val.to(u.kHz).magnitude
+        if attr == 'model':
+            self.model = val
         else:
             found = False
             for item in (self.UCant, self.USamp, self.UExpt):

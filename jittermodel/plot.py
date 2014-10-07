@@ -126,7 +126,8 @@ class GeneratePlotData(object):
         for multi_plot_val in self.multi_plot_values:
             row = []
             for x in x_array:
-                sim = self.Simulation(self.Cant, self.Samp, self.Expt)
+                sim = self.Simulation(self.Cant, self.Samp, self.Expt,
+                                      self.Simulation.model)
                 sim.assign(self.multi_plot_var, multi_plot_val)
                 sim.assign(self.variable, x)
                 row.append(sim)
