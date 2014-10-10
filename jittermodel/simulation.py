@@ -32,7 +32,7 @@ from scipy.misc import derivative
 import math
 from copy import copy
 from jittermodel import u, q2unitless
-
+import numpy as np
 
 inf = float('+infinity')
 
@@ -132,18 +132,26 @@ def _lambda(k, eta, E_eff, E_s):
 def _thetaI(k, h_s, alpha, Lambda, eta, E_s, E_eff):
     """Large term in brackets at the bottom of page 17 of
     Lekkala, 2013, *et al.*."""
-    sk = sinh(k * h_s)
-    sn = sinh(eta * h_s)
-    ck = cosh(k * h_s)
-    cn = cosh(k * eta)
-    return (E_s / E_eff * (-Lambda/ tanh(eta*h_s) +
-            (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /
-            (ck * sn + alpha*sk*sn - Lambda*sk*cn)))
+    if k*h_s > 8:
+        return (E_s / E_eff * (-Lambda +
+            (1 + alpha - Lambda*(1 - 8*exp(-h_s*(eta + k))
+                                 +4*Lambda*exp(-2*eta*h_s)))/
+            (alpha - Lambda + 1)))
+    else:
+        sk = sinh(k * h_s)
+        sn = sinh(eta * h_s)
+        ck = cosh(k * h_s)
+        cn = cosh(eta * h_s)
+        return (E_s / E_eff * (-Lambda/ tanh(eta*h_s) +
+                (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /
+                (ck * sn + alpha*sk*sn - Lambda*sk*cn)))
 
 
 def _thetaII(k, h, E_s, E_d, E_eff, Lambda):
     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / tanh(k*h)) /
                          (E_eff / tanh(k*h) + (1 - Lambda) * E_d)))
+
+
 
 
 class Simulation(object):

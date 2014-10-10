@@ -157,7 +157,6 @@ def test__lambda():
     Lambda = _lambda(k, eta, E_eff, E_s)
     assert_allclose(Lambda, expected_lambda)
 
-@expected_failure
 def test_thetaI():
     k = np.array([1, 10, 100, 1000, 10000, 100000])
     eta = np.array([2020.78311260126 + 15.182507854811j,

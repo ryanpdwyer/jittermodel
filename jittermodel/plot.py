@@ -47,13 +47,13 @@ class GeneratePlotData(object):
     Simulation = Simulation
     units = Simulation.units
 
-    def __init__(self, Cant, Samp, Expt, variable, variable_range):
+    def __init__(self, Cant, Samp, Expt, variable, variable_range, model='II'):
         self.Cant = Cant
         self.Samp = Samp
         self.Expt = Expt
         self.variable = variable
         self.variable_range = variable_range
-
+        self.model = model
         self.labels = {
             'rho': r'Carrier Density $\rho$ ($\mathrm{cm}^{-3}$)',
             'V_g': r'Gate Voltage $V_\mathrm{g}$ (V)',
@@ -127,7 +127,7 @@ class GeneratePlotData(object):
             row = []
             for x in x_array:
                 sim = self.Simulation(self.Cant, self.Samp, self.Expt,
-                                      self.Simulation.model)
+                                      self.model)
                 sim.assign(self.multi_plot_var, multi_plot_val)
                 sim.assign(self.variable, x)
                 row.append(sim)
