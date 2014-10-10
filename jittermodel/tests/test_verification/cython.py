@@ -16,7 +16,7 @@ def _format_time(t):
     return formatted_time
 
 
-def time_theta(call, n):
+def time_thetaI(call, n):
     t = timeit.timeit(
         """{call}(
         1, 0.1, 0.0001 + 0.0165j,3500, 2000+15j,3-0.001j, 3 - 100j)""".format(
@@ -26,10 +26,26 @@ def time_theta(call, n):
     print("{call}: {t}".format(call=call, t=_format_time(t/n)))
 
 
+def time_thetaII(call, n):
+    t = timeit.timeit(
+        """{call}(
+        1, 0.1, 3 - 0.001j, 3 - 0.001j, 3 - 100j, 0.00012 + 0.0165j)""".format(
+        call=call),
+        setup="import jittermodel._sim; import jittermodel.simulation",
+        number=n)
+    print("{call}: {t}".format(call=call, t=_format_time(t/n)))
+
+
 def main():
-    time_theta("jittermodel.simulation._thetaI", 1000)
-    time_theta("jittermodel._sim._thetaI_np", 10000)
-    time_theta("jittermodel._sim._thetaI_math", 10000)
+    time_thetaI("jittermodel.simulation._thetaI", 1000)
+    time_thetaI("jittermodel._sim._thetaI_np", 10000)
+    time_thetaI("jittermodel._sim._thetaI_math", 10000)
+    time_thetaI("jittermodel._sim._thetaI_c", 100000)
+
+    time_thetaII("jittermodel.simulation._thetaII", 10000)
+    time_thetaII("jittermodel._sim._thetaII_math", 100000)
+    time_thetaII("jittermodel._sim._thetaII_c", 1000000)
+
 
 
 if __name__ == '__main__':
