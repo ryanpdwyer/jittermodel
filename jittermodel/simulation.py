@@ -152,6 +152,7 @@ def _thetaII(k, h, E_s, E_d, E_eff, Lambda):
                          (E_eff / tanh(k*h) + (1 - Lambda) * E_d)))
 
 # TODO: test this function!!!
+
 def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
                    model):
     sigma = mu * rho * q
@@ -174,6 +175,7 @@ def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
 
     result = (E_s - theta) / (E_s + theta)
     return result.imag
+
 
 class Simulation(object):
     """This calculates experimental parameters such as capacitance

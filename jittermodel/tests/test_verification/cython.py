@@ -40,11 +40,11 @@ def main():
     time_thetaI("jittermodel.simulation._thetaI", 1000)
     time_thetaI("jittermodel._sim._thetaI_np", 10000)
     time_thetaI("jittermodel._sim._thetaI_math", 10000)
-    time_thetaI("jittermodel._sim._thetaI_c", 100000)
+    time_thetaI("jittermodel._sim._thetaI_c", 1000000)
 
     time_thetaII("jittermodel.simulation._thetaII", 10000)
     time_thetaII("jittermodel._sim._thetaII_math", 100000)
-    time_thetaII("jittermodel._sim._thetaII_c", 1000000)
+    time_thetaII("jittermodel._sim._thetaII_c", 10000000)
 
 
 

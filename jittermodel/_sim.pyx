@@ -105,15 +105,44 @@ def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
         E_d = E_i
         h = h_diel + h_trans
         alpha = E_eff / E_d
-        eta = _eta(k, kappa, E_s, diff, omega)
-        Lambda = _lambda(k, eta, E_eff, E_s)
-        theta = _thetaI(k, h, alpha, Lambda, eta, E_s, E_eff)
+        eta = _eta_c(k, kappa, E_s, diff, omega)
+        Lambda = _lambda_c(k, eta, E_eff, E_s)
+        theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
     if model == 'II':
         E_d = E_s
         h = h_diel
-        eta = _eta(k, kappa, E_s, diff, omega)
-        Lambda = _lambda(k, eta, E_eff, E_s)
-        theta = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
+        eta = _eta_c(k, kappa, E_s, diff, omega)
+        Lambda = _lambda_c(k, eta, E_eff, E_s)
+        theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
 
     result = (E_s - theta) / (E_s + theta)
     return result.imag
+
+cpdef double _im_dielectric_c(double k, double h_diel, double h_trans,
+                            double complex E_s, double complex E_i,
+                            double mu, double omega, double rho, double T,
+                            double k_B, double q, double E_0,
+                            int model):
+    cdef double sigma = mu * rho * q
+    cdef double complex E_eff = E_s - sigma / (E_0 * omega) * 1j
+    cdef double kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
+    cdef double diff = mu * k_B * T / q
+
+    cdef double h
+    cdef double complex E_d, alpha, eta, Lambda, 
+    if model == 1:
+        E_d = E_i
+        h = h_diel + h_trans
+        alpha = E_eff / E_d
+        eta = _eta_c(k, kappa, E_s, diff, omega)
+        Lambda = _lambda_c(k, eta, E_eff, E_s)
+        theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
+    if model == 2:
+        E_d = E_s
+        h = h_diel
+        eta = _eta_c(k, kappa, E_s, diff, omega)
+        Lambda = _lambda_c(k, eta, E_eff, E_s)
+        theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
+
+    cdef double complex result = (E_s - theta) / (E_s + theta)
+    return cimag(result)
