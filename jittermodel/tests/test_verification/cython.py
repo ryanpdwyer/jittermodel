@@ -3,7 +3,7 @@ from __future__ import division
 import timeit
 
 
-def _format_time(t):
+def format_time(t):
     if t > 1:
         formatted_time = "{0:.3f} s".format(t)
     elif t > 1e-3:
@@ -15,7 +15,6 @@ def _format_time(t):
 
     return formatted_time
 
-
 def time_thetaI(call, n):
     t = timeit.timeit(
         """{call}(
@@ -23,7 +22,7 @@ def time_thetaI(call, n):
         call=call),
         setup="import jittermodel._sim; import jittermodel.simulation",
         number=n)
-    print("{call}: {t}".format(call=call, t=_format_time(t/n)))
+    print("{call}: {t}".format(call=call, t=format_time(t/n)))
 
 
 def time_thetaII(call, n):
@@ -33,7 +32,26 @@ def time_thetaII(call, n):
         call=call),
         setup="import jittermodel._sim; import jittermodel.simulation",
         number=n)
-    print("{call}: {t}".format(call=call, t=_format_time(t/n)))
+    print("{call}: {t}".format(call=call, t=format_time(t/n)))
+
+
+def time_im_dielectric_2(call, n):
+    t = timeit.timeit(
+        """{call}(1, 0.1, 0.001, 3 - 0.001j, 4.65, 3e-4, 300, 1e5, 300, 0.0138,
+        0.1602, 0.0088542, 2)""".format(
+        call=call),
+        setup="import jittermodel._sim; import jittermodel.simulation",
+        number=n)
+    print("{call} model 2: {t}".format(call=call, t=format_time(t/n)))
+
+def time_im_dielectric_1(call, n):
+    t = timeit.timeit(
+        """{call}(1, 0.1, 0.001, 3 - 0.001j, 4.65, 3e-4, 300, 1e5, 300, 0.0138,
+        0.1602, 0.0088542, 1)""".format(
+        call=call),
+        setup="import jittermodel._sim; import jittermodel.simulation",
+        number=n)
+    print("{call} model 1: {t}".format(call=call, t=format_time(t/n)))
 
 
 def main():
@@ -46,6 +64,14 @@ def main():
     time_thetaII("jittermodel._sim._thetaII_math", 100000)
     time_thetaII("jittermodel._sim._thetaII_c", 10000000)
 
+    time_im_dielectric_2("jittermodel.simulation._im_dielectric", 1000)
+    time_im_dielectric_2("jittermodel._sim._im_dielectric", 10000)
+    time_im_dielectric_2("jittermodel._sim._im_dielectric_c", 10000)
+
+
+    time_im_dielectric_1("jittermodel.simulation._im_dielectric", 1000)
+    time_im_dielectric_1("jittermodel._sim._im_dielectric", 10000)
+    time_im_dielectric_1("jittermodel._sim._im_dielectric_c", 10000)
 
 
 if __name__ == '__main__':

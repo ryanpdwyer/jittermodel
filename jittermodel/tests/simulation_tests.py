@@ -6,6 +6,7 @@ from jittermodel import u, q2unitless
 from jittermodel.simulation import (Simulation, SphereCapacitance, _alpha, 
                                      sum_sinh, _eta, _lambda, _thetaI,
                                      _thetaII)
+from jittermodel._sim import _thetaI_c
 from jittermodel.base import Cantilever, Experiment, Transistor
 from numpy.testing import assert_allclose
 from nose.tools import eq_, assert_almost_equal, assert_raises
@@ -37,33 +38,6 @@ def test_sum_sinh():
     for mp_result, test_result in zip(mp_results, results):
         assert_almost_equal(mp_result, test_result, 7)
 
-# def test_func(func):
-#     alphas = (2 ** i for i in xrange(-12, 10))
-#     [func(alpha) for alpha in alphas]
-#
-# def test_func2(func):
-#     alphas = (2 ** i for i in xrange(-2, 3))
-#     [func(alpha) for alpha in alphas]
-#
-# if __name__ == '__main__':
-#     from timeit import timeit
-#     # print(timeit("test_func(mp_sum_sinh)",
-#     #              setup="from __main__ import test_func, mp_sum_sinh",
-#     #              number=100))
-#     # print(timeit("test_func(sum_sinh)",
-#     #              setup="from __main__ import test_func, sum_sinh",
-#     #              number=100))
-#     print(timeit("test_func2(mp_sum_sinh)",
-#                  setup="from __main__ import test_func2, mp_sum_sinh",
-#                  number=100))
-#     print(timeit("test_func2(sum_sinh)",
-#                  setup="from __main__ import test_func2, sum_sinh",
-#                  number=100))
-
-"""This test shows that the mpmath implementation of the infinite sum is
-approximately 30 times slower over the whole range of values (see test_func)
-(63.5 s vs. 2.17 s evaluation time). Over the range relevant to experiment,
-it is about 100 times slower (46.4 s vs. 0.20 s)."""
 
 class MockSimulationCapacitance(object):
     """A mock simulation object only containing the parameters necessary to
@@ -157,6 +131,7 @@ def test__lambda():
     Lambda = _lambda(k, eta, E_eff, E_s)
     assert_allclose(Lambda, expected_lambda)
 
+
 def test_thetaI():
     k = np.array([1, 10, 100, 1000, 10000, 100000])
     eta = np.array([2020.78311260126 + 15.182507854811j,
@@ -184,6 +159,38 @@ def test_thetaI():
     E_s = 3 - 0.001j
     E_eff = 3 - 100j
     thetaI = [_thetaI(_k, h_s, alpha, _Lambda, _eta, E_s, E_eff) for
+              _k, _Lambda, _eta in zip(k, Lambda, eta)]
+    thetaI = np.array(thetaI)
+    assert_allclose(expected_thetaI, thetaI)
+
+
+def test_thetaI_c():
+    k = np.array([1, 10, 100, 1000, 10000, 100000])
+    eta = np.array([2020.78311260126 + 15.182507854811j,
+                    2020.80760652432 + 15.182323829782j,
+                    2023.25550170076 + 15.163955048756j,
+                    2254.66583909462 + 13.607584302718j,
+                    10202.1243828582 + 3.007271263178j,
+                    100020.414581093 + 0.30674293451j])
+    Lambda = np.array([0.0001184255261724 + 0.0164941987549306j,
+                       0.00118421087011718 + 0.164939988752172j,
+                       0.0117978533636026 + 1.64740475175451j,
+                       0.0842948437214929 + 14.7834985873234j,
+                      -0.00125999301746353 + 32.672603689536j,
+                      -0.0110065260871034 + 33.3261929274151j])
+
+    expected_thetaI = np.array([0.00157126996626562 + 0.0210682675809495j,
+                                 0.00672782406000677 + 0.0281575198774334j,
+                                 0.050275664263775 + 0.0281213204722464j,
+                                 0.443934273416263 + 0.0140052914999941j,
+                                 0.980197277948465 + 0.000305155415174606j,
+                                 0.999795989512753 + 3.05416795636227e-6j])
+
+    h_s = 0.1
+    alpha = 0.65 - 0.0002j
+    E_s = 3 - 0.001j
+    E_eff = 3 - 100j
+    thetaI = [_thetaI_c(_k, h_s, alpha, _Lambda, _eta, E_s, E_eff) for
               _k, _Lambda, _eta in zip(k, Lambda, eta)]
     thetaI = np.array(thetaI)
     assert_allclose(expected_thetaI, thetaI)

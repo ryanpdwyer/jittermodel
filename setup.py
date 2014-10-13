@@ -8,8 +8,9 @@ except ImportError:
     pass
 
 from distutils.core import setup
+from Cython.Build import cythonize
 
-requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
+requirements = ['numpy', 'scipy', 'matplotlib', 'pint', 'Cython']
 
 test_requirements = ['mpmath', 'bunch', 'nose']
 
@@ -21,5 +22,6 @@ setup(name='jittermodel',
       packages=['jittermodel'],
       zip_safe=False,
       install_requires=requirements,
-      tests_require=test_requirements
+      tests_require=test_requirements,
+      ext_modules = cythonize("jittermodel/_sim.pyx")
       )

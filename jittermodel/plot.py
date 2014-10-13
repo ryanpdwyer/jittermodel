@@ -47,7 +47,7 @@ class GeneratePlotData(object):
     Simulation = Simulation
     units = Simulation.units
 
-    def __init__(self, Cant, Samp, Expt, variable, variable_range, model='II'):
+    def __init__(self, Cant, Samp, Expt, variable, variable_range, model=2):
         self.Cant = Cant
         self.Samp = Samp
         self.Expt = Expt

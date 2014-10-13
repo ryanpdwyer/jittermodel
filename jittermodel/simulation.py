@@ -32,7 +32,6 @@ from scipy.misc import derivative
 import math
 from copy import copy
 from jittermodel import u, q2unitless
-import numpy as np
 
 inf = float('+infinity')
 
@@ -159,19 +158,21 @@ def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
     E_eff = E_s - sigma / (E_0 * omega) * 1j
     kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
     diff = mu * k_B * T / q
-    if model == 'I':
+    if int(model) == 1:
         E_d = E_i
         h = h_diel + h_trans
         alpha = E_eff / E_d
         eta = _eta(k, kappa, E_s, diff, omega)
         Lambda = _lambda(k, eta, E_eff, E_s)
         theta = _thetaI(k, h, alpha, Lambda, eta, E_s, E_eff)
-    if model == 'II':
+    elif int(model) == 2:
         E_d = E_s
         h = h_diel
         eta = _eta(k, kappa, E_s, diff, omega)
         Lambda = _lambda(k, eta, E_eff, E_s)
         theta = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
+    else:
+        raise ValueError("Model must be 1 or 2, not {model}".format(model=model))
 
     result = (E_s - theta) / (E_s + theta)
     return result.imag
@@ -190,7 +191,7 @@ class Simulation(object):
     q = q2unitless(u.elementary_charge, units)
     k_B = q2unitless(u.boltzmann_constant, units)
 
-    def __init__(self, cantilever, sample, experiment, model="II"):
+    def __init__(self, cantilever, sample, experiment, model=2):
         """Initialize the simulation with the values from the given
         cantilever, sample and experiment. It also calculates
         parameters used in the simulation"""
@@ -264,21 +265,21 @@ class Simulation(object):
         TODO: Add unittest, even with just hard-coded comparisons
         to Mathematica."""
 
-        if self.model not in ('I', 'II'):
-            raise ValueError("Model must be either 'I' or 'II'.")
+        if self.model not in (1, 2):
+            raise ValueError("Model must be either 1 or 2.")
 
         samp = self.Samp
         kappa = samp.kappa
         diff = samp.diff
 
-        if self.model == 'I':
+        if self.model == 1:
             E_s = samp.E_s
             E_eff = samp.E_eff(omega)
             E_d = samp.E_i
             h = samp.h_diel + samp.h_trans
             alpha = E_eff / E_d
 
-        if self.model == 'II':
+        if self.model == 2:
             E_s = samp.E_s
             E_eff = samp.E_eff(omega)
             E_d = samp.E_s
@@ -287,9 +288,9 @@ class Simulation(object):
         eta = _eta(k, kappa, E_s, diff, omega)
         Lambda = _lambda(k, eta, E_eff, E_s)
 
-        if self.model == 'I':
+        if self.model == 1:
             theta = _thetaI(k, h, alpha, Lambda, eta, E_s, E_eff)
-        elif self.model == 'II':
+        elif self.model == 2:
             theta = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
 
         result = (E_s - theta) / (E_s + theta)
