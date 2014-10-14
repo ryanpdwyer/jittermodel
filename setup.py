@@ -1,27 +1,58 @@
 #!/usr/bin/env python
-# Enables the package to be used in develop mode
+# -*- coding: utf-8 -*-
+
+import sys
+# Using setuptools enables the package to be used in develop mode
 # See http://pythonhosted.org/setuptools/setuptools.html#development-mode
 # See https://github.com/scikit-learn/scikit-learn/issues/1016
 try:
-    import setuptools
+    from setuptools import setup, find_packages, Extension
 except ImportError:
-    pass
+    print('Please install or upgrade setuptools or pip to continue')
+    sys.exit(1)
 
-from distutils.core import setup
-from Cython.Build import cythonize
 
-requirements = ['numpy', 'scipy', 'matplotlib', 'pint', 'Cython']
+# See http://stackoverflow.com/a/18034855/2823213
+have_cython = False
+try:
+    from Cython.Distutils import build_ext as _build_ext
+    have_cython = True
+except ImportError:
+    from setuptools.command.build_ext import build_ext as _build_ext
+
+if have_cython:
+    _sim  = Extension('_sim', ['jittermodel/_sim.pyx'])
+else:
+    _sim = Extension('_sim', ['jittermodel/_sim.c'])
+
+requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
 
 test_requirements = ['mpmath', 'bunch', 'nose']
 
 setup(name='jittermodel',
       version='0.1',
-      description='',
+      description='Calculate jitter and non-contact friction for an AFM cantilever',
       author='Ryan Dwyer',
+      license='MIT',
+      classifiers=[
+        'Development Status :: 3 - Alpha',
+        'Intended Audience :: Science/Research',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: MacOS :: MacOS X',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX',
+        'Topic :: Scientific/Engineering',
+        'Programming Language :: Python :: 2',
+        'Programming Language :: Python :: 2.7'],
       author_email='ryanpdwyer@gmail.com',
-      packages=['jittermodel'],
+      url='http://github.com/ryanpdwyer/jittermodel',
+      packages=find_packages(include=['jittermodel']),
       zip_safe=False,
       install_requires=requirements,
       tests_require=test_requirements,
-      ext_modules = cythonize("jittermodel/_sim.pyx")
+      extras_require={
+      'dev': ['sphinx']
+      },
+      ext_modules = [_sim],
+      cmdclass={'build_ext': _build_ext}
       )

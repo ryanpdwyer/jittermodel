@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 __init__ tests
 2013-12-16
