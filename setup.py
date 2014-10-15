@@ -15,15 +15,15 @@ except ImportError:
 # See http://stackoverflow.com/a/18034855/2823213
 have_cython = False
 try:
-    from Cython.Distutils import build_ext as _build_ext
+    from Cython.Distutils import build_ext
     have_cython = True
 except ImportError:
-    from setuptools.command.build_ext import build_ext as _build_ext
+    from setuptools.command.build_ext import build_ext
 
 if have_cython:
-    _sim  = Extension('_sim', ['jittermodel/_sim.pyx'])
+    _sim  = Extension('jittermodel._sim', ['jittermodel/_sim.pyx'])
 else:
-    _sim = Extension('_sim', ['jittermodel/_sim.c'])
+    _sim = Extension('jittermodel._sim', ['jittermodel/_sim.c'])
 
 requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
 
@@ -46,7 +46,7 @@ setup(name='jittermodel',
         'Programming Language :: Python :: 2.7'],
       author_email='ryanpdwyer@gmail.com',
       url='http://github.com/ryanpdwyer/jittermodel',
-      packages=find_packages(include=['jittermodel']),
+      packages=['jittermodel', 'jittermodel.tests'],
       zip_safe=False,
       install_requires=requirements,
       tests_require=test_requirements,
@@ -54,5 +54,5 @@ setup(name='jittermodel',
       'dev': ['sphinx']
       },
       ext_modules=[_sim],
-      cmdclass={'build_ext': _build_ext}
+      cmdclass={'build_ext': build_ext}
       )
