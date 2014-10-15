@@ -53,6 +53,6 @@ setup(name='jittermodel',
       extras_require={
       'dev': ['sphinx']
       },
-      ext_modules = [_sim],
+      ext_modules=[_sim],
       cmdclass={'build_ext': _build_ext}
       )

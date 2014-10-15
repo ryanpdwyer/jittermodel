@@ -2,6 +2,7 @@ from jittermodel import u
 import nose
 import functools
 from nose.tools import assert_almost_equal, assert_raises
+import unittest
 
 
 def pint_assert_almost_equal(first, second, unit=None, places=None,
@@ -20,17 +21,18 @@ def pint_assert_almost_equal(first, second, unit=None, places=None,
                                places=places, msg=msg, delta=delta)
 
 
-def test_pint_assert_almost_equal():
-    first = 4.77464829276e-07 * u.N / u.kHz / u.m
-    second = 477.464829276 * u.pN * u.s / u.m
-    pint_assert_almost_equal(first, second)
+class Test_pint_assert_almost_equal(unittest.TestCase):
 
+    def test_pint_assert_almost_equal(self):
+        first = 4.77464829276e-07 * u.N / u.kHz / u.m
+        second = 477.464829276 * u.pN * u.s / u.m
+        pint_assert_almost_equal(first, second)
 
-def test_pint_assert_almost_equal_not():
-    first = 4.78e-07 * u.N / u.kHz / u.m
-    second = 477.464829276 * u.pN * u.s / u.m
-    assert_raises(AssertionError, pint_assert_almost_equal, **{'first': first,
-                  'second': second, 'places': 7, 'unit': u.pN * u.s / u.m})
+    def test_pint_assert_almost_equal_not(self):
+        first = 4.78e-07 * u.N / u.kHz / u.m
+        second = 477.464829276 * u.pN * u.s / u.m
+        assert_raises(AssertionError, pint_assert_almost_equal, **{'first': first,
+                      'second': second, 'places': 7, 'unit': u.pN * u.s / u.m})
 
 
 def expected_failure(test):
