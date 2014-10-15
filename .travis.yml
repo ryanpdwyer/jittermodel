@@ -32,6 +32,7 @@ install:
   - source activate test-environment
   - pip install pint mpmath bunch mock
   - python setup.py develop
+  - python setup.py build_ext --inplace
  
 # Run test
 script:
