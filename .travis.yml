@@ -31,8 +31,8 @@ install:
   - conda install -n test-environment atlas numpy scipy matplotlib nose cython
   - source activate test-environment
   - pip install pint mpmath bunch mock
-  - python setup.py develop
-  - python setup.py build_ext --inplace
+  - python setup.py install
+  - python -m unittest discover
  
 # Run test
 script:
