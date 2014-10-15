@@ -21,20 +21,6 @@ def pint_assert_almost_equal(first, second, unit=None, places=None,
                                places=places, msg=msg, delta=delta)
 
 
-class Test_pint_assert_almost_equal(unittest.TestCase):
-
-    def test_pint_assert_almost_equal(self):
-        first = 4.77464829276e-07 * u.N / u.kHz / u.m
-        second = 477.464829276 * u.pN * u.s / u.m
-        pint_assert_almost_equal(first, second)
-
-    def test_pint_assert_almost_equal_not(self):
-        first = 4.78e-07 * u.N / u.kHz / u.m
-        second = 477.464829276 * u.pN * u.s / u.m
-        assert_raises(AssertionError, pint_assert_almost_equal, **{'first': first,
-                      'second': second, 'places': 7, 'unit': u.pN * u.s / u.m})
-
-
 def expected_failure(test):
     """A wrapper so that tests which are expected to fail don't cause nose
     to crash.

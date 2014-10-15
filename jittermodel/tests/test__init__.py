@@ -23,40 +23,56 @@ import cPickle as pickle
 pa_eq = pint_assert_almost_equal
 
 
-def test_get_defaults():
-    def no_defaults(x):
-        pass
+class Test_pint_assert_almost_equal(unittest.TestCase):
 
-    def both_defaults(x=3, y=5):
-        pass
+    def test_pint_assert_almost_equal(self):
+        first = 4.77464829276e-07 * u.N / u.kHz / u.m
+        second = 477.464829276 * u.pN * u.s / u.m
+        pa_eq(first, second)
 
-    def no_default_then_default(x, y='adfe'):
-        pass
+    def test_pint_assert_almost_equal_not(self):
+        first = 4.78e-07 * u.N / u.kHz / u.m
+        second = 477.464829276 * u.pN * u.s / u.m
+        assert_raises(AssertionError, pa_eq, **{'first': first,
+                      'second': second, 'places': 7, 'unit': u.pN * u.s / u.m})
 
-    funcs = [no_defaults, both_defaults, no_default_then_default]
-    exp_default_dicts = [{'x': None}, {'x': 3, 'y': 5},
-                         {'x': None, 'y': 'adfe'}]
+class Test_get_default_funcs(unittest.TestCase):
 
-    for func, exp_dict in zip(funcs, exp_default_dicts):
-        eq_(get_defaults(func), exp_dict)
+    @staticmethod
+    def test_get_defaults():
+        def no_defaults(x):
+            pass
 
+        def both_defaults(x=3, y=5):
+            pass
 
-def test_get_default_units():
-    def f1(x=2*u.nm):
-        pass
+        def no_default_then_default(x, y='adfe'):
+            pass
 
-    def f2(x='TPD', y=10*u.V):
-        pass
+        funcs = [no_defaults, both_defaults, no_default_then_default]
+        exp_default_dicts = [{'x': None}, {'x': 3, 'y': 5},
+                             {'x': None, 'y': 'adfe'}]
 
-    def f3(x=10*u.m, y=3*u.s, z=298*u.K):
-        pass
+        for func, exp_dict in zip(funcs, exp_default_dicts):
+            eq_(get_defaults(func), exp_dict)
 
-    funcs = [f1, f2, f3]
-    exp_unit_dicts = [{'x': u.nm.units}, {'y': u.V.units},
-                      {'x': u.m.units, 'y': u.s.units, 'z': u.K.units}]
+    @staticmethod
+    def test_get_default_units():
+        def f1(x=2*u.nm):
+            pass
 
-    for func, exp_dict in zip(funcs, exp_unit_dicts):
-        eq_(get_default_units(func), exp_dict)
+        def f2(x='TPD', y=10*u.V):
+            pass
+
+        def f3(x=10*u.m, y=3*u.s, z=298*u.K):
+            pass
+
+        funcs = [f1, f2, f3]
+        exp_unit_dicts = [{'x': u.nm.units}, {'y': u.V.units},
+                          {'x': u.m.units, 'y': u.s.units, 'z': u.K.units}]
+
+        for func, exp_dict in zip(funcs, exp_unit_dicts):
+            eq_(get_default_units(func), exp_dict)
 
 
 class Test_q2unitless(unittest.TestCase):
@@ -160,6 +176,20 @@ class TestAssigner(unittest.TestCase):
         a.property_with_setter = 1200
         eq_({'a', 'b', 'property_with_setter'}, a._all_attributes)
 
+    @staticmethod
+    def test_pickle_Assigner():
+        filename = 'test-pickle-Assigner.pkl'
+        a = Assigner()
+        a.b = 2
+        with open(filename, 'w') as f:
+            pickle.dump(a, f)
+
+        with open(filename, 'r') as f:
+            b = pickle.load(f)
+
+        eq_(a.b, b.b)
+        silentremove(filename)
+
 
 class TestEqAssigner(unittest.TestCase):
     def setUp(self):
@@ -234,7 +264,7 @@ class TestUnitAssigner(unittest.TestCase):
         assert_raises(AttributeError, self.und._get_default_units)
 
 
-class TestUnit_to_unitless():
+class TestUnit_to_unitless(unittest.TestCase):
     filename = 'test-pickle-unitless-Assigner.pkl'
 
     def setUp(self):
@@ -285,17 +315,3 @@ class TestNoUnitAssigner(unittest.TestCase):
     def test_verify_values_passed(self):
         eq_(self.nu.what, "Car")
         eq_(self.nu.speed(), 0.003)
-
-
-def test_pickle_Assigner():
-    filename = 'test-pickle-Assigner.pkl'
-    a = Assigner()
-    a.b = 2
-    with open(filename, 'w') as f:
-        pickle.dump(a, f)
-
-    with open(filename, 'r') as f:
-        b = pickle.load(f)
-
-    eq_(a.b, b.b)
-    silentremove(filename)

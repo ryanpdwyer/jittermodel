@@ -6,6 +6,8 @@ import matplotlib
 matplotlib.use('Agg')
 
 from nose.tools import eq_
+import unittest
+
 
 from jittermodel import u, silentremove
 from jittermodel.base import Cantilever, Transistor, Experiment
@@ -13,13 +15,17 @@ from jittermodel.plot import reformat_properties, GeneratePlotData, unpickle
 from jittermodel.tests import expected_failure
 
 
-def test_reformat_properties():
-    properties = {'color': ('b', 'g'), 'ls': ('-', '--')}
-    exp_reformatted = [{'color': 'b', 'ls': '-'}, {'color': 'g', 'ls': '--'}]
-    eq_(exp_reformatted, reformat_properties(properties))
+class Test_reformat_properties(unittest.TestCase):
+
+    @staticmethod
+    def test_reformat_properties():
+        properties = {'color': ('b', 'g'), 'ls': ('-', '--')}
+        exp_reformatted = [{'color': 'b', 'ls': '-'},
+                           {'color': 'g', 'ls': '--'}]
+        eq_(exp_reformatted, reformat_properties(properties))
 
 
-class TestGeneratePlotData():
+class TestGeneratePlotData(unittest.TestCase):
     filename = 'test-generate-plot-data.pkl'
     figname = 'test-generate-plot-data-plot.png'
 
