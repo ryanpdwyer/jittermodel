@@ -9,4 +9,4 @@ docs/_build/
 **.ipynb_checkpoints/
 jittermodel/tests/test_validation/.ipynb_checkpoints/
 pkl/
-
+dist/
