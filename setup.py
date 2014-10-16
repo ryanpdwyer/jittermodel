@@ -11,6 +11,29 @@ except ImportError:
     print('Please install or upgrade setuptools or pip to continue')
     sys.exit(1)
 
+# ------------------------------------------------------------------------------
+# This section taken from
+# http://nfoti.github.io/a-creative-blog-name/posts/2013/02/07/cleaning-cython-build-files/
+
+args = sys.argv[1:]
+
+# Make a `cleanall` rule to get rid of intermediate and library files
+if "cleanall" in args:
+    print "Deleting cython files..."
+    # Just in case the build directory was created by accident,
+    # note that shell=True should be OK here because the command is constant.
+    subprocess.Popen("rm -rf build", shell=True, executable="/bin/bash")
+    subprocess.Popen("rm -rf *.c", shell=True, executable="/bin/bash")
+    subprocess.Popen("rm -rf *.so", shell=True, executable="/bin/bash")
+
+    # Now do a normal clean
+    sys.argv[1] = "clean"
+
+# We want to always use build_ext --inplace
+if args.count("build_ext") > 0 and args.count("--inplace") == 0:
+    sys.argv.insert(sys.argv.index("build_ext")+1, "--inplace")
+
+# ------------------------------------------------------------------------------
 
 # See http://stackoverflow.com/a/18034855/2823213
 have_cython = False
@@ -54,5 +77,6 @@ setup(name='jittermodel',
       'dev': ['sphinx']
       },
       ext_modules=[_sim],
-      cmdclass={'build_ext': build_ext}
+      cmdclass={'build_ext': build_ext},
+      test_suite='nose.collector'
       )
