@@ -47,7 +47,7 @@ def get_default_units(func):
     from the default values."""
     default_dict = get_defaults(func)
     return {name: val.units for name, val in default_dict.viewitems()
-            if type(val) == u.Quantity}
+            if isinstance(val, u.Quantity)}
 
 
 def make_units(dim_dict, base_dict):
