@@ -32,6 +32,7 @@ from scipy.special import jn
 from scipy.misc import derivative
 import math
 from copy import copy
+import jittermodel._sim
 from jittermodel import u, q2unitless
 
 inf = float('+infinity')
@@ -269,33 +270,12 @@ class Simulation(object):
         if self.model not in (1, 2):
             raise ValueError("Model must be either 1 or 2.")
 
-        samp = self.Samp
-        kappa = samp.kappa
-        diff = samp.diff
+        return jittermodel._sim._im_dielectric_c(k, self.Samp.h_diel, self.Samp.h_trans,
+                            self.Samp.E_s, self.Samp.E_i,
+                            self.Samp.mobility, omega, self.Samp.rho, self.Samp.T,
+                            self.k_B, self.q, self.E_0,
+                            self.model)
 
-        if self.model == 1:
-            E_s = samp.E_s
-            E_eff = samp.E_eff(omega)
-            E_d = samp.E_i
-            h = samp.h_diel + samp.h_trans
-            alpha = E_eff / E_d
-
-        if self.model == 2:
-            E_s = samp.E_s
-            E_eff = samp.E_eff(omega)
-            E_d = samp.E_s
-            h = samp.h_diel
-
-        eta = _eta(k, kappa, E_s, diff, omega)
-        Lambda = _lambda(k, eta, E_eff, E_s)
-
-        if self.model == 1:
-            theta = _thetaI(k, h, alpha, Lambda, eta, E_s, E_eff)
-        elif self.model == 2:
-            theta = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
-
-        result = (E_s - theta) / (E_s + theta)
-        return result.imag
 
     def _corr_integrand(self, r1, r2, z1, z2, k, omega=None, n=0):
         """The integrand of the correlation function from

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import subprocess
 # Using setuptools enables the package to be used in develop mode
 # See http://pythonhosted.org/setuptools/setuptools.html#development-mode
 # See https://github.com/scikit-learn/scikit-learn/issues/1016
@@ -23,8 +24,8 @@ if "cleanall" in args:
     # Just in case the build directory was created by accident,
     # note that shell=True should be OK here because the command is constant.
     subprocess.Popen("rm -rf build", shell=True, executable="/bin/bash")
-    subprocess.Popen("rm -rf *.c", shell=True, executable="/bin/bash")
-    subprocess.Popen("rm -rf *.so", shell=True, executable="/bin/bash")
+    subprocess.Popen("rm -rf jittermodel/*.c", shell=True, executable="/bin/bash")
+    subprocess.Popen("rm -rf jittermodel/*.so", shell=True, executable="/bin/bash")
 
     # Now do a normal clean
     sys.argv[1] = "clean"
