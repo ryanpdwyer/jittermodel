@@ -21,6 +21,18 @@ version of each variable I will encounter. This dictionary should be able to
 transform any unit into the appropriate unitless variable needed in the
 simulation. From there, I can simply use this dictionary to find the correct
 unit, and keep all the math in this code unitfree.
+
+Cython
+------
+
+The innermost loop (``Simulation._im_dielectric``) is now implemented in cython;
+this speeds up the model 2 (the model which was
+already working well) inner loop by a factor of 20, and the model 1 inner loop
+by a factor of 40, enough to make their speeds roughly equal
+(model 2 is now about one third faster).
+
+If additional performance gains are desired, (``Simulation._corr_integrand``
+could also be converted to Cython code).
 """
 
 from __future__ import division

@@ -783,7 +783,7 @@ static PyObject *__pyx_codeobj__4;
  *     double cimag(double complex x)
  * 
  * def _thetaI_np(double k, double h_s,             # <<<<<<<<<<<<<<
- *         double complex alpha, double complex Lambda, complex eta,
+ *         double complex alpha, double complex Lambda, double complex eta,
  *         double complex E_s, double complex E_eff):
  */
 
@@ -1437,7 +1437,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim__thetaI_np(CYTHON_UNUSED PyObject 
  *     double cimag(double complex x)
  * 
  * def _thetaI_np(double k, double h_s,             # <<<<<<<<<<<<<<
- *         double complex alpha, double complex Lambda, complex eta,
+ *         double complex alpha, double complex Lambda, double complex eta,
  *         double complex E_s, double complex E_eff):
  */
 
@@ -2198,9 +2198,9 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_thetaI_c", 0);
 
-  /* "jittermodel/_sim.pyx":63
- * 
+  /* "jittermodel/_sim.pyx":64
  *     cdef double complex sk, sn, ck, cn
+ *     # TODO document this approximation; link to the ipython notebook
  *     if k*h_s > 8:             # <<<<<<<<<<<<<<
  *         return (E_s / E_eff * (-Lambda +
  *             (1 + alpha - Lambda*(1 - 8*cexp(-h_s*(eta + k))
@@ -2208,8 +2208,8 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
   __pyx_t_1 = (((__pyx_v_k * __pyx_v_h_s) > 8.0) != 0);
   if (__pyx_t_1) {
 
-    /* "jittermodel/_sim.pyx":64
- *     cdef double complex sk, sn, ck, cn
+    /* "jittermodel/_sim.pyx":65
+ *     # TODO document this approximation; link to the ipython notebook
  *     if k*h_s > 8:
  *         return (E_s / E_eff * (-Lambda +             # <<<<<<<<<<<<<<
  *             (1 + alpha - Lambda*(1 - 8*cexp(-h_s*(eta + k))
@@ -2223,10 +2223,10 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 64; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 65; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "jittermodel/_sim.pyx":65
+    /* "jittermodel/_sim.pyx":66
  *     if k*h_s > 8:
  *         return (E_s / E_eff * (-Lambda +
  *             (1 + alpha - Lambda*(1 - 8*cexp(-h_s*(eta + k))             # <<<<<<<<<<<<<<
@@ -2235,7 +2235,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_t_2 = __Pyx_c_diff(__Pyx_c_sum(__pyx_t_double_complex_from_parts(1, 0), __pyx_v_alpha), __Pyx_c_prod(__pyx_v_Lambda, __Pyx_c_sum(__Pyx_c_diff(__pyx_t_double_complex_from_parts(1, 0), __Pyx_c_prod(__pyx_t_double_complex_from_parts(8, 0), cexp(__Pyx_c_prod(__pyx_t_double_complex_from_parts((-__pyx_v_h_s), 0), __Pyx_c_sum(__pyx_v_eta, __pyx_t_double_complex_from_parts(__pyx_v_k, 0)))))), __Pyx_c_prod(__Pyx_c_prod(__pyx_t_double_complex_from_parts(4, 0), __pyx_v_Lambda), cexp(__Pyx_c_prod(__Pyx_c_prod(__pyx_t_double_complex_from_parts(-2, 0), __pyx_v_eta), __pyx_t_double_complex_from_parts(__pyx_v_h_s, 0)))))));
 
-    /* "jittermodel/_sim.pyx":67
+    /* "jittermodel/_sim.pyx":68
  *             (1 + alpha - Lambda*(1 - 8*cexp(-h_s*(eta + k))
  *                                  +4*Lambda*cexp(-2*eta*h_s)))/
  *             (alpha - Lambda + 1)))             # <<<<<<<<<<<<<<
@@ -2244,7 +2244,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_t_3 = __Pyx_c_sum(__Pyx_c_diff(__pyx_v_alpha, __pyx_v_Lambda), __pyx_t_double_complex_from_parts(1, 0));
 
-    /* "jittermodel/_sim.pyx":66
+    /* "jittermodel/_sim.pyx":67
  *         return (E_s / E_eff * (-Lambda +
  *             (1 + alpha - Lambda*(1 - 8*cexp(-h_s*(eta + k))
  *                                  +4*Lambda*cexp(-2*eta*h_s)))/             # <<<<<<<<<<<<<<
@@ -2259,11 +2259,11 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 66; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 67; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "jittermodel/_sim.pyx":64
- *     cdef double complex sk, sn, ck, cn
+    /* "jittermodel/_sim.pyx":65
+ *     # TODO document this approximation; link to the ipython notebook
  *     if k*h_s > 8:
  *         return (E_s / E_eff * (-Lambda +             # <<<<<<<<<<<<<<
  *             (1 + alpha - Lambda*(1 - 8*cexp(-h_s*(eta + k))
@@ -2274,7 +2274,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
   }
   /*else*/ {
 
-    /* "jittermodel/_sim.pyx":69
+    /* "jittermodel/_sim.pyx":70
  *             (alpha - Lambda + 1)))
  *     else:
  *         sk = csinh(k * h_s)             # <<<<<<<<<<<<<<
@@ -2283,7 +2283,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_v_sk = csinh(__pyx_t_double_complex_from_parts((__pyx_v_k * __pyx_v_h_s), 0));
 
-    /* "jittermodel/_sim.pyx":70
+    /* "jittermodel/_sim.pyx":71
  *     else:
  *         sk = csinh(k * h_s)
  *         sn = csinh(eta * h_s)             # <<<<<<<<<<<<<<
@@ -2292,7 +2292,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_v_sn = csinh(__Pyx_c_prod(__pyx_v_eta, __pyx_t_double_complex_from_parts(__pyx_v_h_s, 0)));
 
-    /* "jittermodel/_sim.pyx":71
+    /* "jittermodel/_sim.pyx":72
  *         sk = csinh(k * h_s)
  *         sn = csinh(eta * h_s)
  *         ck = ccosh(k * h_s)             # <<<<<<<<<<<<<<
@@ -2301,7 +2301,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_v_ck = ccosh(__pyx_t_double_complex_from_parts((__pyx_v_k * __pyx_v_h_s), 0));
 
-    /* "jittermodel/_sim.pyx":72
+    /* "jittermodel/_sim.pyx":73
  *         sn = csinh(eta * h_s)
  *         ck = ccosh(k * h_s)
  *         cn = ccosh(eta * h_s)             # <<<<<<<<<<<<<<
@@ -2310,7 +2310,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_v_cn = ccosh(__Pyx_c_prod(__pyx_v_eta, __pyx_t_double_complex_from_parts(__pyx_v_h_s, 0)));
 
-    /* "jittermodel/_sim.pyx":73
+    /* "jittermodel/_sim.pyx":74
  *         ck = ccosh(k * h_s)
  *         cn = ccosh(eta * h_s)
  *         return (E_s / E_eff * (-Lambda/ ctanh(eta*h_s) +             # <<<<<<<<<<<<<<
@@ -2325,7 +2325,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_t_3 = __Pyx_c_neg(__pyx_v_Lambda);
     __pyx_t_2 = ctanh(__Pyx_c_prod(__pyx_v_eta, __pyx_t_double_complex_from_parts(__pyx_v_h_s, 0)));
@@ -2337,10 +2337,10 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 73; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "jittermodel/_sim.pyx":74
+    /* "jittermodel/_sim.pyx":75
  *         cn = ccosh(eta * h_s)
  *         return (E_s / E_eff * (-Lambda/ ctanh(eta*h_s) +
  *                 (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /             # <<<<<<<<<<<<<<
@@ -2356,11 +2356,11 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
     __pyx_t_5 = __Pyx_c_diff(__Pyx_c_sum(__Pyx_c_prod(__pyx_v_sk, __pyx_v_sn), __Pyx_c_prod(__Pyx_c_prod(__pyx_v_alpha, __pyx_v_ck), __pyx_v_sn)), __Pyx_c_prod(__pyx_v_Lambda, __Pyx_c_sum(__Pyx_c_diff(__Pyx_c_prod(__pyx_v_ck, __pyx_v_cn), __pyx_t_double_complex_from_parts(2, 0)), __Pyx_c_quot(__pyx_t_4, __pyx_v_sn))));
 
-    /* "jittermodel/_sim.pyx":75
+    /* "jittermodel/_sim.pyx":76
  *         return (E_s / E_eff * (-Lambda/ ctanh(eta*h_s) +
  *                 (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /
  *                 (ck * sn + alpha*sk*sn - Lambda*sk*cn)))             # <<<<<<<<<<<<<<
@@ -2369,7 +2369,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
  */
     __pyx_t_4 = __Pyx_c_diff(__Pyx_c_sum(__Pyx_c_prod(__pyx_v_ck, __pyx_v_sn), __Pyx_c_prod(__Pyx_c_prod(__pyx_v_alpha, __pyx_v_sk), __pyx_v_sn)), __Pyx_c_prod(__Pyx_c_prod(__pyx_v_Lambda, __pyx_v_sk), __pyx_v_cn));
 
-    /* "jittermodel/_sim.pyx":74
+    /* "jittermodel/_sim.pyx":75
  *         cn = ccosh(eta * h_s)
  *         return (E_s / E_eff * (-Lambda/ ctanh(eta*h_s) +
  *                 (sk*sn + alpha*ck*sn - Lambda * (ck*cn - 2 + Lambda*sk/sn)) /             # <<<<<<<<<<<<<<
@@ -2384,10 +2384,10 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaI_c(double __pyx
       #ifdef WITH_THREAD
       PyGILState_Release(__pyx_gilstate_save);
       #endif
-      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 74; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+      {__pyx_filename = __pyx_f[0]; __pyx_lineno = 75; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     }
 
-    /* "jittermodel/_sim.pyx":73
+    /* "jittermodel/_sim.pyx":74
  *         ck = ccosh(k * h_s)
  *         cn = ccosh(eta * h_s)
  *         return (E_s / E_eff * (-Lambda/ ctanh(eta*h_s) +             # <<<<<<<<<<<<<<
@@ -2549,7 +2549,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_4_thetaI_c(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "jittermodel/_sim.pyx":78
+/* "jittermodel/_sim.pyx":79
  * 
  * 
  * cpdef double complex _thetaII_math(double k, double h, double complex E_s,             # <<<<<<<<<<<<<<
@@ -2575,7 +2575,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_math(double _
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_thetaII_math", 0);
 
-  /* "jittermodel/_sim.pyx":81
+  /* "jittermodel/_sim.pyx":82
  *                     double complex E_d, double complex E_eff,
  *                     double complex Lambda):
  *     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / cmath.tanh(k*h)) /             # <<<<<<<<<<<<<<
@@ -2590,22 +2590,22 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_math(double _
     #ifdef WITH_THREAD
     PyGILState_Release(__pyx_gilstate_save);
     #endif
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_1 = __Pyx_c_quot(__pyx_v_E_s, __pyx_v_E_d);
-  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __pyx_PyComplex_FromComplex(__pyx_v_E_eff); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __pyx_PyComplex_FromComplex(__pyx_v_E_eff); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_1 = __Pyx_c_prod(__Pyx_c_diff(__pyx_t_double_complex_from_parts(1, 0), __pyx_v_Lambda), __pyx_v_E_d);
-  __pyx_t_4 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_cmath); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = __Pyx_GetModuleGlobalName(__pyx_n_s_cmath); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_tanh); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_tanh); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = PyFloat_FromDouble((__pyx_v_k * __pyx_v_h)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_6 = PyFloat_FromDouble((__pyx_v_k * __pyx_v_h)); if (unlikely(!__pyx_t_6)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_6);
   __pyx_t_8 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_7))) {
@@ -2618,45 +2618,45 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_math(double _
     }
   }
   if (!__pyx_t_8) {
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_GOTREF(__pyx_t_5);
   } else {
-    __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = PyTuple_New(1+1); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_9);
     PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_t_8); __Pyx_GIVEREF(__pyx_t_8); __pyx_t_8 = NULL;
     PyTuple_SET_ITEM(__pyx_t_9, 0+1, __pyx_t_6);
     __Pyx_GIVEREF(__pyx_t_6);
     __pyx_t_6 = 0;
-    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_9, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_9, NULL); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   }
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_5); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyNumber_Add(__pyx_t_3, __pyx_t_7); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_5 = PyNumber_Add(__pyx_t_3, __pyx_t_7); if (unlikely(!__pyx_t_5)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "jittermodel/_sim.pyx":82
+  /* "jittermodel/_sim.pyx":83
  *                     double complex Lambda):
  *     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / cmath.tanh(k*h)) /
  *                          (E_eff / cmath.tanh(k*h) + (1 - Lambda) * E_d)))             # <<<<<<<<<<<<<<
  * 
  * cpdef double complex _thetaII_c(double k, double h, double complex E_s,
  */
-  __pyx_t_7 = __pyx_PyComplex_FromComplex(__pyx_v_E_eff); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = __pyx_PyComplex_FromComplex(__pyx_v_E_eff); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_cmath); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_GetModuleGlobalName(__pyx_n_s_cmath); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_tanh); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_tanh); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_k * __pyx_v_h)); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = PyFloat_FromDouble((__pyx_v_k * __pyx_v_h)); if (unlikely(!__pyx_t_4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_6 = NULL;
   if (CYTHON_COMPILING_IN_CPYTHON && unlikely(PyMethod_Check(__pyx_t_9))) {
@@ -2669,54 +2669,54 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_math(double _
     }
   }
   if (!__pyx_t_6) {
-    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_4); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_GOTREF(__pyx_t_3);
   } else {
-    __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = PyTuple_New(1+1); if (unlikely(!__pyx_t_8)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_8);
     PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_6); __Pyx_GIVEREF(__pyx_t_6); __pyx_t_6 = NULL;
     PyTuple_SET_ITEM(__pyx_t_8, 0+1, __pyx_t_4);
     __Pyx_GIVEREF(__pyx_t_4);
     __pyx_t_4 = 0;
-    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_8, NULL); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   }
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  __pyx_t_9 = __Pyx_PyNumber_Divide(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_9 = __Pyx_PyNumber_Divide(__pyx_t_7, __pyx_t_3); if (unlikely(!__pyx_t_9)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_1 = __Pyx_c_prod(__Pyx_c_diff(__pyx_t_double_complex_from_parts(1, 0), __pyx_v_Lambda), __pyx_v_E_d);
-  __pyx_t_3 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_7 = PyNumber_Add(__pyx_t_9, __pyx_t_3); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyNumber_Add(__pyx_t_9, __pyx_t_3); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 83; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "jittermodel/_sim.pyx":81
+  /* "jittermodel/_sim.pyx":82
  *                     double complex E_d, double complex E_eff,
  *                     double complex Lambda):
  *     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / cmath.tanh(k*h)) /             # <<<<<<<<<<<<<<
  *                          (E_eff / cmath.tanh(k*h) + (1 - Lambda) * E_d)))
  * 
  */
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_7); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_7 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_7)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_1 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_7); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_t_7); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 82; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __pyx_r = __pyx_t_1;
   goto __pyx_L0;
 
-  /* "jittermodel/_sim.pyx":78
+  /* "jittermodel/_sim.pyx":79
  * 
  * 
  * cpdef double complex _thetaII_math(double k, double h, double complex E_s,             # <<<<<<<<<<<<<<
@@ -2780,31 +2780,31 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_7_thetaII_math(PyObject *__pyx_sel
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_d)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_eff)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Lambda)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_thetaII_math") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_thetaII_math") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -2816,16 +2816,16 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_7_thetaII_math(PyObject *__pyx_sel
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
     }
-    __pyx_v_k = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_k == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_h = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_h == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_s = __Pyx_PyComplex_As___pyx_t_double_complex(values[2]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_d = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_eff = __Pyx_PyComplex_As___pyx_t_double_complex(values[4]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_Lambda = __Pyx_PyComplex_As___pyx_t_double_complex(values[5]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_k = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_k == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_h = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_h == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_s = __Pyx_PyComplex_As___pyx_t_double_complex(values[2]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_d = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_eff = __Pyx_PyComplex_As___pyx_t_double_complex(values[4]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 80; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_Lambda = __Pyx_PyComplex_As___pyx_t_double_complex(values[5]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 81; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_thetaII_math", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("jittermodel._sim._thetaII_math", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -2849,7 +2849,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_6_thetaII_math(CYTHON_UNUSED PyObj
   __Pyx_RefNannySetupContext("_thetaII_math", 0);
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_11jittermodel_4_sim__thetaII_math(__pyx_v_k, __pyx_v_h, __pyx_v_E_s, __pyx_v_E_d, __pyx_v_E_eff, __pyx_v_Lambda, 0);
-  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 78; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 79; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -2866,7 +2866,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_6_thetaII_math(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "jittermodel/_sim.pyx":84
+/* "jittermodel/_sim.pyx":85
  *                          (E_eff / cmath.tanh(k*h) + (1 - Lambda) * E_d)))
  * 
  * cpdef double complex _thetaII_c(double k, double h, double complex E_s,             # <<<<<<<<<<<<<<
@@ -2886,7 +2886,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_c(double __py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_thetaII_c", 0);
 
-  /* "jittermodel/_sim.pyx":87
+  /* "jittermodel/_sim.pyx":88
  *                     double complex E_d, double complex E_eff,
  *                     double complex Lambda):
  *     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / ctanh(k*h)) /             # <<<<<<<<<<<<<<
@@ -2901,7 +2901,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_c(double __py
     #ifdef WITH_THREAD
     PyGILState_Release(__pyx_gilstate_save);
     #endif
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_1 = __Pyx_c_prod(__Pyx_c_diff(__pyx_t_double_complex_from_parts(1, 0), __pyx_v_Lambda), __pyx_v_E_d);
   __pyx_t_2 = ctanh(__pyx_t_double_complex_from_parts((__pyx_v_k * __pyx_v_h), 0));
@@ -2913,11 +2913,11 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_c(double __py
     #ifdef WITH_THREAD
     PyGILState_Release(__pyx_gilstate_save);
     #endif
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_3 = __Pyx_c_sum(__pyx_v_E_eff, __Pyx_c_quot(__pyx_t_1, __pyx_t_2));
 
-  /* "jittermodel/_sim.pyx":88
+  /* "jittermodel/_sim.pyx":89
  *                     double complex Lambda):
  *     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / ctanh(k*h)) /
  *                          (E_eff / ctanh(k*h) + (1 - Lambda) * E_d)))             # <<<<<<<<<<<<<<
@@ -2933,11 +2933,11 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_c(double __py
     #ifdef WITH_THREAD
     PyGILState_Release(__pyx_gilstate_save);
     #endif
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 89; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_t_1 = __Pyx_c_sum(__Pyx_c_quot(__pyx_v_E_eff, __pyx_t_2), __Pyx_c_prod(__Pyx_c_diff(__pyx_t_double_complex_from_parts(1, 0), __pyx_v_Lambda), __pyx_v_E_d));
 
-  /* "jittermodel/_sim.pyx":87
+  /* "jittermodel/_sim.pyx":88
  *                     double complex E_d, double complex E_eff,
  *                     double complex Lambda):
  *     return (E_s / E_d * ((E_eff + (1 - Lambda) * E_d / ctanh(k*h)) /             # <<<<<<<<<<<<<<
@@ -2952,12 +2952,12 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__thetaII_c(double __py
     #ifdef WITH_THREAD
     PyGILState_Release(__pyx_gilstate_save);
     #endif
-    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    {__pyx_filename = __pyx_f[0]; __pyx_lineno = 88; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   }
   __pyx_r = __Pyx_c_prod(__Pyx_c_quot(__pyx_v_E_s, __pyx_v_E_d), __Pyx_c_quot(__pyx_t_3, __pyx_t_1));
   goto __pyx_L0;
 
-  /* "jittermodel/_sim.pyx":84
+  /* "jittermodel/_sim.pyx":85
  *                          (E_eff / cmath.tanh(k*h) + (1 - Lambda) * E_d)))
  * 
  * cpdef double complex _thetaII_c(double k, double h, double complex E_s,             # <<<<<<<<<<<<<<
@@ -3013,31 +3013,31 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_9_thetaII_c(PyObject *__pyx_self, 
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_h)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_d)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_eff)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_Lambda)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_thetaII_c") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_thetaII_c") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 6) {
       goto __pyx_L5_argtuple_error;
@@ -3049,16 +3049,16 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_9_thetaII_c(PyObject *__pyx_self, 
       values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
       values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
     }
-    __pyx_v_k = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_k == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_h = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_h == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_s = __Pyx_PyComplex_As___pyx_t_double_complex(values[2]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_d = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_eff = __Pyx_PyComplex_As___pyx_t_double_complex(values[4]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_Lambda = __Pyx_PyComplex_As___pyx_t_double_complex(values[5]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_k = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_k == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_h = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_h == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_s = __Pyx_PyComplex_As___pyx_t_double_complex(values[2]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_d = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_eff = __Pyx_PyComplex_As___pyx_t_double_complex(values[4]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 86; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_Lambda = __Pyx_PyComplex_As___pyx_t_double_complex(values[5]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 87; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_thetaII_c", 1, 6, 6, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("jittermodel._sim._thetaII_c", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3082,7 +3082,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_8_thetaII_c(CYTHON_UNUSED PyObject
   __Pyx_RefNannySetupContext("_thetaII_c", 0);
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __pyx_f_11jittermodel_4_sim__thetaII_c(__pyx_v_k, __pyx_v_h, __pyx_v_E_s, __pyx_v_E_d, __pyx_v_E_eff, __pyx_v_Lambda, 0);
-  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 84; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_1); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 85; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
@@ -3099,7 +3099,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_8_thetaII_c(CYTHON_UNUSED PyObject
   return __pyx_r;
 }
 
-/* "jittermodel/_sim.pyx":91
+/* "jittermodel/_sim.pyx":92
  * 
  * @cython.cdivision(True)
  * cdef double complex _eta_c(double k, double complex kappa, double complex E_s,             # <<<<<<<<<<<<<<
@@ -3112,7 +3112,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__eta_c(double __pyx_v_
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_eta_c", 0);
 
-  /* "jittermodel/_sim.pyx":93
+  /* "jittermodel/_sim.pyx":94
  * cdef double complex _eta_c(double k, double complex kappa, double complex E_s,
  *                             double D, double omega):
  *     return csqrt(k**2 + kappa**2 / E_s + omega/D*1j)             # <<<<<<<<<<<<<<
@@ -3122,7 +3122,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__eta_c(double __pyx_v_
   __pyx_r = csqrt(__Pyx_c_sum(__Pyx_c_sum(__pyx_t_double_complex_from_parts(pow(__pyx_v_k, 2.0), 0), __Pyx_c_quot(__Pyx_c_pow(__pyx_v_kappa, __pyx_t_double_complex_from_parts(2, 0)), __pyx_v_E_s)), __Pyx_c_prod(__pyx_t_double_complex_from_parts((__pyx_v_omega / __pyx_v_D), 0), __pyx_t_double_complex_from_parts(0, 1.0))));
   goto __pyx_L0;
 
-  /* "jittermodel/_sim.pyx":91
+  /* "jittermodel/_sim.pyx":92
  * 
  * @cython.cdivision(True)
  * cdef double complex _eta_c(double k, double complex kappa, double complex E_s,             # <<<<<<<<<<<<<<
@@ -3136,7 +3136,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__eta_c(double __pyx_v_
   return __pyx_r;
 }
 
-/* "jittermodel/_sim.pyx":97
+/* "jittermodel/_sim.pyx":98
  * 
  * @cython.cdivision(True)
  * cdef double complex _lambda_c(double k, double complex eta,             # <<<<<<<<<<<<<<
@@ -3149,7 +3149,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__lambda_c(double __pyx
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_lambda_c", 0);
 
-  /* "jittermodel/_sim.pyx":101
+  /* "jittermodel/_sim.pyx":102
  *     """Helper function for calculating the correlation integrand.
  *     See Lekkala, et al., 2013, Eq. 19"""
  *     return k/eta*(1 - E_eff/E_s)             # <<<<<<<<<<<<<<
@@ -3159,7 +3159,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__lambda_c(double __pyx
   __pyx_r = __Pyx_c_prod(__Pyx_c_quot(__pyx_t_double_complex_from_parts(__pyx_v_k, 0), __pyx_v_eta), __Pyx_c_diff(__pyx_t_double_complex_from_parts(1, 0), __Pyx_c_quot(__pyx_v_E_eff, __pyx_v_E_s)));
   goto __pyx_L0;
 
-  /* "jittermodel/_sim.pyx":97
+  /* "jittermodel/_sim.pyx":98
  * 
  * @cython.cdivision(True)
  * cdef double complex _lambda_c(double k, double complex eta,             # <<<<<<<<<<<<<<
@@ -3173,7 +3173,7 @@ static __pyx_t_double_complex __pyx_f_11jittermodel_4_sim__lambda_c(double __pyx
   return __pyx_r;
 }
 
-/* "jittermodel/_sim.pyx":103
+/* "jittermodel/_sim.pyx":104
  *     return k/eta*(1 - E_eff/E_s)
  * 
  * def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,             # <<<<<<<<<<<<<<
@@ -3235,66 +3235,66 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_11_im_dielectric(PyObject *__pyx_s
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_h_diel)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_h_trans)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_i)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mu)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_rho)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  8:
         if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_T)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  9:
         if (likely((values[9] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k_B)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 10:
         if (likely((values[10] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_q)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 10); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 10); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 11:
         if (likely((values[11] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 11); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 11); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 12:
         if (likely((values[12] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_model)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 12); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, 12); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_im_dielectric") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_im_dielectric") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 13) {
       goto __pyx_L5_argtuple_error;
@@ -3329,7 +3329,7 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_11_im_dielectric(PyObject *__pyx_s
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_im_dielectric", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("jittermodel._sim._im_dielectric", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -3374,106 +3374,106 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_im_dielectric", 0);
 
-  /* "jittermodel/_sim.pyx":105
+  /* "jittermodel/_sim.pyx":106
  * def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
  *                    model):
  *     sigma = mu * rho * q             # <<<<<<<<<<<<<<
  *     E_eff = E_s - sigma / (E_0 * omega) * 1j
  *     kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
  */
-  __pyx_t_1 = PyNumber_Multiply(__pyx_v_mu, __pyx_v_rho); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyNumber_Multiply(__pyx_v_mu, __pyx_v_rho); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_q); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 105; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_v_q); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_sigma = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "jittermodel/_sim.pyx":106
+  /* "jittermodel/_sim.pyx":107
  *                    model):
  *     sigma = mu * rho * q
  *     E_eff = E_s - sigma / (E_0 * omega) * 1j             # <<<<<<<<<<<<<<
  *     kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
  *     diff = mu * k_B * T / q
  */
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_E_0, __pyx_v_omega); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_E_0, __pyx_v_omega); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_v_sigma, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_v_sigma, __pyx_t_2); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyComplex_FromDoubles(0.0, 1.0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyComplex_FromDoubles(0.0, 1.0); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Subtract(__pyx_v_E_s, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 106; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Subtract(__pyx_v_E_s, __pyx_t_3); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_E_eff = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "jittermodel/_sim.pyx":107
+  /* "jittermodel/_sim.pyx":108
  *     sigma = mu * rho * q
  *     E_eff = E_s - sigma / (E_0 * omega) * 1j
  *     kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5             # <<<<<<<<<<<<<<
  *     diff = mu * k_B * T / q
  *     if model == 1:
  */
-  __pyx_t_2 = PyNumber_Multiply(__pyx_int_2, __pyx_v_rho); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Multiply(__pyx_int_2, __pyx_v_rho); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Power(__pyx_v_q, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyNumber_Power(__pyx_v_q, __pyx_int_2, Py_None); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyNumber_Multiply(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyNumber_Multiply(__pyx_v_E_0, __pyx_v_k_B); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyNumber_Multiply(__pyx_v_E_0, __pyx_v_k_B); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_2 = PyNumber_Multiply(__pyx_t_3, __pyx_v_T); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_3, __pyx_v_T); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_1, __pyx_t_2); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = PyNumber_Power(__pyx_t_3, __pyx_float_0_5, Py_None); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 107; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Power(__pyx_t_3, __pyx_float_0_5, Py_None); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_kappa = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "jittermodel/_sim.pyx":108
+  /* "jittermodel/_sim.pyx":109
  *     E_eff = E_s - sigma / (E_0 * omega) * 1j
  *     kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
  *     diff = mu * k_B * T / q             # <<<<<<<<<<<<<<
  *     if model == 1:
  *         E_d = E_i
  */
-  __pyx_t_2 = PyNumber_Multiply(__pyx_v_mu, __pyx_v_k_B); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyNumber_Multiply(__pyx_v_mu, __pyx_v_k_B); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_T); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_v_T); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_v_q); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 108; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_v_q); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_diff = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "jittermodel/_sim.pyx":109
+  /* "jittermodel/_sim.pyx":110
  *     kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
  *     diff = mu * k_B * T / q
  *     if model == 1:             # <<<<<<<<<<<<<<
  *         E_d = E_i
  *         h = h_diel + h_trans
  */
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_model, __pyx_int_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 109; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_model, __pyx_int_1, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 110; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_4) {
 
-    /* "jittermodel/_sim.pyx":110
+    /* "jittermodel/_sim.pyx":111
  *     diff = mu * k_B * T / q
  *     if model == 1:
  *         E_d = E_i             # <<<<<<<<<<<<<<
@@ -3483,100 +3483,100 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
     __Pyx_INCREF(__pyx_v_E_i);
     __pyx_v_E_d = __pyx_v_E_i;
 
-    /* "jittermodel/_sim.pyx":111
+    /* "jittermodel/_sim.pyx":112
  *     if model == 1:
  *         E_d = E_i
  *         h = h_diel + h_trans             # <<<<<<<<<<<<<<
  *         alpha = E_eff / E_d
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  */
-    __pyx_t_2 = PyNumber_Add(__pyx_v_h_diel, __pyx_v_h_trans); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 111; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = PyNumber_Add(__pyx_v_h_diel, __pyx_v_h_trans); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_h = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "jittermodel/_sim.pyx":112
+    /* "jittermodel/_sim.pyx":113
  *         E_d = E_i
  *         h = h_diel + h_trans
  *         alpha = E_eff / E_d             # <<<<<<<<<<<<<<
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  */
-    __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_v_E_eff, __pyx_v_E_d); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 112; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __Pyx_PyNumber_Divide(__pyx_v_E_eff, __pyx_v_E_d); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_alpha = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "jittermodel/_sim.pyx":113
+    /* "jittermodel/_sim.pyx":114
  *         h = h_diel + h_trans
  *         alpha = E_eff / E_d
  *         eta = _eta_c(k, kappa, E_s, diff, omega)             # <<<<<<<<<<<<<<
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  */
-    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_6 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_kappa); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_diff); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_omega); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_kappa); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_diff); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_omega); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_10 = __pyx_f_11jittermodel_4_sim__eta_c(__pyx_t_5, __pyx_t_6, __pyx_t_7, __pyx_t_8, __pyx_t_9);
-    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_10); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 113; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_10); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_eta = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "jittermodel/_sim.pyx":114
+    /* "jittermodel/_sim.pyx":115
  *         alpha = E_eff / E_d
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)             # <<<<<<<<<<<<<<
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  *     elif model == 2:
  */
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_eta); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_6 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_eta); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_11 = __pyx_f_11jittermodel_4_sim__lambda_c(__pyx_t_9, __pyx_t_10, __pyx_t_7, __pyx_t_6);
-    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_11); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 114; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_11); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_Lambda = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "jittermodel/_sim.pyx":115
+    /* "jittermodel/_sim.pyx":116
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)             # <<<<<<<<<<<<<<
  *     elif model == 2:
  *         E_d = E_s
  */
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_h); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_11 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_alpha); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_6 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_Lambda); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_eta); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_h); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_11 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_alpha); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_6 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_Lambda); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_eta); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_13 = __pyx_f_11jittermodel_4_sim__thetaI_c(__pyx_t_9, __pyx_t_8, __pyx_t_11, __pyx_t_6, __pyx_t_7, __pyx_t_10, __pyx_t_12, 0);
-    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_13); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 115; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_13); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_theta = __pyx_t_2;
     __pyx_t_2 = 0;
     goto __pyx_L3;
   }
 
-  /* "jittermodel/_sim.pyx":116
+  /* "jittermodel/_sim.pyx":117
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  *     elif model == 2:             # <<<<<<<<<<<<<<
  *         E_d = E_s
  *         h = h_diel
  */
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_model, __pyx_int_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 116; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_model, __pyx_int_2, Py_EQ); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_4 < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 117; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_4) {
 
-    /* "jittermodel/_sim.pyx":117
+    /* "jittermodel/_sim.pyx":118
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  *     elif model == 2:
  *         E_d = E_s             # <<<<<<<<<<<<<<
@@ -3586,7 +3586,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
     __Pyx_INCREF(__pyx_v_E_s);
     __pyx_v_E_d = __pyx_v_E_s;
 
-    /* "jittermodel/_sim.pyx":118
+    /* "jittermodel/_sim.pyx":119
  *     elif model == 2:
  *         E_d = E_s
  *         h = h_diel             # <<<<<<<<<<<<<<
@@ -3596,56 +3596,56 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
     __Pyx_INCREF(__pyx_v_h_diel);
     __pyx_v_h = __pyx_v_h_diel;
 
-    /* "jittermodel/_sim.pyx":119
+    /* "jittermodel/_sim.pyx":120
  *         E_d = E_s
  *         h = h_diel
  *         eta = _eta_c(k, kappa, E_s, diff, omega)             # <<<<<<<<<<<<<<
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
  */
-    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_13 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_kappa); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_diff); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_omega); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_8 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_8 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_13 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_kappa); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_diff); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_omega); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_10 = __pyx_f_11jittermodel_4_sim__eta_c(__pyx_t_8, __pyx_t_13, __pyx_t_12, __pyx_t_9, __pyx_t_5);
-    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_10); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 119; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_10); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_eta = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "jittermodel/_sim.pyx":120
+    /* "jittermodel/_sim.pyx":121
  *         h = h_diel
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)             # <<<<<<<<<<<<<<
  *         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
  * 
  */
-    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_eta); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_13 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_eta); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_13 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_7 = __pyx_f_11jittermodel_4_sim__lambda_c(__pyx_t_5, __pyx_t_10, __pyx_t_12, __pyx_t_13);
-    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_7); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 120; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_7); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_Lambda = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "jittermodel/_sim.pyx":121
+    /* "jittermodel/_sim.pyx":122
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)             # <<<<<<<<<<<<<<
  * 
  *     result = (E_s - theta) / (E_s + theta)
  */
-    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_h); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_13 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_d); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
-    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_Lambda); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_5 = __pyx_PyFloat_AsDouble(__pyx_v_k); if (unlikely((__pyx_t_5 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_9 = __pyx_PyFloat_AsDouble(__pyx_v_h); if (unlikely((__pyx_t_9 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_7 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_s); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_13 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_d); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_12 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_E_eff); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_10 = __Pyx_PyComplex_As___pyx_t_double_complex(__pyx_v_Lambda); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __pyx_t_6 = __pyx_f_11jittermodel_4_sim__thetaII_c(__pyx_t_5, __pyx_t_9, __pyx_t_7, __pyx_t_13, __pyx_t_12, __pyx_t_10, 0);
-    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_6); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 121; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+    __pyx_t_2 = __pyx_PyComplex_FromComplex(__pyx_t_6); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 122; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
     __Pyx_GOTREF(__pyx_t_2);
     __pyx_v_theta = __pyx_t_2;
     __pyx_t_2 = 0;
@@ -3653,27 +3653,27 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
   }
   __pyx_L3:;
 
-  /* "jittermodel/_sim.pyx":123
+  /* "jittermodel/_sim.pyx":124
  *         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
  * 
  *     result = (E_s - theta) / (E_s + theta)             # <<<<<<<<<<<<<<
  *     return result.imag
  * 
  */
-  if (unlikely(!__pyx_v_theta)) { __Pyx_RaiseUnboundLocalError("theta"); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;} }
-  __pyx_t_2 = PyNumber_Subtract(__pyx_v_E_s, __pyx_v_theta); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_theta)) { __Pyx_RaiseUnboundLocalError("theta"); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;} }
+  __pyx_t_2 = PyNumber_Subtract(__pyx_v_E_s, __pyx_v_theta); if (unlikely(!__pyx_t_2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_2);
-  if (unlikely(!__pyx_v_theta)) { __Pyx_RaiseUnboundLocalError("theta"); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;} }
-  __pyx_t_3 = PyNumber_Add(__pyx_v_E_s, __pyx_v_theta); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (unlikely(!__pyx_v_theta)) { __Pyx_RaiseUnboundLocalError("theta"); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;} }
+  __pyx_t_3 = PyNumber_Add(__pyx_v_E_s, __pyx_v_theta); if (unlikely(!__pyx_t_3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 123; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_result = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "jittermodel/_sim.pyx":124
+  /* "jittermodel/_sim.pyx":125
  * 
  *     result = (E_s - theta) / (E_s + theta)
  *     return result.imag             # <<<<<<<<<<<<<<
@@ -3681,13 +3681,13 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
  * @cython.cdivision(True)
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_result, __pyx_n_s_imag); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 124; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_result, __pyx_n_s_imag); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 125; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "jittermodel/_sim.pyx":103
+  /* "jittermodel/_sim.pyx":104
  *     return k/eta*(1 - E_eff/E_s)
  * 
  * def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,             # <<<<<<<<<<<<<<
@@ -3719,7 +3719,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_10_im_dielectric(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "jittermodel/_sim.pyx":127
+/* "jittermodel/_sim.pyx":128
  * 
  * @cython.cdivision(True)
  * cpdef double _im_dielectric_c(double k, double h_diel, double h_trans,             # <<<<<<<<<<<<<<
@@ -3744,7 +3744,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("_im_dielectric_c", 0);
 
-  /* "jittermodel/_sim.pyx":132
+  /* "jittermodel/_sim.pyx":133
  *                             double k_B, double q, double E_0,
  *                             int model):
  *     cdef double sigma = mu * rho * q             # <<<<<<<<<<<<<<
@@ -3753,7 +3753,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
   __pyx_v_sigma = ((__pyx_v_mu * __pyx_v_rho) * __pyx_v_q);
 
-  /* "jittermodel/_sim.pyx":133
+  /* "jittermodel/_sim.pyx":134
  *                             int model):
  *     cdef double sigma = mu * rho * q
  *     cdef double complex E_eff = E_s - sigma / (E_0 * omega) * I             # <<<<<<<<<<<<<<
@@ -3762,7 +3762,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
   __pyx_v_E_eff = __Pyx_c_diff(__pyx_v_E_s, __Pyx_c_prod(__pyx_t_double_complex_from_parts((__pyx_v_sigma / (__pyx_v_E_0 * __pyx_v_omega)), 0), I));
 
-  /* "jittermodel/_sim.pyx":134
+  /* "jittermodel/_sim.pyx":135
  *     cdef double sigma = mu * rho * q
  *     cdef double complex E_eff = E_s - sigma / (E_0 * omega) * I
  *     cdef double kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5             # <<<<<<<<<<<<<<
@@ -3771,7 +3771,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
   __pyx_v_kappa = pow((((2.0 * __pyx_v_rho) * pow(__pyx_v_q, 2.0)) / ((__pyx_v_E_0 * __pyx_v_k_B) * __pyx_v_T)), 0.5);
 
-  /* "jittermodel/_sim.pyx":135
+  /* "jittermodel/_sim.pyx":136
  *     cdef double complex E_eff = E_s - sigma / (E_0 * omega) * I
  *     cdef double kappa = (2 * rho * q ** 2 / (E_0 * k_B * T)) ** 0.5
  *     cdef double diff = mu * k_B * T / q             # <<<<<<<<<<<<<<
@@ -3780,7 +3780,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
   __pyx_v_diff = (((__pyx_v_mu * __pyx_v_k_B) * __pyx_v_T) / __pyx_v_q);
 
-  /* "jittermodel/_sim.pyx":146
+  /* "jittermodel/_sim.pyx":147
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  *     elif model == 2:             # <<<<<<<<<<<<<<
@@ -3789,7 +3789,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
   switch (__pyx_v_model) {
 
-    /* "jittermodel/_sim.pyx":139
+    /* "jittermodel/_sim.pyx":140
  *     cdef double h
  *     cdef double complex E_d, alpha, eta, Lambda, theta
  *     if model == 1:             # <<<<<<<<<<<<<<
@@ -3798,7 +3798,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     case 1:
 
-    /* "jittermodel/_sim.pyx":140
+    /* "jittermodel/_sim.pyx":141
  *     cdef double complex E_d, alpha, eta, Lambda, theta
  *     if model == 1:
  *         E_d = E_i             # <<<<<<<<<<<<<<
@@ -3807,7 +3807,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_E_d = __pyx_v_E_i;
 
-    /* "jittermodel/_sim.pyx":141
+    /* "jittermodel/_sim.pyx":142
  *     if model == 1:
  *         E_d = E_i
  *         h = h_diel + h_trans             # <<<<<<<<<<<<<<
@@ -3816,7 +3816,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_h = (__pyx_v_h_diel + __pyx_v_h_trans);
 
-    /* "jittermodel/_sim.pyx":142
+    /* "jittermodel/_sim.pyx":143
  *         E_d = E_i
  *         h = h_diel + h_trans
  *         alpha = E_eff / E_d             # <<<<<<<<<<<<<<
@@ -3825,7 +3825,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_alpha = __Pyx_c_quot(__pyx_v_E_eff, __pyx_v_E_d);
 
-    /* "jittermodel/_sim.pyx":143
+    /* "jittermodel/_sim.pyx":144
  *         h = h_diel + h_trans
  *         alpha = E_eff / E_d
  *         eta = _eta_c(k, kappa, E_s, diff, omega)             # <<<<<<<<<<<<<<
@@ -3834,7 +3834,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_eta = __pyx_f_11jittermodel_4_sim__eta_c(__pyx_v_k, __pyx_t_double_complex_from_parts(__pyx_v_kappa, 0), __pyx_v_E_s, __pyx_v_diff, __pyx_v_omega);
 
-    /* "jittermodel/_sim.pyx":144
+    /* "jittermodel/_sim.pyx":145
  *         alpha = E_eff / E_d
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)             # <<<<<<<<<<<<<<
@@ -3843,7 +3843,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_Lambda = __pyx_f_11jittermodel_4_sim__lambda_c(__pyx_v_k, __pyx_v_eta, __pyx_v_E_eff, __pyx_v_E_s);
 
-    /* "jittermodel/_sim.pyx":145
+    /* "jittermodel/_sim.pyx":146
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)             # <<<<<<<<<<<<<<
@@ -3853,7 +3853,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
     __pyx_v_theta = __pyx_f_11jittermodel_4_sim__thetaI_c(__pyx_v_k, __pyx_v_h, __pyx_v_alpha, __pyx_v_Lambda, __pyx_v_eta, __pyx_v_E_s, __pyx_v_E_eff, 0);
     break;
 
-    /* "jittermodel/_sim.pyx":146
+    /* "jittermodel/_sim.pyx":147
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  *     elif model == 2:             # <<<<<<<<<<<<<<
@@ -3862,7 +3862,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     case 2:
 
-    /* "jittermodel/_sim.pyx":147
+    /* "jittermodel/_sim.pyx":148
  *         theta = _thetaI_c(k, h, alpha, Lambda, eta, E_s, E_eff)
  *     elif model == 2:
  *         E_d = E_s             # <<<<<<<<<<<<<<
@@ -3871,7 +3871,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_E_d = __pyx_v_E_s;
 
-    /* "jittermodel/_sim.pyx":148
+    /* "jittermodel/_sim.pyx":149
  *     elif model == 2:
  *         E_d = E_s
  *         h = h_diel             # <<<<<<<<<<<<<<
@@ -3880,7 +3880,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_h = __pyx_v_h_diel;
 
-    /* "jittermodel/_sim.pyx":149
+    /* "jittermodel/_sim.pyx":150
  *         E_d = E_s
  *         h = h_diel
  *         eta = _eta_c(k, kappa, E_s, diff, omega)             # <<<<<<<<<<<<<<
@@ -3889,7 +3889,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_eta = __pyx_f_11jittermodel_4_sim__eta_c(__pyx_v_k, __pyx_t_double_complex_from_parts(__pyx_v_kappa, 0), __pyx_v_E_s, __pyx_v_diff, __pyx_v_omega);
 
-    /* "jittermodel/_sim.pyx":150
+    /* "jittermodel/_sim.pyx":151
  *         h = h_diel
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)             # <<<<<<<<<<<<<<
@@ -3898,7 +3898,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
     __pyx_v_Lambda = __pyx_f_11jittermodel_4_sim__lambda_c(__pyx_v_k, __pyx_v_eta, __pyx_v_E_eff, __pyx_v_E_s);
 
-    /* "jittermodel/_sim.pyx":151
+    /* "jittermodel/_sim.pyx":152
  *         eta = _eta_c(k, kappa, E_s, diff, omega)
  *         Lambda = _lambda_c(k, eta, E_eff, E_s)
  *         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)             # <<<<<<<<<<<<<<
@@ -3910,7 +3910,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
     default: break;
   }
 
-  /* "jittermodel/_sim.pyx":153
+  /* "jittermodel/_sim.pyx":154
  *         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
  * 
  *     cdef double complex result = (E_s - theta) / (E_s + theta)             # <<<<<<<<<<<<<<
@@ -3918,7 +3918,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
  */
   __pyx_v_result = __Pyx_c_quot(__Pyx_c_diff(__pyx_v_E_s, __pyx_v_theta), __Pyx_c_sum(__pyx_v_E_s, __pyx_v_theta));
 
-  /* "jittermodel/_sim.pyx":154
+  /* "jittermodel/_sim.pyx":155
  * 
  *     cdef double complex result = (E_s - theta) / (E_s + theta)
  *     return cimag(result)             # <<<<<<<<<<<<<<
@@ -3926,7 +3926,7 @@ static double __pyx_f_11jittermodel_4_sim__im_dielectric_c(double __pyx_v_k, dou
   __pyx_r = cimag(__pyx_v_result);
   goto __pyx_L0;
 
-  /* "jittermodel/_sim.pyx":127
+  /* "jittermodel/_sim.pyx":128
  * 
  * @cython.cdivision(True)
  * cpdef double _im_dielectric_c(double k, double h_diel, double h_trans,             # <<<<<<<<<<<<<<
@@ -3993,66 +3993,66 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_13_im_dielectric_c(PyObject *__pyx
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_h_diel)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 1); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  2:
         if (likely((values[2] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_h_trans)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 2); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  3:
         if (likely((values[3] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_s)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 3); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  4:
         if (likely((values[4] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_i)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 4); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  5:
         if (likely((values[5] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_mu)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 5); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  6:
         if (likely((values[6] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_omega)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 6); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  7:
         if (likely((values[7] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_rho)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 7); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  8:
         if (likely((values[8] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_T)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 8); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case  9:
         if (likely((values[9] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_k_B)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 9); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 10:
         if (likely((values[10] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_q)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 10); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 10); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 11:
         if (likely((values[11] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_E_0)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 11); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 11); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
         case 12:
         if (likely((values[12] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_model)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 12); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+          __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, 12); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
         }
       }
       if (unlikely(kw_args > 0)) {
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_im_dielectric_c") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "_im_dielectric_c") < 0)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
       }
     } else if (PyTuple_GET_SIZE(__pyx_args) != 13) {
       goto __pyx_L5_argtuple_error;
@@ -4071,23 +4071,23 @@ static PyObject *__pyx_pw_11jittermodel_4_sim_13_im_dielectric_c(PyObject *__pyx
       values[11] = PyTuple_GET_ITEM(__pyx_args, 11);
       values[12] = PyTuple_GET_ITEM(__pyx_args, 12);
     }
-    __pyx_v_k = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_k == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_h_diel = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_h_diel == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_h_trans = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_h_trans == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_s = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_i = __Pyx_PyComplex_As___pyx_t_double_complex(values[4]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_mu = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_mu == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_omega = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_omega == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_rho = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_rho == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_T = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_T == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_k_B = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_k_B == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_q = __pyx_PyFloat_AsDouble(values[10]); if (unlikely((__pyx_v_q == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_E_0 = __pyx_PyFloat_AsDouble(values[11]); if (unlikely((__pyx_v_E_0 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
-    __pyx_v_model = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_model == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_k = __pyx_PyFloat_AsDouble(values[0]); if (unlikely((__pyx_v_k == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_h_diel = __pyx_PyFloat_AsDouble(values[1]); if (unlikely((__pyx_v_h_diel == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_h_trans = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_h_trans == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_s = __Pyx_PyComplex_As___pyx_t_double_complex(values[3]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_i = __Pyx_PyComplex_As___pyx_t_double_complex(values[4]); if (unlikely(PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 129; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_mu = __pyx_PyFloat_AsDouble(values[5]); if (unlikely((__pyx_v_mu == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_omega = __pyx_PyFloat_AsDouble(values[6]); if (unlikely((__pyx_v_omega == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_rho = __pyx_PyFloat_AsDouble(values[7]); if (unlikely((__pyx_v_rho == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_T = __pyx_PyFloat_AsDouble(values[8]); if (unlikely((__pyx_v_T == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 130; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_k_B = __pyx_PyFloat_AsDouble(values[9]); if (unlikely((__pyx_v_k_B == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_q = __pyx_PyFloat_AsDouble(values[10]); if (unlikely((__pyx_v_q == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_E_0 = __pyx_PyFloat_AsDouble(values[11]); if (unlikely((__pyx_v_E_0 == (double)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 131; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+    __pyx_v_model = __Pyx_PyInt_As_int(values[12]); if (unlikely((__pyx_v_model == (int)-1) && PyErr_Occurred())) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 132; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
+  __Pyx_RaiseArgtupleInvalid("_im_dielectric_c", 1, 13, 13, PyTuple_GET_SIZE(__pyx_args)); {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L3_error;}
   __pyx_L3_error:;
   __Pyx_AddTraceback("jittermodel._sim._im_dielectric_c", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4109,7 +4109,7 @@ static PyObject *__pyx_pf_11jittermodel_4_sim_12_im_dielectric_c(CYTHON_UNUSED P
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_im_dielectric_c", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_11jittermodel_4_sim__im_dielectric_c(__pyx_v_k, __pyx_v_h_diel, __pyx_v_h_trans, __pyx_v_E_s, __pyx_v_E_i, __pyx_v_mu, __pyx_v_omega, __pyx_v_rho, __pyx_v_T, __pyx_v_k_B, __pyx_v_q, __pyx_v_E_0, __pyx_v_model, 0)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 127; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_f_11jittermodel_4_sim__im_dielectric_c(__pyx_v_k, __pyx_v_h_diel, __pyx_v_h_trans, __pyx_v_E_s, __pyx_v_E_i, __pyx_v_mu, __pyx_v_omega, __pyx_v_rho, __pyx_v_T, __pyx_v_k_B, __pyx_v_q, __pyx_v_E_0, __pyx_v_model, 0)); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 128; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
@@ -4212,7 +4212,7 @@ static int __Pyx_InitCachedConstants(void) {
  *     double cimag(double complex x)
  * 
  * def _thetaI_np(double k, double h_s,             # <<<<<<<<<<<<<<
- *         double complex alpha, double complex Lambda, complex eta,
+ *         double complex alpha, double complex Lambda, double complex eta,
  *         double complex E_s, double complex E_eff):
  */
   __pyx_tuple_ = PyTuple_Pack(11, __pyx_n_s_k, __pyx_n_s_h_s, __pyx_n_s_alpha, __pyx_n_s_Lambda, __pyx_n_s_eta, __pyx_n_s_E_s, __pyx_n_s_E_eff, __pyx_n_s_sk, __pyx_n_s_sn, __pyx_n_s_ck, __pyx_n_s_cn); if (unlikely(!__pyx_tuple_)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -4220,17 +4220,17 @@ static int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple_);
   __pyx_codeobj__2 = (PyObject*)__Pyx_PyCode_New(7, 0, 11, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple_, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_ryandwyer_Documents_Progr, __pyx_n_s_thetaI_np, 19, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__2)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
 
-  /* "jittermodel/_sim.pyx":103
+  /* "jittermodel/_sim.pyx":104
  *     return k/eta*(1 - E_eff/E_s)
  * 
  * def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,             # <<<<<<<<<<<<<<
  *                    model):
  *     sigma = mu * rho * q
  */
-  __pyx_tuple__3 = PyTuple_Pack(24, __pyx_n_s_k, __pyx_n_s_h_diel, __pyx_n_s_h_trans, __pyx_n_s_E_s, __pyx_n_s_E_i, __pyx_n_s_mu, __pyx_n_s_omega, __pyx_n_s_rho, __pyx_n_s_T, __pyx_n_s_k_B, __pyx_n_s_q, __pyx_n_s_E_0, __pyx_n_s_model, __pyx_n_s_sigma, __pyx_n_s_E_eff, __pyx_n_s_kappa, __pyx_n_s_diff, __pyx_n_s_E_d, __pyx_n_s_h, __pyx_n_s_alpha, __pyx_n_s_eta, __pyx_n_s_Lambda, __pyx_n_s_theta, __pyx_n_s_result); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_tuple__3 = PyTuple_Pack(24, __pyx_n_s_k, __pyx_n_s_h_diel, __pyx_n_s_h_trans, __pyx_n_s_E_s, __pyx_n_s_E_i, __pyx_n_s_mu, __pyx_n_s_omega, __pyx_n_s_rho, __pyx_n_s_T, __pyx_n_s_k_B, __pyx_n_s_q, __pyx_n_s_E_0, __pyx_n_s_model, __pyx_n_s_sigma, __pyx_n_s_E_eff, __pyx_n_s_kappa, __pyx_n_s_diff, __pyx_n_s_E_d, __pyx_n_s_h, __pyx_n_s_alpha, __pyx_n_s_eta, __pyx_n_s_Lambda, __pyx_n_s_theta, __pyx_n_s_result); if (unlikely(!__pyx_tuple__3)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
-  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(13, 0, 24, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_ryandwyer_Documents_Progr, __pyx_n_s_im_dielectric, 103, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_codeobj__4 = (PyObject*)__Pyx_PyCode_New(13, 0, 24, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__3, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_Users_ryandwyer_Documents_Progr, __pyx_n_s_im_dielectric, 104, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__4)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -4362,7 +4362,7 @@ PyMODINIT_FUNC PyInit__sim(void)
  *     double cimag(double complex x)
  * 
  * def _thetaI_np(double k, double h_s,             # <<<<<<<<<<<<<<
- *         double complex alpha, double complex Lambda, complex eta,
+ *         double complex alpha, double complex Lambda, double complex eta,
  *         double complex E_s, double complex E_eff):
  */
   __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_11jittermodel_4_sim_1_thetaI_np, NULL, __pyx_n_s_jittermodel__sim); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
@@ -4370,16 +4370,16 @@ PyMODINIT_FUNC PyInit__sim(void)
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_thetaI_np, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 19; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "jittermodel/_sim.pyx":103
+  /* "jittermodel/_sim.pyx":104
  *     return k/eta*(1 - E_eff/E_s)
  * 
  * def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,             # <<<<<<<<<<<<<<
  *                    model):
  *     sigma = mu * rho * q
  */
-  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_11jittermodel_4_sim_11_im_dielectric, NULL, __pyx_n_s_jittermodel__sim); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  __pyx_t_1 = PyCFunction_NewEx(&__pyx_mdef_11jittermodel_4_sim_11_im_dielectric, NULL, __pyx_n_s_jittermodel__sim); if (unlikely(!__pyx_t_1)) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_im_dielectric, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 103; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_im_dielectric, __pyx_t_1) < 0) {__pyx_filename = __pyx_f[0]; __pyx_lineno = 104; __pyx_clineno = __LINE__; goto __pyx_L1_error;}
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "jittermodel/_sim.pyx":1

@@ -231,7 +231,8 @@ class TestImDielectricHelperFunctions(unittest.TestCase):
         thetaII = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
         assert_allclose(expected_thetaII, thetaII)
 
-class TestSimulation(unittest.TestCase):
+
+class TestSimulationObject(unittest.TestCase):
     def setUp(self):
         self.cant = Cantilever(
             f_c=50*u.kHz, k_c=3.5*u.N/u.m, Q=20000*u.d,

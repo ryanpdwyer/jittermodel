@@ -44,10 +44,17 @@ try:
 except ImportError:
     from setuptools.command.build_ext import build_ext
 
-if have_cython:
-    _sim  = Extension('jittermodel._sim', ['jittermodel/_sim.pyx'])
-else:
-    _sim = Extension('jittermodel._sim', ['jittermodel/_sim.c'])
+
+def make_extension(name, have_cython):
+    if have_cython:
+        ext = '.pyx'
+    else:
+        ext = '.c'
+    return Extension(name, [name.replace('.', '/')+ext])
+
+
+extensions = ['jittermodel._sim']
+ext_modules = [make_extension(name, have_cython) for name in extensions]
 
 requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
 
@@ -77,7 +84,7 @@ setup(name='jittermodel',
       extras_require={
       'dev': ['sphinx']
       },
-      ext_modules=[_sim],
+      ext_modules=ext_modules,
       cmdclass={'build_ext': build_ext},
       test_suite='nose.collector'
       )
