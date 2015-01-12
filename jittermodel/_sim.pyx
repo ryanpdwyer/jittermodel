@@ -17,7 +17,7 @@ cdef extern from "complex.h":
     double cimag(double complex x)
 
 def _thetaI_np(double k, double h_s,
-        double complex alpha, double complex Lambda, complex eta,
+        double complex alpha, double complex Lambda, double complex eta,
         double complex E_s, double complex E_eff):
 
     cdef double complex sk, sn, ck, cn
@@ -152,3 +152,21 @@ cpdef double _im_dielectric_c(double k, double h_diel, double h_trans,
 
     cdef double complex result = (E_s - theta) / (E_s + theta)
     return cimag(result)
+
+
+def corr_integrand(k, r1, r2, z1, z2, n, h_diel, h_trans,
+    E_s, E_i, mu, omega, rho, T, k_B, q, E_0, model):
+    return (
+        (-k) ** n * jn(0, k * abs(r1 - r2)) *
+         exp(-1 * k * (z1 + z2)) *
+         _im_dielectric(k, h_diel, h_trans, E_s, E_i,
+                        mu, omega, rho, T, k_B, q, E_0, model)
+         )
+
+
+def base_corr(d, omega, n_derivs, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
+                   model):
+    integral, error = quad(lambda x: corr_integrand(x, 0, 0, d, d, n_derivs, h_diel, h_trans,
+    E_s, E_i, mu, omega, rho, T, k_B, q, E_0, model), 0, inf)
+    return integral
+

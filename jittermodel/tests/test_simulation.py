@@ -59,6 +59,7 @@ class MockSimulationCapacitance(object):
         self.sphere = SphereCapacitance(self)
 
 
+# TODO: Where do these test cases come from?
 class TestSphereCapacitance(unittest.TestCase):
     def setUp(self):
         self.sim = MockSimulationCapacitance()

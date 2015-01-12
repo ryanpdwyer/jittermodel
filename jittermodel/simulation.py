@@ -174,7 +174,7 @@ def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
         Lambda = _lambda(k, eta, E_eff, E_s)
         theta = _thetaII(k, h, E_s, E_d, E_eff, Lambda)
     else:
-        raise ValueError("Model must be 1 or 2, not {model}".format(model=model))
+        raise ValueError("Model must be 1 or 2, not {0}".format(model))
 
     result = (E_s - theta) / (E_s + theta)
     return result.imag
@@ -277,11 +277,9 @@ class Simulation(object):
                             self.model)
 
 
-    def _corr_integrand(self, r1, r2, z1, z2, k, omega=None, n=0):
+    def _corr_integrand(self, r1, r2, z1, z2, k, omega, n=0):
         """The integrand of the correlation function from
         Lekkala et al., 2013, at the cantilever resonance frequency."""
-        if omega is None:
-            omega = self.Cant.omega_c
         return ((-k) ** n * jn(0, k * abs(r1 - r2)) *
                 exp(-1 * k * (z1 + z2)) * self._im_dielectric(k, omega))
 
@@ -369,13 +367,13 @@ class Simulation(object):
         c = self.Sphere.C(d)
         cd = self.Sphere.Cd(d)
 
-        terms = [
+        terms = np.array([
             c ** 2 * self.corr_EzEz(d, omega_c),
             cd ** 2 * self.corr_PP(d, omega_c),
             -2 * c * cd * self.corr_PEz(d, omega_c)
-        ]
+        ])
 
-        return (gamma_prefactor * sum(terms))
+        return (gamma_prefactor * np.sum(terms))
 
     def _gamma_parallel(self, d=None):
         """Calculates the parellel geometry friction,
@@ -404,8 +402,8 @@ class Simulation(object):
         elif cant.geometry_c == 'parallel':
             Gamma_s = self._gamma_parallel(d)
         else:
-            raise ValueError("""geometry_c must be either 'parallel'\
-                                or 'perpendicular'""")
+            raise ValueError(
+                "geometry_c must be either 'parallel' or 'perpendicular'")
 
         self.Gamma_s = Gamma_s
         return Gamma_s
@@ -425,8 +423,8 @@ class Simulation(object):
         elif self.Cant.geometry_c == 'parallel':
             Pdf = self._power_spectrum_parallel(omega, d)
         else:
-            raise ValueError("geometry_c must be either 'parallel'\
-or 'perpendicular'")
+            raise ValueError(
+                "geometry_c must be either 'parallel' or 'perpendicular'")
 
         return Pdf
 
