@@ -12,6 +12,14 @@ except ImportError:
     print('Please install or upgrade setuptools or pip to continue')
     sys.exit(1)
 
+import versioneer
+versioneer.VCS = 'git'
+versioneer.versionfile_source = 'jittermodel/_version.py'
+versioneer.versionfile_build = 'jittermodel/_version.py'
+versioneer.tag_prefix = '' # tags are like 1.2.0
+versioneer.parentdir_prefix = 'jittermodel-' # dirname like 'myproject-1.2.0'
+
+
 # ------------------------------------------------------------------------------
 # This section taken from
 # http://nfoti.github.io/a-creative-blog-name/posts/2013/02/07/cleaning-cython-build-files/
@@ -60,8 +68,11 @@ requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
 
 test_requirements = ['mpmath', 'bunch', 'nose']
 
+cmdclass=versioneer.get_cmdclass()
+cmdclass.update({'build_ext': build_ext})
+
 setup(name='jittermodel',
-      version='0.1',
+      version=versioneer.get_version(),
       description='Calculate jitter and non-contact friction for an AFM cantilever',
       author='Ryan Dwyer',
       license='MIT',
@@ -85,6 +96,6 @@ setup(name='jittermodel',
       'dev': ['sphinx']
       },
       ext_modules=ext_modules,
-      cmdclass={'build_ext': build_ext},
-      test_suite='nose.collector'
+      cmdclass=cmdclass,
+      test_suite='nose.collector',
       )
