@@ -28,7 +28,7 @@ args = sys.argv[1:]
 
 # Make a `cleanall` rule to get rid of intermediate and library files
 if "cleanall" in args:
-    print "Deleting cython files..."
+    print("Deleting cython files...")
     # Just in case the build directory was created by accident,
     # note that shell=True should be OK here because the command is constant.
     subprocess.Popen("rm -rf build", shell=True, executable="/bin/bash")
@@ -45,6 +45,8 @@ if args.count("build_ext") > 0 and args.count("--inplace") == 0:
 # ------------------------------------------------------------------------------
 
 # See http://stackoverflow.com/a/18034855/2823213
+# If the user does not have Cython installed, we should be able to use the
+# package by building with the .c file
 have_cython = False
 try:
     from Cython.Distutils import build_ext
@@ -68,7 +70,9 @@ requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
 
 test_requirements = ['mpmath', 'bunch', 'nose']
 
+# Versioneer commands
 cmdclass=versioneer.get_cmdclass()
+# Add Cython / setuptools build_ext
 cmdclass.update({'build_ext': build_ext})
 
 setup(name='jittermodel',

@@ -32,7 +32,13 @@ by a factor of 40, enough to make their speeds roughly equal
 (model 2 is now about one third faster).
 
 If additional performance gains are desired, (``Simulation._corr_integrand``
-could also be converted to Cython code).
+could also be converted to Cython code). There is still very significant
+overhead in all of the critical functions being python functions rather than
+Cython; overall, we achieved a factor of 2 to 4 speed-up moving to Cython.
+
+The scipy quad routine could also be converted to Cython; this could be done
+directly by ``cdef extern from "gsl/gsl_file.h"``, or using the ``CythonGSL``
+library.
 """
 
 from __future__ import division
