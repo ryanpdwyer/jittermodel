@@ -1,0 +1,2 @@
+.. automodule:: jittermodel.simulation
+   :members:

@@ -10,6 +10,7 @@ Contents:
 
 .. toctree::
     base
+    simulation
 
 
 Indices and tables
