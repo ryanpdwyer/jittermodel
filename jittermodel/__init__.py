@@ -19,9 +19,9 @@ import errno
 u = pint.UnitRegistry()
 
 # Universal Constants
-E_0 = u.epsilon_0
-k_B = u.boltzmann_constant
-q = u.elementary_charge
+E_0 = 1*u.epsilon_0
+k_B = 1*u.boltzmann_constant
+q = 1*u.elementary_charge
 
 
 def get_defaults(func):
@@ -55,7 +55,7 @@ def make_units(dim_dict, base_dict):
     method `dimensionality`, along with a set of base_units, and creates
     appropriate unit."""
     units = u.dimensionless
-    for dimension, power in dim_dict.viewitems():
+    for dimension, power in dim_dict.items():
         units *= base_dict[dimension] ** power
     return units
 

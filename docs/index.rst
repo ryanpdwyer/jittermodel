@@ -9,6 +9,8 @@ Welcome to Jitter Model's documentation!
 Contents:
 
 .. toctree::
+    :maxdepth: 2
+
     base
     simulation
 

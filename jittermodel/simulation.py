@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 Simulation
-===========
+==========
 
 The simulation code, but with units.
 
@@ -207,9 +207,9 @@ class Simulation(object):
              "[current]": u.aC / u.ms, "[temperature]": u.K, "[angle]": u.rad}
 
     # Store fundamental constants in the units defined above.
-    E_0 = q2unitless(u.epsilon_0, units)
-    q = q2unitless(u.elementary_charge, units)
-    k_B = q2unitless(u.boltzmann_constant, units)
+    E_0 = q2unitless(jittermodel.E_0, units)
+    q = q2unitless(jittermodel.q, units)
+    k_B = q2unitless(jittermodel.k_B, units)
 
     def __init__(self, cantilever, sample, experiment, model=2):
         """Initialize the simulation with the values from the given
