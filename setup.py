@@ -62,13 +62,9 @@ def make_extension(name, have_cython):
         ext = '.c'
     return Extension(name, [name.replace('.', '/')+ext])
 
-
+# List of cython modules here. Make_extension will add the correct extension.
 extensions = ['jittermodel._sim']
 ext_modules = [make_extension(name, have_cython) for name in extensions]
-
-requirements = ['numpy', 'scipy', 'matplotlib', 'pint']
-
-test_requirements = ['mpmath', 'bunch', 'nose']
 
 # Versioneer commands
 cmdclass=versioneer.get_cmdclass()
@@ -94,8 +90,8 @@ setup(name='jittermodel',
       url='http://github.com/ryanpdwyer/jittermodel',
       packages=['jittermodel', 'jittermodel.tests'],
       zip_safe=False,
-      install_requires=requirements,
-      tests_require=test_requirements,
+      install_requires=['numpy', 'scipy', 'matplotlib', 'pint'],
+      tests_require=['mpmath', 'bunch', 'nose'],
       extras_require={
       'dev': ['sphinx']
       },
