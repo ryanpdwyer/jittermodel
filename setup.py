@@ -35,7 +35,10 @@ if "cleanall" in args:
     import glob
     import shutil
     import os.path
-    shutil.rmtree('build')
+    try:
+        shutil.rmtree('build')
+    except:
+        pass
 
     for filename in glob.glob(os.path.join('jittermodel','*.c')):
         os.remove(filename)
@@ -47,7 +50,7 @@ if "cleanall" in args:
     sys.argv[1] = "clean"
 
 # We want to always use build_ext --inplace
-if args.count("build_ext") > 0 and args.count("--inplace") == 0:
+if "build_ext" in sys.argv and "--inplace" not in sys.argv:
     sys.argv.insert(sys.argv.index("build_ext")+1, "--inplace")
 
 # See http://stackoverflow.com/a/18034855/2823213
