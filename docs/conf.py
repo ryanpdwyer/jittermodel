@@ -12,24 +12,28 @@
 # serve to show the default.
 
 import sys, os
-from mock import MagicMock
 
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-            return Mock()
+# on_rtd is whether we are on readthedocs.org
+on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
-MOCK_MODULES = [
-    'matplotlib',
-    'matplotlib.pypplot',
-    'numpy',
-    'scipy',
-    'scipy.integrate',
-    'scipy.misc',
-    'scipy.special',
-    'jittermodel._sim']
+if on_rtd:
+    from mock import MagicMock
 
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+    class Mock(MagicMock):
+        @classmethod
+        def __getattr__(cls, name):
+                return Mock()
+
+    MOCK_MODULES = [
+        'matplotlib',
+        'matplotlib.pypplot',
+        'numpy',
+        'scipy',
+        'scipy.integrate',
+        'scipy.misc',
+        'scipy.special']
+
+    sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 import jittermodel
 
@@ -163,9 +167,6 @@ html_static_path = ['_static']
 
 # From readthedocs.org help files:
 # http://read-the-docs.readthedocs.org/en/latest/theme.html#how-do-i-use-this-locally-and-on-read-the-docs # noqa
-
-# on_rtd is whether we are on readthedocs.org
-on_rtd = os.environ.get('READTHEDOCS', None) == 'True'
 
 if not on_rtd:  # only import and set the theme if we're building docs locally
     import sphinx_rtd_theme
