@@ -8,6 +8,15 @@ a ``Cantilever``, ``Transistor`` and ``Experiment``
 
 NOTE: To use units in your own file, import the
 unitregistry (``u``) from ``jittermodel``!
+
+Class structure
+---------------
+
+These classes should be conceptually much simpler; they should be simple classes,
+that perhaps contain additional logic buried underneath.
+
+For example, the cantilever should *only* expose simple attributes, 
+
 """
 
 from __future__ import division

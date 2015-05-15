@@ -11,3 +11,4 @@ jittermodel/tests/test_validation/.ipynb_checkpoints/
 pkl/
 dist/
 .eggs/
+build/
