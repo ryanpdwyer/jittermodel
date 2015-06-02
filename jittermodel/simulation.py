@@ -240,6 +240,7 @@ class Simulation(object):
         class, and then does the appropriate assignment."""
         if attr == 'omega':
             # Unlike other attributes, omega is owned by the simulation.
+            # TODO: Why is kHz hard-coded here!
             self.omega = val.to(u.kHz).magnitude
         if attr == 'model':
             self.model = val
