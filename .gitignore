@@ -12,3 +12,4 @@ pkl/
 dist/
 .eggs/
 build/
+MANIFEST
