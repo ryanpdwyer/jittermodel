@@ -120,6 +120,12 @@ def _im_dielectric(k, h_diel, h_trans, E_s, E_i, mu, omega, rho, T, k_B, q, E_0,
         eta = _eta_c(k, kappa, E_s, diff, omega)
         Lambda = _lambda_c(k, eta, E_eff, E_s)
         theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
+    elif model == 20:
+        E_d = E_i
+        h = h_diel
+        eta = _eta_c(k, kappa, E_s, diff, omega)
+        Lambda = _lambda_c(k, eta, E_eff, E_s)
+        theta = _thetaII_c(k, h, E_s, E_d, E_eff, Lambda)
 
     result = (E_s - theta) / (E_s + theta)
     return result.imag

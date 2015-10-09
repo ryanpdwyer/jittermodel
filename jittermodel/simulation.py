@@ -286,14 +286,20 @@ class Simulation(object):
         TODO: Add unittest, even with just hard-coded comparisons
         to Mathematica."""
 
-        if self.model not in (1, 2):
-            raise ValueError("Model must be either 1 or 2.")
-
-        return jittermodel._sim._im_dielectric_c(k, self.Samp.h_diel, self.Samp.h_trans,
+        if self.model not in (1, 2, 20):
+            raise ValueError("Model must be either 1, 2 or 20.")
+        elif self.model == 1 or self.model == 2:
+            return jittermodel._sim._im_dielectric_c(k, self.Samp.h_diel, self.Samp.h_trans,
                             self.Samp.E_s, self.Samp.E_i,
                             self.Samp.mobility, omega, self.Samp.rho, self.Samp.T,
                             self.k_B, self.q, self.E_0,
                             self.model)
+        else:
+            return jittermodel._sim._im_dielectric_c(k, self.Samp.h_d,
+                self.Samp.h_s, self.Samp.E_s, self.Samp.E_i,
+                self.Samp.mobility, omega, self.Samp.rho, self.Samp.T,
+                self.k_B, self.q, self.E_0,
+                self.model)
 
 
     def _corr_integrand(self, r1, r2, z1, z2, k, omega, n=0):

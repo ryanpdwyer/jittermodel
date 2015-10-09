@@ -130,6 +130,7 @@ geometry_c = '{self.geometry_c}')".format(self=self)
 class UnitlessCantilever(NoUnitAssigner, Cantilever):
     pass
 
+
 class Experiment(UnitAssigner):
     """Stores parameters set by the experimenter. Now with units!"""
 
@@ -268,6 +269,114 @@ incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
         carrier density."""
         self._rho = value
         self._V_g = self.q * self._rho * self.h_trans / self.C_i
+
+    #---------------------------------------------------------
+    # Relevant properties derived from gate voltage / charge density.
+    @property
+    def sigma(self):
+        """The conductivity sigma of the sample."""
+        return self.mobility * self.rho * self.q
+
+    @property
+    def kappa(self):
+        """Define the inverse Debye length screening length kappa,
+        used in the Lekkala Loring theory. See Lekkala et al.,
+        p4, at http://dx.doi.org/10.1063/1.4754602."""
+        return (2 * self.rho * self.q ** 2 /
+                (self.E_0 * self.k_B * self.T)) ** 0.5
+
+    def E_eff(self, omega):
+        """Defines the effective dielectric constant,
+        which corrects for the effect of Ohm's law (carrier drift),
+        at a particular angular frequency. See Eq. 14 in
+        Lekkala et al., 2013."""
+        return self.E_s - self.sigma / (self.E_0 * omega) * 1j
+
+    def __str__(self):
+        """Write out the sample, using its semiconductor material,
+        height and mobility."""
+        return "{self.semiconductor:P}  {self.h_nm:P}\
+mobility {self.mobility_cm2:P}".format(self=self)
+
+    def __repr__(self):
+        return "Transistor(semiconductor = '{self.semiconductor}', \
+h = {self.h}, h_trans = {self.h_trans}, \
+h_i = {self.h_i}, E_s1 = {self.E_s1}, \
+E_s2 = {self.E_s2}, E_i1 = {self.E_i1}, \
+E_i2 = {self.E_i2}, mobility = {self.mobility}, \
+T = {self.T}, V_g = {self.V_g})".format(self=self)
+
+
+class UnitlessTransistor(NoUnitAssigner, Transistor):
+    pass
+
+
+class BareTransistor(UnitAssigner):
+    """A transistor sample, now with units."""
+    E_0 = E_0
+    k_B = k_B
+    q = q
+
+    def __init__(self, semiconductor='Si',
+                 h_d=300 * u.nm, h_s=500 * u.um,
+                 E_d1=4.65, E_d2=-0.005,
+                 E_s1=11.65, E_s2=-0.05,
+                 mobility=1 * u.cm ** 2 / u.V / u.s,
+                 T=298 * u.K,
+                 rho=None):
+        """Initialize the sample with all of the experimentally
+        relevant sample parameters."""
+        self.UnitlessClass = UnitlessTransistor
+
+        self.semiconductor = semiconductor
+        self.h_d = h_d
+        self.h_s = h_s
+        self.E_s1 = E_s1
+        self.E_s2 = E_s2
+        self.E_d1 = E_d1
+        self.E_d2 = E_d2
+        self.mobility = mobility
+        self.T = T
+        self.rho = rho
+
+        self._default_units = {'h_d': u.nm, 'h_s': u.nm,
+                      'mobility': u.cm ** 2 / u.V / u.s, 'T': u.K,
+                      'rho': u.cm ** -3}
+
+        self._check_dimensionality_units()
+        self._check_number_inputs_positive()
+
+    def _check_V_g_rho_defined(self, V_g, rho):
+        """Checks to determine whether one, both, or none of V_g and rho
+        were given when the sample was initialized, and properly assigns
+        V_g and rho or throws an error as appropriate."""
+
+        default_dict = get_defaults(self.__init__)
+
+        if rho is None:
+            self.V_g = V_g
+        elif V_g == default_dict['V_g']:
+            self.rho = rho
+        else:
+            raise ValueError("The provided values of 'V_g' and 'rho' are \
+incompatible. Only specify one of 'V_g' or 'rho' when defining a Sample.")
+
+    @property
+    def diff(self):
+        """Diffusion constant defined according to the Einstein relation."""
+        return self.mobility * self.k_B * self.T / self.q
+
+    @property
+    def E_s(self):
+        """Total dielectric constant, adjusted for conductivity."""
+        return self.E_s1 + self.E_s2*1j
+
+    @property
+    def E_d(self):
+        """Total dielectric constant of the insulator layer,
+        assuming the same lossy part of the spectrum as the
+        sample layer."""
+        return self.E_d1 + self.E_d2*1j
 
     #---------------------------------------------------------
     # Relevant properties derived from gate voltage / charge density.
